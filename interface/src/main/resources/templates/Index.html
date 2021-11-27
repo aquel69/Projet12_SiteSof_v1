@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barber</title>
+    <!-- Favicon -->
+    <link rel="icon" href="ressources/favicon.ico" type="image/x-icon">
+    <!-- Polices de caractères -->
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Font-Awesome -->
+    <script src="https://kit.fontawesome.com/3a8fc215ae.js" crossorigin="anonymous"></script>
+
+    <!-- Feuilles de style -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="CSS/baseMedias.css">
+    <link rel="stylesheet" media="only screen and (width: 320px) and (height: 480px)" href="CSS/iphone4.css">
+    <link rel="stylesheet" media="only screen and (width: 768px) and (height: 1024px)" href="CSS/iPad_Mini.css">
+    <link rel="stylesheet" media="only screen and (width: 360px) and (height: 640px)" href="CSS/galaxy_S5.css">
+    <link rel="stylesheet" media="only screen and (width: 411px) and (height: 731px)" href="CSS/pixel2.css">
+    <link rel="stylesheet" media="only screen and (width: 320px) and (height: 568px)" href="CSS/iPhone5_SE.css">
+    <link rel="stylesheet" media="only screen and (width: 375px) and (height: 667px)" href="CSS/iPhone6_7_8.css">
+    <link rel="stylesheet" media="only screen and (width: 414px) and (height: 736px)" href="CSS/iPhone6_7_8PLUS.css">
+    <link rel="stylesheet" media="only screen and (width: 1024px) and (height: 1366px)" href="CSS/iPadPro.css">
+<body>
+
+<!-- Accueil -->
+
+<header id="accueil">
+
+    <nav id="navigation">
+
+        <a href="#accueil" class="liensNav" onclick="toggleNav()">Accueil</a>
+        <a href="#bio" class="liensNav" onclick="toggleNav()">Bio</a>
+        <a href="#concerts" class="liensNav" onclick="toggleNav()">Concerts</a>
+        <a href="#album" class="liensNav" onclick="toggleNav()">Album</a>
+        <a href="#contact" class="liensNav" onclick="toggleNav()">Contact</a>
+        <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
+    </nav>
+
+    <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/yRWCAFs1oY8?controls=0&amp;start=4"
+            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+            encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h1>Sof</h1>
+    <h2>Auteure - Compositrice - Interprète</h2>
+
+    <a href="#bio" id="arrow"><i class="fas fa-music"></i></a>
+
+
+</header>
+
+<!-- Section About -->
+
+<section id="bio" class="section-bio">
+
+    <div class="centerH">
+
+        <h2 class="titreBio">
+            Biographie
+        </h2>
+    </div>
+
+
+    <div class="ligne">
+        <div class="col-1-of-2">
+            <h3 class="sousTitreBio">Ses inspirations</h3>
+            <p class="paragraphe">
+                Auteur compositeur, chanteuse guitariste, Sof s’inscrit dans un univers chanson/folk.
+                Sa voix chaude et son jeu subtil délivrent une intimité vibrante et passionnée.
+                 Elle compose ses musiques au piano, à la guitare et au ukulélé, ses textes sont à la fois légers et poétiques.
+            </p>
+            <h3 class="sousTitreBio">Ses musiciens</h3>
+            <p class="paragraphe">
+                Elle fait appel sur scène à Cyrille Savoi, musicien multi-instrumentiste,
+                qui l’accompagne aux saxophones, flûte traversière et harmonica,
+                Régis Parazon à la batterie et aux percussions et Boris Mange aux claviers.
+                Ils apportent des couleurs intenses et cuivrées à son répertoire,
+                les influences de chacun se mêlent et donnent un cocktail explosif de fraîcheur !
+            </p>
+        </div>
+        <div class="col-1-of-2">
+            <div class="composition">
+                <img src="ressources/concert_noir_blanc.jpg" alt="photo concert sof" class="composition_photo composition_photo--1">
+                <img src="ressources/sof_uku.png" alt="photo sof avec son ukulélé" class="composition_photo composition_photo--2">
+                <img src="ressources/musicien.jpg" alt="photo des musiciens" class="composition_photo composition_photo--3">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Concerts -->
+
+<section id="concerts">
+
+    <h2>CONCERTS</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div class="compositionConcerts">
+
+                    <img src="ressources/sof_piano.jpg" alt="photo sof jouant de la guitare" class="img-fluid composition_photo_concert composition_photo_concert--1">
+                    <img src="ressources/sof_dos.jpg" alt="photo de dos guitare sof" class="img-fluid composition_photo_concert composition_photo_concert--2">
+                    <img src="ressources/sof_cri_2.jpg" alt="photo scène festival cri du col" class="img-fluid composition_photo_concert composition_photo_concert--3">
+                </div>
+            </div>
+            <div class="col-5 tableau_concert">
+                <h5 class="sous_titre_concert-1">A venir</h5>
+                <div class="table-responsive concert_venir">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Adresse</th>
+                            <th scope="col">Tarif</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>25/10/2021</td>
+                            <td>Cri du col</td>
+                            <td>26 route du col de cri - Pommier 69825</td>
+                            <td>Gratuit</td>
+                        </tr>
+                        <tr>
+                            <td>26/10/2021</td>
+                            <td>Cri du col</td>
+                            <td>26 route du col de cri - Pommier 69825</td>
+                            <td>Gratuit</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <h5 class="sous_titre_concert-2">Historique</h5>
+                <div class="table-responsive concert_historique">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Adresse</th>
+                            <th scope="col">Tarif</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>25/10/2021</td>
+                            <td>Cri du col</td>
+                            <td>26 route du col de cri - Pommier 69825</td>
+                            <td>Gratuit</td>
+                        </tr>
+                        <tr>
+                            <td>26/10/2021</td>
+                            <td>Cri du col</td>
+                            <td>26 route du col de cri - Pommier 69825</td>
+                            <td>Gratuit</td>
+                        </tr>
+                        <tr>
+                            <td>26/10/2021</td>
+                            <td>Cri du col</td>
+                            <td>26 route du col de cri - Pommier 69825</td>
+                            <td>Gratuit</td>
+                        </tr>
+                        <tr>
+                            <td>26/10/2021</td>
+                            <td>Cri du col</td>
+                            <td>26 route du col de cri - Pommier 69825</td>
+                            <td>Gratuit</td>
+                        </tr>
+                        <tr>
+                            <td>26/10/2021</td>
+                            <td>Cri du col</td>
+                            <td>26 route du col de cri - Pommier 69825</td>
+                            <td>Gratuit</td>
+                        </tr>
+                        <tr>
+                            <td>26/10/2021</td>
+                            <td>Cri du col</td>
+                            <td>26 route du col de cri - Pommier 69825</td>
+                            <td>Gratuit</td>
+                        </tr>
+                        <tr>
+                            <td>26/10/2021</td>
+                            <td>Cri du col</td>
+                            <td>26 route du col de cri - Pommier 69825</td>
+                            <td>Gratuit</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="offset-1"></div>
+        </div>
+
+    </div>
+
+
+
+</section>
+
+<!-- Sections Paralax -->
+
+<section class="section-parallax"></section>
+
+<!-- Sections Phrases Slide -->
+
+<section id="album">
+    <div class="centerH">
+
+        <h2 class="titreAlbum">
+            Album
+        </h2>
+    </div>
+    <div class="container-fluid cont">
+        <div class="fond-forme"></div>
+        <div class="row">
+            <div class="col-4">
+                <h4 id="sous_titre_ep" class="text-center">
+                    EP - La Luna
+                </h4>
+                <div class="text-center">
+                     <img src="ressources/EP_front.png" alt="photo EP sof" class="img-fluid photo_EP_front">
+                </div>
+                <div class="lecteur_1 text-center">
+                    <h6 class="titre_ep">
+                        La Luna
+                    </h6>
+                    <audio controls>
+                        <source src="ressources/LA-LUNA-MIX1.mp3" type="audio/mpeg">
+                        <source src="ressources/LA-LUNA-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="lecteur_2 text-center">
+                    <h6 class="titre_ep">
+                        Mon Amour
+                    </h6>
+                    <audio controls >
+                        <source src="ressources/MON-AMOUR-MIX1.mp3" type="audio/mpeg">
+                        <source src="ressources/MON-AMOUR-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="lecteur_3 text-center">
+                    <h6 class="titre_ep">
+                        Cancion Del Amanecer
+                    </h6>
+                    <audio controls>
+                        <source src="ressources/CANCION-MIX1.mp3" type="audio/mpeg">
+                        <source src="ressources/CANCION-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="lecteur_4 text-center">
+                    <h6 class="titre_ep">
+                        90 Printemps
+                    </h6>
+                    <audio controls preload="metadata">
+                        <source src="ressources/90-PRINTEMPS-MIX1.mp3" type="audio/mpeg">
+                        <source src="ressources/90-PRINTEMPS-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+            <div class="col-4 text-center">
+                <img src="ressources/sof_album.jpg" alt="photo sof tenant un ukulélé dans la nature" class="img-fluid photo_album">
+            </div>
+            <div class="col-4">
+                <h4 id="sous_titre_commander" class="text-center">
+                    Commander l'EP
+                </h4>
+            </div>
+        </div>
+
+    </div>
+
+    <!--<div class="cadre">
+
+        <div class="centre">
+
+            <div class="carousel">
+
+                <div class="changeHidden">
+
+                    <div class="contenant">
+
+                        <div class="element">"Exceptionnel."</div>
+                        <div class="element">"Un service impeccable !"</div>
+                        <div class="element">"Barbe parfaitement taillé."</div>
+                        <div class="element">"Des produits de qualités"</div>
+                        <div class="element">"Exceptionnel."</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>-->
+
+</section>
+
+
+<!-- Section Équipe -->
+
+<section id="equipe">
+
+    <h3>Il est temps de rencontrer l'équipe</h3>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure porro ea maxime!</p>
+
+    <div class="containerFlexTeam">
+
+        <div class="team">
+            <div class="teamPic pic1"></div>
+            <div class="sousTxt">
+                <h4>John Mcintosh</h4>
+                <p>Spécialiste de la barbe.</p>
+            </div>
+        </div>
+
+        <div class="team">
+            <div class="teamPic pic2"></div>
+            <div class="sousTxt">
+                <h4>Peter SmoothHands</h4>
+                <p>Roi du dégradé.</p>
+            </div>
+        </div>
+
+        <div class="team">
+            <div class="teamPic pic3"></div>
+            <div class="sousTxt">
+                <h4>Laury Smith</h4>
+                <p>Mains de fée.</p>
+            </div>
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- Contact Section -->
+
+<section id="contact">
+
+    <h2>Téléphone</h2>
+    <h3>0232 986 78954</h3>
+
+    <div class="flexMedias">
+
+        <div class="medias">
+            <a href="https://www.instagram.com/" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+
+        <div class="medias">
+            <a href="https://www.twitter.com/" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+        <div class="medias">
+            <a href="https://www.behance.net/" target="_blank">
+                <i class="fab fa-behance"></i>
+            </a>
+        </div>
+
+
+    </div>
+
+
+</section>
+
+<!-- Jquery -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<!-- GreenSock -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+<!-- Bootstrap 5 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="JS/app.js"></script>
+<script src="JS/greenSock.js"></script>
+</body>
+
+</html>

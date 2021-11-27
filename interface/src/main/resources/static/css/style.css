@@ -1,0 +1,652 @@
+html {
+    font-size: 62.5%;
+}
+
+
+body {
+    margin: 0;
+    font-family: 'Lato', 'sans-serif';
+    background-color: #f7f7f7;
+
+}
+
+
+
+/* Navigation */
+
+#navigation {
+    position: fixed;
+    z-index: 40;
+    width: 100%;
+    background-color: blueviolet;
+    text-align: center;
+    height: 10rem;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 55% 70%, 50% 90%, 45% 70%, 0% 70%);
+    transition: all 0.4s ease-in-out;
+    /* anim GS */
+    opacity: 0;
+}
+
+#navigation a {
+    text-decoration: none;
+    font-size: 3rem;
+    padding: 1rem 5rem;
+    line-height: 6.5rem;
+    font-family: 'Kaushan Script';
+    margin: auto;
+    color: #f7f7f7;
+}
+
+
+#navigation a:active {
+    font-size: 4rem;
+}
+
+.icon {
+    display: none;
+}
+
+
+/* Header accueil */
+
+
+header {
+    height: 100vh;
+    width: 100%;
+    background: url("../ressources/sof_accueil.jpg");
+    background-size: cover;
+    background-position: top;
+}
+
+#video{
+    position: relative;
+    top: 20rem;
+    left: 180rem;
+}
+
+h1 {
+    text-align: center;
+    margin: 0;
+    color: blueviolet;
+    position: relative;
+    top: 14rem;
+    font-family: 'Kaushan Script';
+    font-size: 11rem;
+    /* Anim GS */
+    opacity: 0;
+}
+
+header h2 {
+    text-align: center;
+    margin: 0;
+    color: blueviolet;
+    position: relative;
+    top: 16rem;
+    font-family: 'Abril Fatface';
+    font-size: 3rem;
+    letter-spacing: 0.2rem;
+    /* Anim GS */
+    opacity: 0;
+}
+
+header #arrow {
+    color: black;
+    height: 8rem;
+    width: 8rem;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    line-height: 8rem;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 0 0 #fff;
+    animation: pulse 1.3s infinite;
+    /* Anim GS */
+    opacity: 0;
+}
+
+
+@keyframes pulse {
+    to
+    {
+        box-shadow: 0 0 0 1rem rgba(255, 255, 255, 0.01);
+    }
+}
+
+/* première section concert avec 3 photos */
+
+
+.section-bio {
+    background-color: #f7f7f7;
+    padding-bottom: 10rem;
+}
+
+.centerH {
+    text-align: center!important;
+    margin-bottom: 8rem!important;
+}
+
+.titreBio {
+    font-size: 4rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: inline-block;
+    background-color: #e8bb8c;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: .2rem;
+    padding-top: 8.5rem;
+
+}
+
+.ligne {
+    max-width:114rem;
+    margin: 0 auto;
+}
+
+.ligne::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.ligne [class^="col-"] {
+    float: left;
+}
+
+.ligne [class^="col-"]:not(:last-child) {
+    margin-right: 6rem;
+}
+
+.ligne .col-1-of-2 {
+    width: calc((100% - 6rem) / 2);
+}
+
+.sousTitreBio {
+    font-size: 1.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem!important;
+}
+
+.paragraphe {
+    font-size: 1.9rem;
+}
+
+.paragraphe:not(:last-child) {
+    margin-bottom: 3rem;
+}
+
+
+.composition {
+    position: relative;
+}
+
+
+.composition_photo {
+    width: 55%;
+    box-shadow: 0 1.5rem 4rem rgba(0,0,0,0.4);
+    border-radius: 2px;
+    position: absolute;
+    z-index: 10;
+    transition: all .2s;
+    outline-offset: 2rem;
+}
+
+.composition_photo--1 {
+    left: 0;
+    top: -2rem;
+}
+.composition_photo--2 {
+    right: 0;
+    top: 2rem;
+}
+.composition_photo--3 {
+    left: 20%;
+    top: 10rem;
+}
+
+
+.composition_photo:hover {
+    outline: 1.5rem solid blueviolet;
+    transform: scale(1.05) translateY(-0.5rem);
+    box-shadow: 0 2.5rem 4rem rgba(0,0,0,0.5);
+    z-index:30;
+}
+.composition:hover .composition_photo:not(:hover) {
+    transform: scale(0.95);
+}
+
+
+/* Section Concerts */
+
+#concerts {
+    border-top: 1px dashed rgb(80, 79, 75);
+    background: #e8bb8c;
+    height:90rem;
+}
+
+
+#concerts h2 {
+    text-align: center;
+    font-size: 4rem;
+    background: #e8bb8c;
+    background-color: blueviolet;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+    padding-top: 8.5rem;
+}
+
+
+.composition_photo_concert {
+    max-width: 15%;
+    height: auto;
+    box-shadow: 0 1.5rem 4rem rgba(0,0,0,0.4);
+    border-radius: 2px;
+    position: absolute;
+    z-index: 10;
+    transition: all .2s;
+    outline-offset: 2rem;
+}
+
+.composition_photo_concert--1 {
+    left: 15rem;
+    margin-top: 13rem;
+}
+.composition_photo_concert--2 {
+    left: 40rem;
+    margin-top: 21rem;
+}
+.composition_photo_concert--3 {
+    left: 65rem;
+    margin-top: 29rem;
+}
+
+.composition_photo_concert:hover {
+    outline: 1.5rem solid blueviolet;
+    transform: scale(1.05) translateY(-0.5rem);
+    box-shadow: 0 2.5rem 4rem rgba(0,0,0,0.5);
+    z-index:30;
+}
+.compositionConcerts:hover .composition_photo_concert:not(:hover) {
+    transform: scale(0.95);
+}
+
+.tableau_concert{
+    padding-top: 6rem;
+    font-size: 2rem;
+}
+
+.sous_titre_concert-1{
+    font-size: 3rem;
+    font-family: 'Kaushan Script';
+    color: blueviolet;
+}
+
+.sous_titre_concert-2{
+    margin-top: 6rem;
+    font-size: 3rem;
+    font-family: 'Kaushan Script';
+    color: blueviolet;
+}
+
+.concert_venir{
+    margin-top: 2rem;
+    height: 17rem;
+    max-height: 17rem;
+    overflow-y:scroll;
+}
+
+.concert_historique{
+    margin-top: 2rem;
+    max-height: 25rem;
+    overflow-y:scroll;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: blueviolet #e8bb8c;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 1.5rem;
+
+}
+
+*::-webkit-scrollbar-track {
+    background: #e8bb8c;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: blueviolet;
+    border-radius: 20px;
+    border: 3px solid #e8bb8c;
+}
+
+
+/* section paralax */
+
+.section-parallax {
+    width: 100%;
+    height: 45rem;
+    background: url("../ressources/sof_accueil.jpg") no-repeat right / cover fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: top;
+    border-top: 1px dashed #333;
+    border-bottom: 1px dashed #333;
+}
+
+/* Album */
+
+.fond-forme {
+    background: #485563;
+    background-image: linear-gradient(to right, #29323c, #485563);
+    height: 2000px;
+    position: absolute;
+    overflow-x: visible;
+    overflow: visible;
+    width: 2 000px;
+    transform: rotate(-35deg) translateX(-300px) translateY(-85px);
+    z-index: -1;
+}
+
+
+.album {
+    overflow: hidden;
+    width: 100%;
+    background-color: #f7f7f7;
+    padding-bottom: 10rem;
+}
+
+.centerH {
+    text-align: center!important;
+    margin-bottom: 8rem!important;
+}
+
+.titreAlbum {
+    font-size: 4rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: inline-block;
+    background-color: #e8bb8c;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: .2rem;
+    padding-top: 8.5rem;
+}
+
+#sous_titre_ep{
+    font-size: 3rem;
+    color: blueviolet;
+    padding-top: 6rem;
+}
+
+#sous_titre_commander{
+    font-size: 3rem;
+    color: blueviolet;
+    padding-top: 6rem;
+}
+
+.photo_album{
+    max-width: 100%;
+    margin-bottom: 10rem;
+}
+
+.photo_EP_front{
+    max-width: 40%;
+    padding-top: 10rem;
+}
+
+.lecteur_1{
+    margin-top:12rem;
+}
+
+.lecteur_2{
+    margin-top:5rem;
+}
+
+.lecteur_3{
+    margin-top:5rem;
+}
+
+.lecteur_4{
+    margin-top:5rem;
+}
+
+.titre_ep{
+    font-size: 2rem;
+    padding-bottom: 1.5rem;
+    font-family: 'Kaushan Script';
+    color: #e8bb8c;
+}
+
+audio{
+    width: 60%;
+    color: #333333;
+    filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
+}
+
+
+/*#phrasesSlide {
+    height: 60rem;
+    width: 100%;
+    border-top: 1px dashed rgb(209,174,59);
+    background: url(../ressources/sectionBg.jpg);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+
+.cadre {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 110rem;
+    height: 40rem;
+    transform: translate(-50%,-50%);
+    border-radius: 2px;
+    background: rgba(55,55,55,0.3);
+    color: white;
+}
+
+.centre {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin-top: -2.25rem;
+
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 4.5rem;
+    text-align: center;
+    line-height: 45px;
+
+}
+
+.carousel .changeHidden{
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    height: 13rem;
+    line-height: 13rem;
+    width: 100rem;
+    overflow: hidden;
+
+}
+
+.carousel .changeHidden .contenant {
+
+    position: relative;
+    animation: carousel 8s ease-in-out infinite;
+
+}
+
+.carousel .changeHidden .element {
+    font-weight: 700;
+    font-size: 8rem;
+
+}
+
+@keyframes carousel {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    25%, 45% {
+        transform: translateY(-13rem);
+    }
+    50%, 70% {
+        transform: translateY(-26rem);
+    }
+    75%, 95% {
+        transform: translateY(-39rem);
+    }
+    100% {
+        transform: translateY(-52rem);
+    }
+}*/
+
+/* Section Équipe */
+
+#equipe {
+    height: 72rem;
+    width: 100%;
+    background: #f7f7f7;
+    border-top: 1px dashed rgb(209,174,59);
+    padding-bottom: 10rem;
+}
+
+
+#equipe h3 {
+    text-align: center;
+    font-size: 5.5rem;
+    background-image: linear-gradient(to right, #373737, #c0b283);
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 0;
+}
+
+#equipe p {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+
+.containerFlexTeam {
+    width: 100%;
+    height: 60rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team {
+    height: 50rem;
+    width: 40rem;
+    background: #f7f7f7;
+    margin: 5rem;
+    overflow: hidden;
+}
+
+
+.sousTxt {
+    width: 100%;
+    height: 20%;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    background: rgb(211,203,178);
+}
+
+.sousTxt h4 {
+    font-size: 2rem;
+    margin: 0;
+    padding-top: 2rem;
+}
+.teamPic {
+    width: 100%;
+    height: 80%;
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s ease-in-out;
+}
+
+.pic1 {
+    background:url("../ressources/barber1.jpg");
+    background-position: 35% 15%;
+}
+.pic1:hover{
+    transform: scale(1.2);
+}
+.pic2 {
+    background:url("../ressources/barber2.jpg");
+    background-position: 50% 40%;
+}
+.pic2:hover{
+    transform: scale(1.2);
+}
+.pic3 {
+    background:url("../ressources/barber3.jpg");
+    background-position: center;
+}
+.pic3:hover{
+    transform: scale(1.2);
+}
+
+/* Section Contact */
+
+
+#contact {
+    height: 20rem;
+    width: 100%;
+    border-top: 1px dashed rgb(209,174,59);
+}
+
+#contact h2 {
+    font-size: 10rem;
+    text-align: center;
+}
+
+
+#contact h3 {
+    text-align: center;
+    font-size: 5.5rem;
+    background-image: linear-gradient(to right, #373737, #c0b283);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+
+.flexMedias {
+    display: flex;
+    justify-content: center;
+}
+
+
+.medias {
+    font-size: 10rem;
+    margin: 2rem;
+}
+
+.medias a {
+    text-decoration: none;
+    color: black;
+}
