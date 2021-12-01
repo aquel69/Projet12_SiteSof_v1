@@ -34,21 +34,51 @@ body {
     line-height: 6.5rem;
     font-family: 'Kaushan Script';
     margin: auto;
+
     color: #f7f7f7;
 }
 
+#navigation a:first-child{
+    margin-left: 4rem;
+}
 
 #navigation a:active {
     font-size: 4rem;
+}
+
+#lien_icone{
+    position: fixed;
+    z-index: 40;
+    width: 100%;
+    transition: all 0.4s ease-in-out;
+    text-align: end;
+    /* anim GS */
+    opacity: 0;
+}
+
+#lien_icone a {
+    text-decoration: none;
+    font-size: 3rem;
+    padding: 1rem 2rem;
+    line-height: 6.5rem;
+    font-family: 'Kaushan Script';
+    margin: auto;
+    color: #f7f7f7;
+}
+
+#lien_icone a:active {
+    font-size: 4rem;
+}
+
+#soundcloud{
+   /* margin-left: 50rem;*/
 }
 
 .icon {
     display: none;
 }
 
-
 /* Header accueil */
-
 
 header {
     height: 100vh;
@@ -97,8 +127,9 @@ header #arrow {
     top: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 4rem;
-    line-height: 8rem;
+    font-size: 5rem;
+    color: blueviolet;
+    line-height: 9rem;
     text-align: center;
     text-decoration: none;
     border-radius: 50%;
@@ -348,24 +379,10 @@ header #arrow {
 
 /* Album */
 
-.fond-forme {
-    background: #485563;
-    background-image: linear-gradient(to right, #29323c, #485563);
-    height: 2000px;
-    position: absolute;
-    overflow-x: visible;
-    overflow: visible;
-    width: 2 000px;
-    transform: rotate(-35deg) translateX(-300px) translateY(-85px);
-    z-index: -1;
-}
-
-
-.album {
-    overflow: hidden;
-    width: 100%;
+#album {
     background-color: #f7f7f7;
-    padding-bottom: 10rem;
+    background-image: linear-gradient(#eee6e6, #f7f7f7);
+    padding-bottom: 5rem;
 }
 
 .centerH {
@@ -390,12 +407,14 @@ header #arrow {
     font-size: 3rem;
     color: blueviolet;
     padding-top: 6rem;
+    padding-bottom: 7rem;
 }
 
 #sous_titre_commander{
     font-size: 3rem;
     color: blueviolet;
     padding-top: 6rem;
+    padding-bottom: 7rem;
 }
 
 .photo_album{
@@ -404,12 +423,32 @@ header #arrow {
 }
 
 .photo_EP_front{
-    max-width: 40%;
-    padding-top: 10rem;
+    max-width: 30%;
+    box-shadow:5px 5px 10px #575659;
+
+
 }
 
+.photo_CD{
+    max-width: 30%;
+    -webkit-border-radius: 99em;
+    -moz-border-radius: 99em;
+    border-radius: 99em;
+
+    box-shadow: 5px 5px 10px #575659;
+}
+
+.lecteurs{
+    background-color: #575659;
+    padding-bottom: 5rem;
+    margin-top: 12rem;
+    border-radius: 2rem;
+}
+
+
 .lecteur_1{
-    margin-top:12rem;
+    margin-top:5rem;
+
 }
 
 .lecteur_2{
@@ -438,202 +477,174 @@ audio{
 }
 
 
-/*#phrasesSlide {
-    height: 60rem;
-    width: 100%;
-    border-top: 1px dashed rgb(209,174,59);
-    background: url(../ressources/sectionBg.jpg);
-    background-size: cover;
-    background-position: center;
-    position: relative;
+.authentification_globale{
+    padding-bottom: 5rem;
+    margin-top: 8.5rem;
+    border-radius: 2rem;
+    border: 0.1rem solid #575659;
+    height: 662px;
+    width: 560px;
 }
 
-
-.cadre {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 110rem;
-    height: 40rem;
-    transform: translate(-50%,-50%);
-    border-radius: 2px;
-    background: rgba(55,55,55,0.3);
-    color: white;
+.titre_authentification{
+    color: #575659;
+    font-size: 3rem;
+    margin-top: 5rem;
 }
 
-.centre {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    margin-top: -2.25rem;
-
+.prix_EP{
+    font-size: 1.2rem;
+    margin-top: 1rem;
 }
 
-.carousel {
-    position: relative;
-    width: 100%;
-    height: 4.5rem;
-    text-align: center;
-    line-height: 45px;
-
-}
-
-.carousel .changeHidden{
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: auto;
-    height: 13rem;
-    line-height: 13rem;
-    width: 100rem;
-    overflow: hidden;
-
-}
-
-.carousel .changeHidden .contenant {
-
-    position: relative;
-    animation: carousel 8s ease-in-out infinite;
-
-}
-
-.carousel .changeHidden .element {
-    font-weight: 700;
-    font-size: 8rem;
-
-}
-
-@keyframes carousel {
-    0%, 20% {
-        transform: translateY(0);
-    }
-    25%, 45% {
-        transform: translateY(-13rem);
-    }
-    50%, 70% {
-        transform: translateY(-26rem);
-    }
-    75%, 95% {
-        transform: translateY(-39rem);
-    }
-    100% {
-        transform: translateY(-52rem);
-    }
-}*/
-
-/* Section Équipe */
-
-#equipe {
-    height: 72rem;
-    width: 100%;
-    background: #f7f7f7;
-    border-top: 1px dashed rgb(209,174,59);
-    padding-bottom: 10rem;
-}
-
-
-#equipe h3 {
-    text-align: center;
-    font-size: 5.5rem;
-    background-image: linear-gradient(to right, #373737, #c0b283);
-    -webkit-background-clip: text;
-    color: transparent;
-    margin-bottom: 0;
-}
-
-#equipe p {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-}
-
-.containerFlexTeam {
-    width: 100%;
-    height: 60rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.team {
-    height: 50rem;
-    width: 40rem;
-    background: #f7f7f7;
-    margin: 5rem;
-    overflow: hidden;
-}
-
-
-.sousTxt {
-    width: 100%;
-    height: 20%;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-    background: rgb(211,203,178);
-}
-
-.sousTxt h4 {
+.paragraphe_authentification_1{
+    color: #575659;
     font-size: 2rem;
-    margin: 0;
-    padding-top: 2rem;
-}
-.teamPic {
-    width: 100%;
-    height: 80%;
-    position: relative;
-    z-index: 1;
-    transition: all 0.4s ease-in-out;
+    margin-top: 5rem;
 }
 
-.pic1 {
-    background:url("../ressources/barber1.jpg");
-    background-position: 35% 15%;
+.paragraphe_authentification_2{
+    color: #575659;
+    font-size: 2rem;
+    margin-top: 2rem;
 }
-.pic1:hover{
-    transform: scale(1.2);
+
+.paragraphe_authentification_3{
+    color: #575659;
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 8rem;
 }
-.pic2 {
-    background:url("../ressources/barber2.jpg");
-    background-position: 50% 40%;
+
+.form-label{
+    font-size: 1.3rem;
 }
-.pic2:hover{
-    transform: scale(1.2);
+
+.validationAuthentification{
+    border-radius: 2rem;
+    border: 0.1rem solid #575659;
+    padding: 3rem;
 }
-.pic3 {
-    background:url("../ressources/barber3.jpg");
-    background-position: center;
+
+#validationAuthentification01{
+    margin-bottom: 1rem;
 }
-.pic3:hover{
-    transform: scale(1.2);
-}
+
 
 /* Section Contact */
 
-
 #contact {
-    height: 20rem;
-    width: 100%;
-    border-top: 1px dashed rgb(209,174,59);
+    border-top: 1px dashed rgb(80, 79, 75);
+    background-color: #f7f7f7;
+    background-image: linear-gradient(#f7f7f7, #eee6e6);
+    height:132rem;
 }
 
-#contact h2 {
-    font-size: 10rem;
+
+.titreContact {
     text-align: center;
+    font-size: 4rem;
+    color: blueviolet;
+    text-transform: uppercase;
+    padding-top: 8.5rem;
 }
 
-
-#contact h3 {
-    text-align: center;
-    font-size: 5.5rem;
-    background-image: linear-gradient(to right, #373737, #c0b283);
-    -webkit-background-clip: text;
-    color: transparent;
+.photo_contact{
+    max-width: 80%;
 }
 
+.envoi_mail{
+    height: 63rem;
+    border: 0.1rem solid #575659;
+    margin-bottom: 3rem;
+    margin-right: 7rem;
+}
+
+.ligne_envoi_mail{
+    height: 20%;
+    max-height: 20%;
+    margin: 0;
+}
+
+.titre_envoi_mail{
+    padding-top: 5rem;
+    font-size: 3rem;
+}
+
+.text_form_mail{
+    font-size: 2rem;
+    padding-top: 2rem;
+}
+
+.formulaire_envoi_mail{
+    height: 80%;
+    max-height: 80%;
+}
+
+#formulaire_envoi_mail_01{
+    height: 3rem;
+    max-height: 3rem;
+}
+
+#formulaire_envoi_mail_02{
+    padding-top: 1rem;
+    height: 3rem;
+    max-height: 3rem;
+}
+
+#formulaire_envoi_mail_03{
+    padding-top: 1rem;
+    height: 15rem;
+    max-height: 15rem;
+}
+
+.bouton_mail{
+    padding: 1rem 3rem 1rem 3rem;
+    margin-top: 4rem;
+}
+
+.newsletter{
+    height: 34rem;
+    border: 0.1rem solid #575659;
+    margin-right: 7rem;
+}
+
+.ligne_newsletter{
+    height: 35%;
+    max-height: 35%;
+    margin: 0;
+}
+
+.titre_newsletter{
+    padding-top: 5rem;
+    font-size: 3rem;
+}
+
+.formulaire_inscription_newsletter{
+    height: 65%;
+    max-height: 65%;
+}
+
+.text_form_newsletter{
+    font-size: 2rem;
+    padding-top: 2rem;
+}
+
+#formulaire_inscription_newsletter_01{
+    padding-top: 1rem;
+    height: 3rem;
+    max-height: 3rem;
+}
+
+.bouton_newsletter{
+    padding: 1rem 3rem 1rem 3rem;
+    margin-top: 4rem;
+}
+
+.texte_mention{
+    padding-top: 1rem;
+    font-size: 1.5rem;
+}
 
 .flexMedias {
     display: flex;
@@ -642,11 +653,16 @@ audio{
 
 
 .medias {
-    font-size: 10rem;
-    margin: 2rem;
+    font-size: 2rem;
+    margin-right: 2rem;
+    margin-left: 2rem;
 }
 
 .medias a {
     text-decoration: none;
     color: black;
+}
+
+.footer{
+    padding-top: 2rem;
 }
