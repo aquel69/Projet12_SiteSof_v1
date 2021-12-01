@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barber</title>
+    <title>Sof</title>
     <!-- Favicon -->
     <link rel="icon" href="ressources/favicon.ico" type="image/x-icon">
     <!-- Polices de caractères -->
@@ -32,9 +32,7 @@
 <!-- Accueil -->
 
 <header id="accueil">
-
     <nav id="navigation">
-
         <a href="#accueil" class="liensNav" onclick="toggleNav()">Accueil</a>
         <a href="#bio" class="liensNav" onclick="toggleNav()">Bio</a>
         <a href="#concerts" class="liensNav" onclick="toggleNav()">Concerts</a>
@@ -42,15 +40,19 @@
         <a href="#contact" class="liensNav" onclick="toggleNav()">Contact</a>
         <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
     </nav>
-
-    <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/yRWCAFs1oY8?controls=0&amp;start=4"
-            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-            encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <nav id="lien_icone">
+        <a href="https://soundcloud.com/sofmusique" id="soundcloud" class="lien_nav_icone"><i class="fab fa-soundcloud"></i></a>
+        <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube" class="lien_nav_icone"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.facebook.com/sofmusique/" id="facebook" class="lien_nav_icone"><i class="fab fa-facebook"></i></a>
+    </nav>
+    <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/yRWCAFs1oY8?controls=0" title="YouTube video player"
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
 
     <h1>Sof</h1>
     <h2>Auteure - Compositrice - Interprète</h2>
 
-    <a href="#bio" id="arrow"><i class="fas fa-music"></i></a>
+    <a href="#bio" id="arrow"><i class="fas fa-arrow-down"></i></a>
 
 
 </header>
@@ -219,7 +221,6 @@
         </h2>
     </div>
     <div class="container-fluid cont">
-        <div class="fond-forme"></div>
         <div class="row">
             <div class="col-4">
                 <h4 id="sous_titre_ep" class="text-center">
@@ -228,45 +229,49 @@
                 <div class="text-center">
                      <img src="ressources/EP_front.png" alt="photo EP sof" class="img-fluid photo_EP_front">
                 </div>
-                <div class="lecteur_1 text-center">
-                    <h6 class="titre_ep">
-                        La Luna
-                    </h6>
-                    <audio controls>
-                        <source src="ressources/LA-LUNA-MIX1.mp3" type="audio/mpeg">
-                        <source src="ressources/LA-LUNA-MIX1.mp3" type="audio/ogg; codec=vorbis">
-                        Your browser does not support the audio element.
-                    </audio>
-                </div>
-                <div class="lecteur_2 text-center">
-                    <h6 class="titre_ep">
-                        Mon Amour
-                    </h6>
-                    <audio controls >
-                        <source src="ressources/MON-AMOUR-MIX1.mp3" type="audio/mpeg">
-                        <source src="ressources/MON-AMOUR-MIX1.mp3" type="audio/ogg; codec=vorbis">
-                        Your browser does not support the audio element.
-                    </audio>
-                </div>
-                <div class="lecteur_3 text-center">
-                    <h6 class="titre_ep">
-                        Cancion Del Amanecer
-                    </h6>
-                    <audio controls>
-                        <source src="ressources/CANCION-MIX1.mp3" type="audio/mpeg">
-                        <source src="ressources/CANCION-MIX1.mp3" type="audio/ogg; codec=vorbis">
-                        Your browser does not support the audio element.
-                    </audio>
-                </div>
-                <div class="lecteur_4 text-center">
-                    <h6 class="titre_ep">
-                        90 Printemps
-                    </h6>
-                    <audio controls preload="metadata">
-                        <source src="ressources/90-PRINTEMPS-MIX1.mp3" type="audio/mpeg">
-                        <source src="ressources/90-PRINTEMPS-MIX1.mp3" type="audio/ogg; codec=vorbis">
-                        Your browser does not support the audio element.
-                    </audio>
+                <div class="row justify-content-center">
+                    <div class="lecteurs col-8 ">
+                        <div class="lecteur_1 text-center ">
+                            <h6 class="titre_ep">
+                                La Luna
+                            </h6>
+                            <audio controls>
+                                <source src="ressources/LA-LUNA-MIX1.mp3" type="audio/mpeg">
+                                <source src="ressources/LA-LUNA-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                        <div class="lecteur_2 text-center">
+                            <h6 class="titre_ep">
+                                Mon Amour
+                            </h6>
+                            <audio controls >
+                                <source src="ressources/MON-AMOUR-MIX1.mp3" type="audio/mpeg">
+                                <source src="ressources/MON-AMOUR-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                        <div class="lecteur_3 text-center">
+                            <h6 class="titre_ep">
+                                Cancion Del Amanecer
+                            </h6>
+                            <audio controls>
+                                <source src="ressources/CANCION-MIX1.mp3" type="audio/mpeg">
+                                <source src="ressources/CANCION-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                        <div class="lecteur_4 text-center">
+                            <h6 class="titre_ep">
+                                90 Printemps
+                            </h6>
+                            <audio controls preload="metadata">
+                                <source src="ressources/90-PRINTEMPS-MIX1.mp3" type="audio/mpeg">
+                                <source src="ressources/90-PRINTEMPS-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-4 text-center">
@@ -276,28 +281,36 @@
                 <h4 id="sous_titre_commander" class="text-center">
                     Commander l'EP
                 </h4>
-            </div>
-        </div>
-
-    </div>
-
-    <!--<div class="cadre">
-
-        <div class="centre">
-
-            <div class="carousel">
-
-                <div class="changeHidden">
-
-                    <div class="contenant">
-
-                        <div class="element">"Exceptionnel."</div>
-                        <div class="element">"Un service impeccable !"</div>
-                        <div class="element">"Barbe parfaitement taillé."</div>
-                        <div class="element">"Des produits de qualités"</div>
-                        <div class="element">"Exceptionnel."</div>
-
+                <div class="text-center">
+                    <img src="ressources/rond_CD.png" alt="photo cd sof" class="img-fluid photo_CD">
+                    <p class=" prix_EP">Prix de l'EP : 5€</p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="authentification_globale col-8">
+                        <h6 class="titre_authentification text-center">Authentification</h6>
+                        <p class="paragraphe_authentification_1 text-center">Vous souhaitez écouter mon EP où vous voulez ?
+                        <p class="paragraphe_authentification_2 text-center">Créez vous un compte et nous pourrons échanger,</p>
+                        <p class="paragraphe_authentification_3 text-center">afin que vous puissiez l'acquérir.</p>
+                        <div class="row justify-content-center">
+                        <div class="col-8 validationAuthentification">
+                            <form >
+                                <div class="col-md-12">
+                                    <label for="validationAuthentification01" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="validationAuthentification01" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="validationAuthentification02" class="form-label">Mot de passe</label>
+                                    <input type="text" class="form-control" id="validationAuthentification02" required>
+                                </div>
+                                <p class="text-center mt-4 mb-5" ><a th:href="@{|/Inscription|}">Vous n'avez pas de compte?</a></p>
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-lg btn-primary" type="submit">Valider</button>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
                     </div>
+
 
                 </div>
 
@@ -305,82 +318,96 @@
 
         </div>
 
-    </div>-->
-
-</section>
-
-
-<!-- Section Équipe -->
-
-<section id="equipe">
-
-    <h3>Il est temps de rencontrer l'équipe</h3>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure porro ea maxime!</p>
-
-    <div class="containerFlexTeam">
-
-        <div class="team">
-            <div class="teamPic pic1"></div>
-            <div class="sousTxt">
-                <h4>John Mcintosh</h4>
-                <p>Spécialiste de la barbe.</p>
-            </div>
-        </div>
-
-        <div class="team">
-            <div class="teamPic pic2"></div>
-            <div class="sousTxt">
-                <h4>Peter SmoothHands</h4>
-                <p>Roi du dégradé.</p>
-            </div>
-        </div>
-
-        <div class="team">
-            <div class="teamPic pic3"></div>
-            <div class="sousTxt">
-                <h4>Laury Smith</h4>
-                <p>Mains de fée.</p>
-            </div>
-        </div>
-
-
     </div>
-
 </section>
 
 
 <!-- Contact Section -->
 
 <section id="contact">
-
-    <h2>Téléphone</h2>
-    <h3>0232 986 78954</h3>
-
-    <div class="flexMedias">
-
-        <div class="medias">
-            <a href="https://www.instagram.com/" target="_blank">
-                <i class="fab fa-instagram"></i>
-            </a>
-        </div>
-
-        <div class="medias">
-            <a href="https://www.twitter.com/" target="_blank">
-                <i class="fab fa-twitter"></i>
-            </a>
-        </div>
-
-        <div class="medias">
-            <a href="https://www.behance.net/" target="_blank">
-                <i class="fab fa-behance"></i>
-            </a>
-        </div>
-
-
+    <div class="centerH">
+        <h2 class="titreContact">
+            Contact
+        </h2>
     </div>
 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4 text-center">
+                <img src="ressources/sof_contact.jpg" alt="photo sof en noir et blanc contre un mur" class="img-fluid photo_contact">
+            </div>
+
+            <div class="col-8">
+                <div class="row justify-content-center envoi_mail">
+                    <div class="col-10 ligne_envoi_mail">
+                        <h6 class="titre_envoi_mail">Envoyez un mail</h6>
+                    </div>
+                    <div class="col-10 formulaire_envoi_mail">
+                        <form >
+                            <div class="col-md-6">
+                                <label for="formulaire_envoi_mail_01" class="form-label text_form_mail">Nom</label>
+                                <input type="text" class="form-control" id="formulaire_envoi_mail_01" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="formulaire_envoi_mail_02" class="form-label text_form_mail">Email</label>
+                                <input type="text" class="form-control" id="formulaire_envoi_mail_02" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="formulaire_envoi_mail_03" class="form-label text_form_mail">Message</label>
+                                <input type="text" class="form-control" id="formulaire_envoi_mail_03" required>
+                            </div>
+
+                            <div class="col-12 text-start">
+                                <button class="btn btn-lg btn-primary bouton_mail" type="submit">Valider</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row justify-content-center newsletter">
+                    <div class="col-10 ligne_newsletter">
+                        <h6 class="titre_newsletter">Inscrivez-vous à la Newsletter</h6>
+                    </div>
+                    <div class="col-10 formulaire_inscription_newsletter">
+                        <form >
+                            <div class="col-md-6">
+                                <label for="formulaire_inscription_newsletter_01" class="form-label text_form_newsletter">Email</label>
+                                <input type="text" class="form-control" id="formulaire_inscription_newsletter_01" required>
+                            </div>
+                            <div class="col-12 text-start">
+                                <button class="btn btn-lg btn-primary bouton_newsletter" type="submit">Valider</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="row footer justify-content-center footer">
+            <div class="row justify-content-center">
+                 <div class="col-6 ">
+                    <p class="text-center texte_mention">- © Sof 2021 – Tous droits réservés – Reproduction interdite – Mentions légales -</p>
+                 </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-6 flexMedias">
+                    <div class="medias">
+                        <a href="https://soundcloud.com/sofmusique" id="soundcloud_footer"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+
+                    <div class="medias">
+                        <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube_footer"><i class="fab fa-youtube"></i></a>
+                    </div>
+
+                    <div class="medias">
+                        <a href="https://www.facebook.com/sofmusique/" id="facebook_footer"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+         </div>
+        </div>
+    </div>
 
 </section>
+
 
 <!-- Jquery -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
