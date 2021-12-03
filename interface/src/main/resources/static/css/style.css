@@ -25,6 +25,7 @@ body {
     transition: all 0.4s ease-in-out;
     /* anim GS */
     opacity: 0;
+
 }
 
 #navigation a {
@@ -34,7 +35,6 @@ body {
     line-height: 6.5rem;
     font-family: 'Kaushan Script';
     margin: auto;
-
     color: #f7f7f7;
 }
 
@@ -530,6 +530,21 @@ audio{
     margin-bottom: 1rem;
 }
 
+.texte_email_authentification{
+    font-size: 1.5rem;
+}
+
+.texte_motDePasse_authentification{
+    font-size: 1.5rem;
+}
+
+.texte_pas_de_compte{
+    font-size: 1.3rem;
+}
+
+.bouton_authentification{
+    padding: 1rem 3rem 1rem 3rem;
+}
 
 /* Section Contact */
 
