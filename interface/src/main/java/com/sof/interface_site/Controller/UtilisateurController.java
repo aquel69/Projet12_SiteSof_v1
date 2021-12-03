@@ -13,4 +13,16 @@ public class UtilisateurController {
         return "Index";
     }
 
+    @RequestMapping(value = "/Inscription", method = RequestMethod.GET)
+    public String inscription(){
+        System.out.println("inscription");
+        return "Inscription";
+    }
+
+    @RequestMapping(value = "/ConversationMembre", method = RequestMethod.GET)
+    public String conversationMembre(){
+        System.out.println("ConversationMembre");
+        return "ConversationMembre";
+    }
+
 }

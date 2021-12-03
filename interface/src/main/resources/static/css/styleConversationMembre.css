@@ -1,0 +1,105 @@
+html {
+    font-size: 62.5%;
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    min-height: 100%;
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #f7f7f7, #d4d1d5) no-repeat;
+
+}
+
+.ensemble_retour_accueil{
+    display: flex;
+    height: 10rem;
+    min-height: 10rem;
+    color: blueviolet;
+}
+
+.ligne_retour_accueil{
+    height: 10rem;
+    min-height: 10rem;
+    color: blueviolet;
+}
+
+.retour_accueil_icone{
+    font-size: 2rem;
+    text-decoration: none;
+    margin: auto;
+    padding-left: 3rem;
+}
+
+.text_retour_accueil{
+    font-size: 2rem;
+    float: right;
+    margin: auto;
+    padding-right: 1rem;
+}
+
+.text_retour_accueil a{
+    text-decoration: none;
+}
+
+/*.ensemble_titre_conversation{
+    margin-top: 4rem;
+}*/
+
+.titre_conversation{
+    color: blueviolet;
+    font-size: 4rem;
+}
+
+.ensemble_photo_conversation{
+    margin-top: 10rem;
+    margin-left: 5rem;
+}
+
+.photo_conversation{
+    max-width: 78%;
+}
+
+.ensemble_conversation{
+    margin-top: 17rem;
+}
+
+.formulaire_conversation{
+
+}
+
+.ensemble_historique_conversation{
+    border-bottom: 0.1rem solid #575659;
+    padding-bottom: 5rem;
+}
+
+.text_form_conversation_historique{
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+
+.text_form_formulaire_conversation{
+    font-size: 2rem;
+    margin-top: 4rem;
+    padding-bottom: 1rem;
+}
+
+#historique_conversation_01{
+    height: 38rem;
+    max-height: 38rem;
+}
+
+#formulaire_conversation_01{
+    height: 20rem;
+    max-height: 20rem;
+}
+
+.bouton_conversation{
+    padding: 1rem 6rem 1rem 6rem;
+    margin-top: 6rem;
+    font-size: 1.5rem;
+}
+
+

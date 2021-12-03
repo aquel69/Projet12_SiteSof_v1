@@ -82,14 +82,61 @@ function toggleNav() {
     }
 }
 
-
-
 $('html').click(function () {
     if (nav.className += "responsive") {
 
         nav.className = "";
     }
 });
+
 $('#icon').click(function (event) {
     event.stopPropagation(); // stop la propagation, donc l'animation audessus
+});
+
+// Navigation Jquery, nav et arrow
+
+$("#arrow").click(function () {
+    $('html,body').animate({
+            scrollTop: $("#bio").offset().top - 50 // moins 50 pour que la pointe de clip path ne rentre pas dans les titres
+        },
+        'slow');
+});
+
+
+$(".liensNav:nth-child(1)").click(function () {
+    $('html,body').animate({
+            scrollTop: $("#accueil").offset().top + 50
+        },
+        'slow');
+});
+
+$(".liensNav:nth-child(2)").click(function () {
+    $('html,body').animate({
+            scrollTop: $("#bio").offset().top - 50
+        },
+        'slow');
+});
+
+
+$(".liensNav:nth-child(3)").click(function () {
+    $('html,body').animate({
+            scrollTop: $("#concerts").offset().top - 50
+        },
+        'slow');
+});
+
+$(".liensNav:nth-child(4)").click(function () {
+    $('html,body').animate({
+            scrollTop: $("#album").offset().top - 50
+            // offset prends les coordonnés de contact et les retournent en top et left et ensuite on y va en cliquant
+        },
+        'slow');
+});
+
+$(".liensNav:nth-child(5)").click(function () {
+    $('html,body').animate({
+            scrollTop: $("#contact").offset().top - 50
+            // offset prends les coordonnés de contact et les retournent en top et left et ensuite on y va en cliquant
+        },
+        'slow');
 });
