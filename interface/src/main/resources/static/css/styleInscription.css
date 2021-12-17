@@ -35,7 +35,6 @@ body{
 
 .text_retour_accueil{
     font-size: 2rem;
-    float: right;
     margin: auto;
     padding-right: 1rem;
 }
@@ -45,16 +44,23 @@ body{
 }
 
 .ensemble_titre_authentification{
- margin-top: 4rem;
+     margin-top: 4rem;
+
 }
 
 .titre_authentification{
     color: blueviolet;
     font-size: 4rem;
+    border-bottom: 0.1rem solid #575659;
+    border-top: 0.1rem solid #575659;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background-color: #e8bb8c;
+    opacity: 60%;
 }
 
 .ensemble_photo_authentification{
-    margin-top: 10rem;
+    margin-top: 7rem;
     margin-left: 5rem;
 }
 
@@ -63,7 +69,7 @@ body{
 }
 
 .formulaire_inscription{
-    margin-top: 17rem;
+    margin-top: 14rem;
 }
 
 .formulaire_inscription_identite{
@@ -72,11 +78,11 @@ body{
 }
 
 .text_form_inscription_nom{
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .text_form_inscription_prenom{
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .formulaire_inscription_coordonne{
@@ -86,22 +92,22 @@ body{
 
 .text_form_inscription_adresse{
     padding-top: 4rem;
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .text_form_inscription_complement{
     padding-top: 2rem;
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .text_form_inscription_ville{
     padding-top: 2rem;
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .text_form_inscription_codePostal{
     padding-top: 2rem;
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .formulaire_inscription_authentification{
@@ -110,22 +116,22 @@ body{
 
 .text_form_inscription_email{
     padding-top: 4rem;
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .text_form_inscription_confEmail{
     padding-top: 4rem;
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .text_form_inscription_mdp{
     padding-top: 2rem;
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .text_form_inscription_confMdp{
     padding-top: 2rem;
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 #formulaire_inscription_01{

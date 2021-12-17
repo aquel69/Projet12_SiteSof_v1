@@ -1,0 +1,32 @@
+#navigationBarre {
+    position: fixed;
+    z-index: 40;
+    width: 100%;
+    background-color: blueviolet;
+    text-align: center;
+    height: 7rem;
+    transition: all 0.4s ease-in-out;
+
+}
+
+#navigationBarre a {
+    text-decoration: none;
+    font-size: 3rem;
+    padding: 1rem 5rem;
+    line-height: 6.5rem;
+    font-family: 'Kaushan Script';
+    margin: auto;
+    color: #f7f7f7;
+}
+
+#navigationBarre a:first-child{
+    margin-left: 4rem;
+}
+
+#navigationBarre a:active {
+    font-size: 4rem;
+}
+
+.icon {
+    display: none;
+}

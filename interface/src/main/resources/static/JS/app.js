@@ -1,10 +1,8 @@
 // Navigation bar color change
 
-let nav = document.getElementById('navigation');
+let nav = document.getElementById('navigationBarre');
 let liens_icon = document.getElementsByClassName('lien_nav_icone');
 let liens = document.getElementsByClassName('liensNav');
-let icon = document.getElementById('icon');
-
 
 // onload pour commencer et onresize pour dynamique
 window.onresize = colorHeader;
@@ -18,9 +16,7 @@ function colorHeader() {
     window.onscroll = function () {
 
         if (myWidth > 768) {
-
-
-            if (document.documentElement.scrollTop > 2950) {
+            if ( document.documentElement.scrollTop > 2950 ) {
 
                 nav.style.background = "#e8bb8c";
                 liens[0].style.color = "#373737";
@@ -32,8 +28,8 @@ function colorHeader() {
                 liens_icon[0].style.color = "#373737";
                 liens_icon[1].style.color = "#373737";
                 liens_icon[2].style.color = "#373737";
-
             } else {
+
                 nav.style.background = "#8A2BE2FF";
                 liens[0].style.color = "#f7f7f7";
                 liens[1].style.color = "#f7f7f7";
@@ -61,10 +57,6 @@ function colorHeader() {
             liens_icon[2].style.color = "#373737";
         }
     }
-
-
-
-
 };
 
 
@@ -72,19 +64,15 @@ function colorHeader() {
 // Responsiv nav
 
 function toggleNav() {
-
     if (nav.className === "") {
         nav.className += "responsive";
-
     } else {
         nav.className = "";
-
     }
 }
 
 $('html').click(function () {
     if (nav.className += "responsive") {
-
         nav.className = "";
     }
 });
@@ -105,7 +93,7 @@ $("#arrow").click(function () {
 
 $(".liensNav:nth-child(1)").click(function () {
     $('html,body').animate({
-            scrollTop: $("#accueil").offset().top + 50
+            scrollTop: $("#accueil").offset().top
         },
         'slow');
 });
@@ -135,7 +123,7 @@ $(".liensNav:nth-child(4)").click(function () {
 
 $(".liensNav:nth-child(5)").click(function () {
     $('html,body').animate({
-            scrollTop: $("#contact").offset().top - 50
+            scrollTop: $("#contact").offset().top
             // offset prends les coordonnés de contact et les retournent en top et left et ensuite on y va en cliquant
         },
         'slow');

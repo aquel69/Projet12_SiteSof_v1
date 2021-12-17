@@ -18,21 +18,22 @@
 
     <!-- Feuilles de style -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <link rel="stylesheet" href="CSS/baseMedias.css">
-    <link rel="stylesheet" media="only screen and (width: 320px) and (height: 480px)" href="CSS/iphone4.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/baseMedias.css}">
+<!--    <link rel="stylesheet" media="only screen and (width: 320px) and (height: 480px)" href="CSS/iphone4.css">
     <link rel="stylesheet" media="only screen and (width: 768px) and (height: 1024px)" href="CSS/iPad_Mini.css">
     <link rel="stylesheet" media="only screen and (width: 360px) and (height: 640px)" href="CSS/galaxy_S5.css">
     <link rel="stylesheet" media="only screen and (width: 411px) and (height: 731px)" href="CSS/pixel2.css">
     <link rel="stylesheet" media="only screen and (width: 320px) and (height: 568px)" href="CSS/iPhone5_SE.css">
     <link rel="stylesheet" media="only screen and (width: 375px) and (height: 667px)" href="CSS/iPhone6_7_8.css">
     <link rel="stylesheet" media="only screen and (width: 414px) and (height: 736px)" href="CSS/iPhone6_7_8PLUS.css">
-    <link rel="stylesheet" media="only screen and (width: 1024px) and (height: 1366px)" href="CSS/iPadPro.css">
+    <link rel="stylesheet" media="only screen and (width: 1024px) and (height: 1366px)" href="CSS/iPadPro.css">-->
 <body>
 
 <!-- Accueil -->
 
 <header id="accueil">
-    <nav id="navigation">
+
+    <nav id="navigationBarre">
         <a href="#accueil" class="liensNav" onclick="toggleNav()">Accueil</a>
         <a href="#bio" class="liensNav" onclick="toggleNav()">Bio</a>
         <a href="#concerts" class="liensNav" onclick="toggleNav()">Concerts</a>
@@ -45,12 +46,13 @@
         <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube" class="lien_nav_icone"><i class="fab fa-youtube"></i></a>
         <a href="https://www.facebook.com/sofmusique/" id="facebook" class="lien_nav_icone"><i class="fab fa-facebook"></i></a>
     </nav>
+    <h1>Sof</h1>
+    <h2>Auteure - Compositrice - Interprète</h2>
     <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/yRWCAFs1oY8?controls=0" title="YouTube video player"
             frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen></iframe>
-    <h1>Sof</h1>
-    <h2>Auteure - Compositrice - Interprète</h2>
-    <a href="#bio" id="arrow"><i class="fas fa-arrow-down"></i></a>
+
+
 </header>
 
 <!-- Section About -->
