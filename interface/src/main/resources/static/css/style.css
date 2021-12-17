@@ -11,11 +11,11 @@ body {
 }
 
 
-
 /* Navigation */
 
-#navigation {
+#navigationBarre {
     position: fixed;
+    overflow: hidden;
     z-index: 40;
     width: 100%;
     background-color: blueviolet;
@@ -28,7 +28,7 @@ body {
 
 }
 
-#navigation a {
+#navigationBarre a {
     text-decoration: none;
     font-size: 3rem;
     padding: 1rem 5rem;
@@ -38,18 +38,18 @@ body {
     color: #f7f7f7;
 }
 
-#navigation a:first-child{
+#navigationBarre a:first-child{
     margin-left: 4rem;
 }
 
-#navigation a:active {
+#navigationBarre a:active {
     font-size: 4rem;
 }
 
 #lien_icone{
     position: fixed;
     z-index: 40;
-    width: 100%;
+
     transition: all 0.4s ease-in-out;
     text-align: end;
     /* anim GS */
@@ -71,7 +71,7 @@ body {
 }
 
 #soundcloud{
-   /* margin-left: 50rem;*/
+    margin-left: 50rem;
 }
 
 .icon {
@@ -90,28 +90,27 @@ header {
 
 #video{
     position: relative;
-    top: 20rem;
-    left: 180rem;
+    top: 29%;
+    left: 60%;
 }
 
 h1 {
-    text-align: center;
-    margin: 0;
+    margin-left: 65%;
     color: blueviolet;
     position: relative;
-    top: 14rem;
+    top: 23rem;
     font-family: 'Kaushan Script';
-    font-size: 11rem;
+    font-size:18rem;
     /* Anim GS */
     opacity: 0;
 }
 
 header h2 {
-    text-align: center;
-    margin: 0;
+
+    margin-left: 60%;
     color: blueviolet;
     position: relative;
-    top: 16rem;
+    top: 26rem;
     font-family: 'Abril Fatface';
     font-size: 3rem;
     letter-spacing: 0.2rem;
@@ -129,7 +128,7 @@ header #arrow {
     transform: translate(-50%, -50%);
     font-size: 5rem;
     color: blueviolet;
-    line-height: 9rem;
+    line-height: 9.5rem;
     text-align: center;
     text-decoration: none;
     border-radius: 50%;
@@ -203,6 +202,7 @@ header #arrow {
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 1.5rem!important;
+    color: blueviolet;
 }
 
 .paragraphe {

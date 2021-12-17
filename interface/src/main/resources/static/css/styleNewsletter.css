@@ -1,0 +1,51 @@
+html {
+    font-size: 62.5%;
+}
+
+body{
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #f7f7f7, #d4d1d5) no-repeat;
+}
+
+.titre_global_newsletter{
+    min-height: 10rem;
+    margin-top: 15rem;
+    background-color: #e8bb8c;
+}
+
+.titre_ajout_newsletter{
+    font-size: 3rem;
+    color: blueviolet;
+}
+
+.formulaire_ensemble_newsletter{
+    margin-top: 10rem;
+}
+
+.text_form_newsletter_objet{
+    font-size: 2.1rem;
+}
+
+#formulaire_newsletter_objet{
+    height: 3rem;
+}
+
+.formulaire_ensemble_texte{
+   margin-top: 3rem;
+}
+
+.text_form_newsletter_texte{
+    font-size: 2.1rem;
+}
+
+#formulaire_newsletter_texte{
+    height: 60rem;
+}
+
+.bouton_newsletter{
+    padding: 1rem 6rem 1rem 6rem;
+    margin-top: 6rem;
+    font-size: 1.5rem;
+}

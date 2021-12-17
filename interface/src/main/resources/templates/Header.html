@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Header">
-    <meta name="author" content="alardon">
-    <title>Header</title>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sof</title>
+
 <body>
-    <div id="head" th:fragment="header()">
-        <h1 class="text-center">Sof</h1>
+
+<!-- Accueil -->
+
+<header id="accueil" th:fragment="header()">
+    <div class="row">
+        <div class="col-12">
+            <nav id="navigationBarre">
+                <a href="#accueil" class="liensNav" onclick="toggleNav()">Newsletter</a>
+                <a href="#bio" class="liensNav" onclick="toggleNav()">Ajout Concert</a>
+                <a href="#concerts" class="liensNav" onclick="toggleNav()">Conversation</a>
+                <a href="#album" class="liensNav" onclick="toggleNav()">Se déconnecter</a>
+                <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
+            </nav>
+        </div>
     </div>
+</header>
+
 </body>
 </html>
