@@ -126,9 +126,9 @@ header #arrow {
     top: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 5rem;
+    font-size: 5.5rem;
     color: blueviolet;
-    line-height: 9.5rem;
+    line-height: 9rem;
     text-align: center;
     text-decoration: none;
     border-radius: 50%;

@@ -9,14 +9,14 @@ public class UtilisateurController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String accueil(){
-        System.out.println("coucou");
+        System.out.println("Accueil");
         return "Index";
     }
 
-    @RequestMapping(value = "/Inscription", method = RequestMethod.GET)
+    @RequestMapping(value = "/CreationCompte", method = RequestMethod.GET)
     public String inscription(){
-        System.out.println("inscription");
-        return "Inscription";
+        System.out.println("CreationCompte");
+        return "CreationCompte";
     }
 
     @RequestMapping(value = "/ConversationMembre", method = RequestMethod.GET)
