@@ -137,6 +137,7 @@ body{
 #formulaire_inscription_01{
     height: 3rem;
     max-height: 3rem;
+    font-size: 100%;
 }
 
 #formulaire_inscription_02{
