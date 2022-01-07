@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class Membre {
+public class Utilisateur {
 
     /**
      * id de la table membre
@@ -43,4 +43,9 @@ public class Membre {
      * date de création du compte
      */
     private LocalDateTime dateAjout;
+
+    /**
+     * role de l'utilisateur
+     */
+    private int role;
 }
