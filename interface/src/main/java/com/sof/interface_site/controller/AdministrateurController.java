@@ -1,4 +1,4 @@
-package com.sof.interface_site.Controller;
+package com.sof.interface_site.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

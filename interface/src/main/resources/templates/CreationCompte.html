@@ -47,7 +47,7 @@
                 <img src="ressources/sof_inscription.jpg" alt="photo sof en noir et blanc contre un mur" class="img-fluid photo_authentification">
             </div>
             <div class="col-7 formulaire_inscription">
-                <form >
+                <form th:action="@{/Inscription}" th:object="${utilisateur}" method="post">
                     <div class="row formulaire_inscription_identite">
                         <div class="col-md-6">
                             <label for="formulaire_inscription_01" class="form-label text_form_inscription_nom">Nom</label>

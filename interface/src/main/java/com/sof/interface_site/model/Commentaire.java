@@ -22,12 +22,12 @@ public class Commentaire {
     /**
      * utilisateur
      */
-    private Membre membre;
+    private Utilisateur membre;
 
     /**
      * utilisateur
      */
-    private Membre interlocuteur;
+    private Utilisateur interlocuteur;
 
     /**
      * date du commentaire

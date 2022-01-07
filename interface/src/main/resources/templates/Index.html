@@ -282,14 +282,14 @@
                         <p class="paragraphe_authentification_3 text-center">afin que vous puissiez l'acquérir.</p>
                         <div class="row justify-content-center">
                         <div class="col-8 validationAuthentification">
-                            <form >
+                            <form th:action="@{/}" th:object="${utilisateur}" method="post">
                                 <div class="col-md-12">
                                     <label for="validationAuthentification01" class="form-label texte_email_authentification">Email</label>
-                                    <input type="text" class="form-control" id="validationAuthentification01" required>
+                                    <input type="email" th:field="*{email}" name="email" class="form-control" id="validationAuthentification01" required>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="validationAuthentification02" class="form-label texte_motDePasse_authentification">Mot de passe</label>
-                                    <input type="text" class="form-control" id="validationAuthentification02" required>
+                                    <input type="password" th:field="*{motDePasse}" name="password" class="form-control" id="validationAuthentification02" required>
                                 </div>
                                 <p class="text-center mt-4 mb-5 texte_pas_de_compte" ><a th:href="@{|/Inscription|}">Vous n'avez pas de compte?</a></p>
                                 <div class="col-12 text-center">
