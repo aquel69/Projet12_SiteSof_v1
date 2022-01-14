@@ -2,6 +2,7 @@ package com.sof.interface_site.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +26,11 @@ public class Utilisateur {
     private String prenom;
 
     /**
+     * username de l'utilisateur
+     */
+    private String username;
+
+    /**
      * adresse du memebre
      */
     private Adresse adresse;
@@ -43,6 +49,7 @@ public class Utilisateur {
      * date de création du compte
      */
     private LocalDateTime dateAjout;
+
 
     /**
      * role de l'utilisateur

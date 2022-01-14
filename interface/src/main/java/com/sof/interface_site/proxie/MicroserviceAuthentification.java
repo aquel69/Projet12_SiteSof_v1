@@ -21,7 +21,7 @@ public interface MicroserviceAuthentification {
     @GetMapping(value = "/UtilisateurSelonEmail/{email}")
     Utilisateur findUtilisateurByEmail(@PathVariable String email);
 
-    @PostMapping(value="/Login/{motDePasse}/{email}")
-    UtilisateurAuthentification login(@PathVariable(value = "motDePasse") String motDePasse, @PathVariable(value = "email") String email );
+    @PostMapping(value="/Login/{username}/{motDePasse}")
+    UtilisateurAuthentification login(@PathVariable(value = "username") String username , @PathVariable(value = "motDePasse") String motDePasse);
 
 }

@@ -5,7 +5,6 @@ import com.sof.authentification.dao.DaoUtilisateur;
 import com.sof.authentification.dao.DaoUtilisateurAuthentification;
 import com.sof.authentification.model.Adresse;
 import com.sof.authentification.model.Utilisateur;
-import com.sof.authentification.model.UtilisateurAuthentification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +25,7 @@ public class AuthentificationController {
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     /**
      * ajouter une adresse dans la base de données
@@ -75,25 +75,24 @@ public class AuthentificationController {
 
 
 
-    @PostMapping(value="/Login/{motDePasse}/{email}")
-    public UtilisateurAuthentification login(@PathVariable(value = "motDePasse") String motDePasse, @PathVariable(value = "email") String email ){
-        UtilisateurAuthentification utilisateurAuthentification;
+    @PostMapping(value="/Login/{username}/{motDePasse}")
+    public Utilisateur login(@PathVariable(value = "username") String username, @PathVariable(value = "motDePasse") String motDePasse ){
+        Utilisateur utilisateur;
 
         List<Utilisateur> listeDesMembres = daoUtilisateur.findAll();
-        utilisateurAuthentification = verificationAuthentification(listeDesMembres, motDePasse, email);
+        utilisateur = verificationAuthentification(listeDesMembres, motDePasse, username);
 
-        return utilisateurAuthentification;
+        return utilisateur;
     }
 
 
-    private UtilisateurAuthentification verificationAuthentification(List<Utilisateur> listeDesMembres, String motDePasse, String email){
-        UtilisateurAuthentification utilisateurAuthentification;
-
+    private Utilisateur verificationAuthentification(List<Utilisateur> listeDesMembres, String motDePasse, String username){
         for (Utilisateur utilisateur : listeDesMembres) {
-            if (utilisateur.getEmail().equals(email)) {
+            if (utilisateur.getUsername().equals(username)) {
                 if (bCryptPasswordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
-                    utilisateurAuthentification = daoUtilisateurAuthentification.findByEmail(email);
-                    return utilisateurAuthentification;
+                    utilisateur = daoUtilisateur.findByUsername(username);
+
+                    return utilisateur;
                 }
             }
         }

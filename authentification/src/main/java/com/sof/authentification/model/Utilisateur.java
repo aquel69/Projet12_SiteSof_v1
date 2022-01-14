@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 public class Utilisateur {
 
     /**
-     * id de la table membre
+     * id de la table utilisateur
      */
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="project_generator")
@@ -26,35 +27,43 @@ public class Utilisateur {
     private int idUtilisateur;
 
     /**
-     * nom du membre
+     * nom de l'utilisateur
      */
     @NonNull
     @Column(name="nom")
     private String nom;
 
     /**
-     * prénom du membre
+     * prénom de l'utilisateur
      */
     @NonNull
     @Column(name="prenom")
     private String prenom;
 
     /**
-     * adresse du memebre
+     * username de l'utilisateur
      */
+    @NonNull
+    @Column(name="username")
+    private String username;
+
+    /**
+     * adresse de l'utilisateur
+     */
+    @NonNull
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="id_adresse")
+    @JoinColumn(name="adresse_id")
     private Adresse adresse;
 
     /**
-     * email du membre
+     * email de l'utilisateur
      */
     @NonNull
     @Column(name="email")
     private String email;
 
     /**
-     * mot de passe du membre
+     * mot de passe de l'utilisateur
      */
     @NonNull
     @Column(name="mot_de_passe")
@@ -70,7 +79,7 @@ public class Utilisateur {
     /**
      * role de l'utilisateur
      */
-    @NonNull
-    @Column(name="role")
-    private int role;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "utilisateur_role", joinColumns = @JoinColumn (name = "utilisateur_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
 }
