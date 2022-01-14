@@ -34,7 +34,7 @@ public class UtilisateurController {
      */
     @RequestMapping(value = "/",method = RequestMethod.POST )
     public String validationAuthentification(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateurPost){
-        utilisateurAuthentifier = authentificationProxy.login(utilisateurPost.getMotDePasse(), utilisateurPost.getEmail());
+        utilisateurAuthentifier = authentificationProxy.login(utilisateurPost.getMotDePasse(), utilisateurPost.getUsername());
 
         if (utilisateurAuthentifier == null) {
             return "Index";
@@ -44,7 +44,6 @@ public class UtilisateurController {
             return "Newsletter";
         }
     }
-
 
     @RequestMapping(value = "/CreationCompte", method = RequestMethod.GET)
     public String inscription(){

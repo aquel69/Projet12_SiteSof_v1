@@ -5,14 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Table;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Column;
-
+import javax.persistence.*;
+import java.util.List;
 
 
 @Data
@@ -37,9 +31,16 @@ public class UtilisateurAuthentification {
     private String email;
 
     /**
-     * role de l'utilisateur
+     * email du membre
      */
     @NonNull
-    @Column(name="role")
-    private int role;
+    @Column(name="username")
+    private String username;
+
+    /**
+     * role de l'utilisateur
+     */
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "utilisateur_role", joinColumns = @JoinColumn (name = "utilisateur_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
 }

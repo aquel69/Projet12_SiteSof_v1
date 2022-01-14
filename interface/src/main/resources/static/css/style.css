@@ -526,11 +526,18 @@ audio{
     padding: 3rem;
 }
 
-#validationAuthentification01{
+.texte_champ_username{
     margin-bottom: 1rem;
+    height: 3rem;
+    font-size: 1.5rem;
 }
 
-.texte_email_authentification{
+.texte_champ_mot_de_passe{
+    height: 3rem;
+    font-size: 1.5rem;
+}
+
+.texte_username_authentification{
     font-size: 1.5rem;
 }
 
