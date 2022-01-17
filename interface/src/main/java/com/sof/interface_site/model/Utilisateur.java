@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -54,5 +55,5 @@ public class Utilisateur {
     /**
      * role de l'utilisateur
      */
-    private int role;
+    private List<Role> roles;
 }
