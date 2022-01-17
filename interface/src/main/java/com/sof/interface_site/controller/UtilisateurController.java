@@ -1,6 +1,7 @@
 package com.sof.interface_site.controller;
 
 import com.sof.interface_site.model.Utilisateur;
+import com.sof.interface_site.model.UtilisateurAuth;
 import com.sof.interface_site.model.UtilisateurAuthentification;
 import com.sof.interface_site.proxie.MicroserviceAuthentification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,11 @@ public class UtilisateurController {
     @Autowired
     private MicroserviceAuthentification authentificationProxy;
 
-    private UtilisateurAuthentification utilisateurAuthentifier;
+    private Utilisateur utilisateurAuthentifier;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String accueil(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateurGet){
-        utilisateurAuthentifier = new UtilisateurAuthentification();
+        utilisateurAuthentifier = new Utilisateur();
         System.out.println("Accueil");
         return "Index";
     }
@@ -33,12 +34,12 @@ public class UtilisateurController {
      * @return la page correspondante au role
      */
     @RequestMapping(value = "/",method = RequestMethod.POST )
-    public String validationAuthentification(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateurPost){
-        utilisateurAuthentifier = authentificationProxy.login(utilisateurPost.getMotDePasse(), utilisateurPost.getUsername());
+    public String validationAuthentification(Model model, @ModelAttribute("utilisateur") UtilisateurAuth utilisateurPost){
+        utilisateurAuthentifier = authentificationProxy.login(utilisateurPost);
 
         if (utilisateurAuthentifier == null) {
             return "Index";
-        } else if (utilisateurAuthentifier.getRole() == 1){
+        } else if (utilisateurAuthentifier.getRoles().get(0).getIdRole() == 2){
             return "CreationCompte";
         } else {
             return "Newsletter";

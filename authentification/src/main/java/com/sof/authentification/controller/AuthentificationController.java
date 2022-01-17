@@ -1,14 +1,17 @@
 package com.sof.authentification.controller;
 
+import com.sof.authentification.Security.MyUserDetailService;
 import com.sof.authentification.dao.DaoAdresse;
 import com.sof.authentification.dao.DaoUtilisateur;
 import com.sof.authentification.dao.DaoUtilisateurAuthentification;
 import com.sof.authentification.model.Adresse;
 import com.sof.authentification.model.Utilisateur;
+import com.sof.authentification.model.UtilisateurAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,6 +28,9 @@ public class AuthentificationController {
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    MyUserDetailService myUserDetailService;
 
 
     /**
@@ -73,26 +79,25 @@ public class AuthentificationController {
         return idDerniereAdresse;
     }
 
-
-
-    @PostMapping(value="/Login/{username}/{motDePasse}")
-    public Utilisateur login(@PathVariable(value = "username") String username, @PathVariable(value = "motDePasse") String motDePasse ){
-        Utilisateur utilisateur;
-
+    @PostMapping(value="/Login")
+    public Utilisateur login(@Valid @RequestBody UtilisateurAuth utilisateur){
         List<Utilisateur> listeDesMembres = daoUtilisateur.findAll();
-        utilisateur = verificationAuthentification(listeDesMembres, motDePasse, username);
+        Utilisateur utilisateurAuthentifie = verificationAuthentification(listeDesMembres, utilisateur.getMotDePasse(), utilisateur.getUsername());
 
-        return utilisateur;
+        return utilisateurAuthentifie;
     }
-
 
     private Utilisateur verificationAuthentification(List<Utilisateur> listeDesMembres, String motDePasse, String username){
         for (Utilisateur utilisateur : listeDesMembres) {
             if (utilisateur.getUsername().equals(username)) {
                 if (bCryptPasswordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
-                    utilisateur = daoUtilisateur.findByUsername(username);
+                    Utilisateur utilisateur1;
+                    utilisateur1 = daoUtilisateur.findByUsername(username);
+                    //ADDITION verification mot de passe username
 
-                    return utilisateur;
+                    System.out.println(utilisateur1);
+
+                    return utilisateur1;
                 }
             }
         }

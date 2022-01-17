@@ -22,9 +22,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -35,6 +35,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+
+        //url appelé par spring pour le login
+        setFilterProcessesUrl("/Login");
     }
 
     @SneakyThrows
@@ -44,6 +47,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Utilisateur utilisateur = null;
 
 
+
         try{
             utilisateur = new ObjectMapper().readValue(request.getInputStream(), Utilisateur.class);
         }
@@ -51,12 +55,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         {
             e.printStackTrace();
         }
-
-        /*String username = obtainUsername(request);
-        String password = obtainPassword(request);
-        System.out.println("username : " + username);
-        System.out.println("password : " + password);*/
-        /*utilisateur = authentificationController.login(obtainUsername(request), obtainUsername(request));*/
 
         return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken
                 (utilisateur.getUsername(), utilisateur.getMotDePasse()));
@@ -75,12 +73,26 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             roles.add(au.getAuthority());
         });
 
-        String jwt = JWT.create().
+        String accessToken = JWT.create().
                 withSubject(user.getUsername()).
                 withArrayClaim("roles", roles.toArray(new String[roles.size()])).
-                withExpiresAt(new Date(System.currentTimeMillis()+ConstantParameter.TIME_10_DAYS)).
+                withExpiresAt(new Date(System.currentTimeMillis()+ConstantParameter.TIME_1_DAYS)).
+                withIssuer(request.getRequestURL().toString()).
                 sign(Algorithm.HMAC256(ConstantParameter.SECRET));
 
-        response.addHeader("Autorization", jwt);
+        String refreshToken = JWT.create().
+                withSubject(user.getUsername()).
+                withExpiresAt(new Date(System.currentTimeMillis()+ConstantParameter.TIME_10_DAYS)).
+                withIssuer(request.getRequestURL().toString()).
+                sign(Algorithm.HMAC256(ConstantParameter.SECRET));
+
+        response.setHeader("accessToken", accessToken);
+        response.setHeader("refreshToken", refreshToken);
+        //nous mettons les tokens dans le body
+        /*Map<String, String > tokens = new HashMap<>();
+        tokens.put("accessToken", accessToken);
+        tokens.put("refreshToken", refreshToken);
+        response.setContentType(APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(), tokens);*/
     }
 }

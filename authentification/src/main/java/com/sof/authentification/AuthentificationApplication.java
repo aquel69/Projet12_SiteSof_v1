@@ -31,12 +31,14 @@ public class AuthentificationApplication extends SpringBootServletInitializer {
 		Adresse adresse = new Adresse();
 
 		adresse.setIdAdresse(1);
-
-		*//*userService.addAdresse(adresse);*//*
+*//*
+		userService.addAdresse(adresse);
 		userService.saveUtilisateur(new Utilisateur("Rut", "Sophie",  "Sof", adresse, "sophierut@gmail.com", "123", dateTime));
-		userService.addRoleToUtilisateur("sophierut@gmail.com", "administrateur");
-	}
-*/
+		userService.addRoleToUtilisateur("sophierut@gmail.com", "administrateur");*//*
+
+		userService.saveUtilisateur(new Utilisateur("Lardon", "Alexandre",  "Aquel", adresse, "alexandre.lardon@yahoo.fr", "123", dateTime));
+		userService.addRoleToUtilisateur("alexandre.lardon@yahoo.fr", "invite");
+	}*/
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
