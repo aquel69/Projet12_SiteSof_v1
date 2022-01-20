@@ -8,7 +8,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class UtilisateurAuthentification {
 
-    private int idMembre;
+    private int idUtilisateur;
 
     /**
      * email du membre

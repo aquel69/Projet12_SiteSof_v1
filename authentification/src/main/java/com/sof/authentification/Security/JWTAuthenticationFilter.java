@@ -46,8 +46,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throws AuthenticationException {
         Utilisateur utilisateur = null;
 
-
-
         try{
             utilisateur = new ObjectMapper().readValue(request.getInputStream(), Utilisateur.class);
         }
@@ -80,19 +78,24 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 withIssuer(request.getRequestURL().toString()).
                 sign(Algorithm.HMAC256(ConstantParameter.SECRET));
 
-        String refreshToken = JWT.create().
-                withSubject(user.getUsername()).
-                withExpiresAt(new Date(System.currentTimeMillis()+ConstantParameter.TIME_10_DAYS)).
-                withIssuer(request.getRequestURL().toString()).
-                sign(Algorithm.HMAC256(ConstantParameter.SECRET));
+        response.setHeader("Authorization", accessToken);
 
-        response.setHeader("accessToken", accessToken);
-        response.setHeader("refreshToken", refreshToken);
-        //nous mettons les tokens dans le body
         /*Map<String, String > tokens = new HashMap<>();
         tokens.put("accessToken", accessToken);
-        tokens.put("refreshToken", refreshToken);
+        *//*tokens.put("refreshToken", refreshToken);*//*
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);*/
     }
 }
+
+
+
+        /*String refreshToken = JWT.create().
+                withSubject(user.getUsername()).
+                withExpiresAt(new Date(System.currentTimeMillis()+ConstantParameter.TIME_10_DAYS)).
+*//*                withIssuer(request.getRequestURL().toString()).*//*
+                sign(Algorithm.HMAC256(ConstantParameter.SECRET));*/
+
+
+//response.setHeader("refreshToken", refreshToken);
+//nous mettons les tokens dans le body

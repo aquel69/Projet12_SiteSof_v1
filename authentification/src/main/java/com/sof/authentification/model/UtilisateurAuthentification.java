@@ -21,7 +21,7 @@ public class UtilisateurAuthentification {
      */
     @Id
     @Column(name="id_utilisateur")
-    private int idMembre;
+    private int idUtilisateur;
 
     /**
      * email du membre

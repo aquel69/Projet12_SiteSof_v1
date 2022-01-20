@@ -8,6 +8,7 @@ import com.sof.authentification.model.Adresse;
 import com.sof.authentification.model.Utilisateur;
 import com.sof.authentification.model.UtilisateurAuth;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,10 +80,12 @@ public class AuthentificationController {
         return idDerniereAdresse;
     }
 
-    @PostMapping(value="/Login")
-    public Utilisateur login(@Valid @RequestBody UtilisateurAuth utilisateur){
+    @PostMapping(value = "/Login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Utilisateur login(@Valid @RequestBody UtilisateurAuth utilisateurAuth) {
         List<Utilisateur> listeDesMembres = daoUtilisateur.findAll();
-        Utilisateur utilisateurAuthentifie = verificationAuthentification(listeDesMembres, utilisateur.getMotDePasse(), utilisateur.getUsername());
+        System.out.println(utilisateurAuth);
+        Utilisateur utilisateurAuthentifie = verificationAuthentification(listeDesMembres, utilisateurAuth.getMotDePasse()
+                , utilisateurAuth.getUsername());
 
         return utilisateurAuthentifie;
     }
@@ -91,13 +94,9 @@ public class AuthentificationController {
         for (Utilisateur utilisateur : listeDesMembres) {
             if (utilisateur.getUsername().equals(username)) {
                 if (bCryptPasswordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
-                    Utilisateur utilisateur1;
-                    utilisateur1 = daoUtilisateur.findByUsername(username);
-                    //ADDITION verification mot de passe username
+                    utilisateur = daoUtilisateur.findByUsername(username);
 
-                    System.out.println(utilisateur1);
-
-                    return utilisateur1;
+                    return utilisateur;
                 }
             }
         }
