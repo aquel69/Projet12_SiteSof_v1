@@ -14,7 +14,7 @@ public class Utilisateur {
     /**
      * id de la table membre
      */
-    private int idMembre;
+    private int idUtilisateur;
 
     /**
      * nom du membre
