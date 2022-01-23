@@ -44,7 +44,7 @@
         </div>
         <div class="row">
             <div class="col-4 text-center ensemble_photo_conversation">
-                <img src="ressources/sof_conversation.jpg" alt="photo sof tenant son ukulélé avec un pont dans le font" class="img-fluid photo_conversation">
+                <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoConversationMembre()})}" alt="photo sof tenant son ukulélé avec un pont dans le font" class="img-fluid photo_conversation">
             </div>
             <div class="col-6 ensemble_conversation">
 
