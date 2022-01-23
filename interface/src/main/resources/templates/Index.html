@@ -32,7 +32,6 @@
 <!-- Accueil -->
 
 <header id="accueil">
-
     <nav id="navigationBarre">
         <a href="#accueil" class="liensNav" onclick="toggleNav()">Accueil</a>
         <a href="#bio" class="liensNav" onclick="toggleNav()">Bio</a>
@@ -48,45 +47,32 @@
     </nav>
     <h1>Sof</h1>
     <h2>Auteure - Compositrice - Interprète</h2>
-    <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/yRWCAFs1oY8?controls=0" title="YouTube video player"
+    <iframe id="video" width="560" height="315" th:src="${urlVideo}" title="YouTube video player"
             frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen></iframe>
     <a href="#bio" id="arrow"><i class="fas fa-chevron-down"></i></a>
-
 </header>
 
-<!-- Section About -->
+<!-- Section Biographie -->
 
 <section id="bio" class="section-bio">
-
     <div class="centerH">
-
         <h2 class="titreBio">
             Biographie
         </h2>
     </div>
     <div class="ligne">
         <div class="col-1-of-2">
-            <h3 class="sousTitreBio">Ses inspirations</h3>
-            <p class="paragraphe">
-                Auteure compositrice, chanteuse guitariste, Sof s’inscrit dans un univers chanson/folk.
-                Sa voix chaude et son jeu subtil délivrent une intimité vibrante et passionnée.
-                 Elle compose ses musiques au piano, à la guitare et au ukulélé, ses textes sont à la fois légers et poétiques.
-            </p>
-            <h3 class="sousTitreBio">Ses musiciens</h3>
-            <p class="paragraphe">
-                Elle fait appel sur scène à Cyrille Savoi, musicien multi-instrumentiste,
-                qui l’accompagne aux saxophones, flûte traversière et harmonica,
-                Régis Parazon à la batterie et aux percussions et Boris Mange aux claviers.
-                Ils apportent des couleurs intenses et cuivrées à son répertoire,
-                les influences de chacun se mêlent et donnent un cocktail explosif de fraîcheur !
-            </p>
+            <h3 class="sousTitreBio" th:text="${biographieInterface.getSousTitre1()}"></h3>
+            <p class="paragraphe" th:text="${biographieInterface.getParagraphe1()}"></p>
+            <h3 class="sousTitreBio" th:text="${biographieInterface.getSousTitre2()}"></h3>
+            <p class="paragraphe" th:text="${biographieInterface.getParagraphe2()}"></p>
         </div>
         <div class="col-1-of-2">
             <div class="composition">
-                <img src="ressources/concert_noir_blanc.jpg" alt="photo concert sof" class="composition_photo composition_photo--1">
-                <img src="ressources/sof_uku.png" alt="photo sof avec son ukulélé" class="composition_photo composition_photo--2">
-                <img src="ressources/musicien.jpg" alt="photo des musiciens" class="composition_photo composition_photo--3">
+                <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto1()})}" alt="photo concert sof" class="composition_photo composition_photo--1">
+                <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto2()})}" class="composition_photo composition_photo--2">
+                <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto3()})}" class="composition_photo composition_photo--3">
             </div>
         </div>
     </div>
@@ -100,42 +86,36 @@
         <div class="row">
             <div class="col-6">
                 <div class="compositionConcerts">
-                    <img src="ressources/sof_piano.jpg" alt="photo sof jouant de la guitare" class="img-fluid composition_photo_concert composition_photo_concert--1">
-                    <img src="ressources/sof_dos.jpg" alt="photo de dos guitare sof" class="img-fluid composition_photo_concert composition_photo_concert--2">
-                    <img src="ressources/sof_cri_2.jpg" alt="photo scène festival cri du col" class="img-fluid composition_photo_concert composition_photo_concert--3">
+                    <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto1()})}" alt="photo sof jouant de la guitare" class="img-fluid composition_photo_concert composition_photo_concert--1">
+                    <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto2()})}" alt="photo de dos guitare sof" class="img-fluid composition_photo_concert composition_photo_concert--2">
+                    <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto3()})}" alt="photo scène festival cri du col" class="img-fluid composition_photo_concert composition_photo_concert--3">
                 </div>
             </div>
             <div class="col-5 tableau_concert">
                 <h5 class="sous_titre_concert-1">A venir</h5>
                 <div class="table-responsive concert_venir">
-                    <table class="table">
+                    <table class="table table-hover table-nowrap">
                         <thead>
-                        <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Adresse</th>
-                            <th scope="col">Tarif</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Adresse</th>
+                                <th scope="col">Tarif</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>25/10/2021</td>
-                            <td>Cri du col</td>
-                            <td>26 route du col de cri - Pommier 69825</td>
-                            <td>Gratuit</td>
-                        </tr>
-                        <tr>
-                            <td>26/10/2021</td>
-                            <td>Cri du col</td>
-                            <td>26 route du col de cri - Pommier 69825</td>
-                            <td>Gratuit</td>
-                        </tr>
+                            <tr th:each="dateConcert, inter : ${listeDateConcert}" th:if="${dateConcert.getDate() > #temporals.createNow()}">
+                                <td th:text="${#temporals.format(listeDateConcert[inter.index].getDate(),'dd-MM-yyyy')}"></td>
+                                <td th:text="${listeDateConcert[inter.index].getNomLieu()}"></td>
+                                <td th:text="${listeDateConcert[inter.index].getAdresse()}"></td>
+                                <td th:text="${listeDateConcert[inter.index].getTarif()}"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
                 <h5 class="sous_titre_concert-2">Historique</h5>
                 <div class="table-responsive concert_historique">
-                    <table class="table">
+                    <table class="table table-hover table-nowrap">
                         <thead>
                         <tr>
                             <th scope="col">Date</th>
@@ -145,47 +125,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>25/10/2021</td>
-                            <td>Cri du col</td>
-                            <td>26 route du col de cri - Pommier 69825</td>
-                            <td>Gratuit</td>
-                        </tr>
-                        <tr>
-                            <td>26/10/2021</td>
-                            <td>Cri du col</td>
-                            <td>26 route du col de cri - Pommier 69825</td>
-                            <td>Gratuit</td>
-                        </tr>
-                        <tr>
-                            <td>26/10/2021</td>
-                            <td>Cri du col</td>
-                            <td>26 route du col de cri - Pommier 69825</td>
-                            <td>Gratuit</td>
-                        </tr>
-                        <tr>
-                            <td>26/10/2021</td>
-                            <td>Cri du col</td>
-                            <td>26 route du col de cri - Pommier 69825</td>
-                            <td>Gratuit</td>
-                        </tr>
-                        <tr>
-                            <td>26/10/2021</td>
-                            <td>Cri du col</td>
-                            <td>26 route du col de cri - Pommier 69825</td>
-                            <td>Gratuit</td>
-                        </tr>
-                        <tr>
-                            <td>26/10/2021</td>
-                            <td>Cri du col</td>
-                            <td>26 route du col de cri - Pommier 69825</td>
-                            <td>Gratuit</td>
-                        </tr>
-                        <tr>
-                            <td>26/10/2021</td>
-                            <td>Cri du col</td>
-                            <td>26 route du col de cri - Pommier 69825</td>
-                            <td>Gratuit</td>
+                        <tr th:each="dateConcert, inter : ${listeDateConcert}" th:if="${dateConcert.getDate() < #temporals.createNow()}">
+                            <td th:text="${#temporals.format(listeDateConcert[inter.index].getDate(),'dd-MM-yyyy')}"></td>
+                            <td th:text="${listeDateConcert[inter.index].getNomLieu()}"></td>
+                            <td th:text="${listeDateConcert[inter.index].getAdresse()}"></td>
+                            <td th:text="${listeDateConcert[inter.index].getTarif()}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -200,11 +144,10 @@
 
 <section class="section-parallax"></section>
 
-<!-- Sections Phrases Slide -->
+<!-- Sections Album -->
 
 <section id="album">
     <div class="centerH">
-
         <h2 class="titreAlbum">
             Album
         </h2>
@@ -212,51 +155,41 @@
     <div class="container-fluid cont">
         <div class="row">
             <div class="col-4">
-                <h4 id="sous_titre_ep" class="text-center">
-                    EP - La Luna
-                </h4>
+                <h4 id="sous_titre_ep" class="text-center" th:text="${albumInterface.getSousTitre1()}"></h4>
                 <div class="text-center">
-                     <img src="ressources/EP_front.png" alt="photo EP sof" class="img-fluid photo_EP_front">
+                     <img th:src="@{/ressources/{image}(image=${albumInterface.getPhotoAlbum()})}" alt="photo EP sof" class="img-fluid photo_EP_front">
                 </div>
                 <div class="row justify-content-center">
                     <div class="lecteurs col-8 ">
                         <div class="lecteur_1 text-center ">
-                            <h6 class="titre_ep">
-                                La Luna
-                            </h6>
+                            <h6 class="titre_ep" th:text="${albumInterface.getTitreChanson1()}"></h6>
                             <audio controls>
-                                <source src="ressources/LA-LUNA-MIX1.mp3" type="audio/mpeg">
-                                <source src="ressources/LA-LUNA-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                                <source th:src="@{/ressources/{chanson}(chanson=${albumInterface.getChanson1()})}" type="audio/mpeg">
+                                <source th:src="@{/ressources/{chanson}(chanson=${albumInterface.getChanson1()})}" type="audio/ogg; codec=vorbis">
                                 Your browser does not support the audio element.
                             </audio>
                         </div>
                         <div class="lecteur_2 text-center">
-                            <h6 class="titre_ep">
-                                Mon Amour
-                            </h6>
+                            <h6 class="titre_ep" th:text="${albumInterface.getTitreChanson2()}"></h6>
                             <audio controls >
-                                <source src="ressources/MON-AMOUR-MIX1.mp3" type="audio/mpeg">
-                                <source src="ressources/MON-AMOUR-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                                <source th:src="@{/ressources/{chanson}(chanson=${albumInterface.getChanson2()})}" type="audio/mpeg">
+                                <source th:src="@{/ressources/{chanson}(chanson=${albumInterface.getChanson2()})}" type="audio/ogg; codec=vorbis">
                                 Your browser does not support the audio element.
                             </audio>
                         </div>
                         <div class="lecteur_3 text-center">
-                            <h6 class="titre_ep">
-                                Cancion Del Amanecer
-                            </h6>
+                            <h6 class="titre_ep" th:text="${albumInterface.getTitreChanson3()}"></h6>
                             <audio controls>
-                                <source src="ressources/CANCION-MIX1.mp3" type="audio/mpeg">
-                                <source src="ressources/CANCION-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                                <source th:src="@{/ressources/{chanson}(chanson=${albumInterface.getChanson3()})}" type="audio/mpeg">
+                                <source th:src="@{/ressources/{chanson}(chanson=${albumInterface.getChanson3()})}" type="audio/ogg; codec=vorbis">
                                 Your browser does not support the audio element.
                             </audio>
                         </div>
                         <div class="lecteur_4 text-center">
-                            <h6 class="titre_ep">
-                                90 Printemps
-                            </h6>
+                            <h6 class="titre_ep" th:text="${albumInterface.getTitreChanson4()}"></h6>
                             <audio controls preload="metadata">
-                                <source src="ressources/90-PRINTEMPS-MIX1.mp3" type="audio/mpeg">
-                                <source src="ressources/90-PRINTEMPS-MIX1.mp3" type="audio/ogg; codec=vorbis">
+                                <source th:src="@{/ressources/{chanson}(chanson=${albumInterface.getChanson4()})}" type="audio/mpeg">
+                                <source th:src="@{/ressources/{chanson}(chanson=${albumInterface.getChanson4()})}" type="audio/ogg; codec=vorbis">
                                 Your browser does not support the audio element.
                             </audio>
                         </div>
@@ -264,15 +197,13 @@
                 </div>
             </div>
             <div class="col-4 text-center">
-                <img src="ressources/sof_album.jpg" alt="photo sof tenant un ukulélé dans la nature" class="img-fluid photo_album">
+                <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoAlbum()})}" alt="photo sof tenant un ukulélé dans la nature" class="img-fluid photo_album">
             </div>
             <div class="col-4">
-                <h4 id="sous_titre_commander" class="text-center">
-                    Commander l'EP
-                </h4>
+                <h4 id="sous_titre_commander" class="text-center" th:text="${albumInterface.getSousTitre2()}"></h4>
                 <div class="text-center">
-                    <img src="ressources/rond_CD.png" alt="photo cd sof" class="img-fluid photo_CD">
-                    <p class=" prix_EP">Prix de l'EP : 5€</p>
+                    <img th:src="@{/ressources/{image}(image=${albumInterface.getPhotoCD()})}" alt="photo cd sof" class="img-fluid photo_CD">
+                    <p class="prix_EP" th:text="${albumInterface.getTarifEP()}"></p>
                 </div>
                 <div class="row justify-content-center">
                     <div class="authentification_globale col-8">
@@ -291,7 +222,7 @@
                                     <label for="validationAuthentification02" class="form-label texte_motDePasse_authentification">Mot de passe</label>
                                     <input type="password" th:field="*{motDePasse}" name="motDePasse" class="form-control texte_champ_mot_de_passe" id="validationAuthentification02" required>
                                 </div>
-                                <p class="text-center mt-4 mb-5 texte_pas_de_compte" ><a th:href="@{|/Inscription|}">Vous n'avez pas de compte?</a></p>
+                                <p class="text-center mt-4 mb-5 texte_pas_de_compte" ><a th:href="@{|/CreationCompte|}">Vous n'avez pas de compte?</a></p>
                                 <div class="col-12 text-center">
                                     <button class="btn btn-lg btn-primary bouton_authentification" type="submit">Valider</button>
                                 </div>
@@ -313,13 +244,11 @@
             Contact
         </h2>
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-4 text-center">
-                <img src="ressources/sof_contact.jpg" alt="photo sof en robe à coté d'un arbre" class="img-fluid photo_contact">
+                <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoContact()})}" alt="photo sof en robe à coté d'un arbre" class="img-fluid photo_contact">
             </div>
-
             <div class="col-8">
                 <div class="row justify-content-center envoi_mail">
                     <div class="col-10 ligne_envoi_mail">
@@ -339,7 +268,6 @@
                                 <label for="formulaire_envoi_mail_03" class="form-label text_form_mail">Message</label>
                                 <input type="text" class="form-control" id="formulaire_envoi_mail_03" required>
                             </div>
-
                             <div class="col-12 text-start">
                                 <button class="btn btn-lg btn-primary bouton_mail" type="submit">Valider</button>
                             </div>
@@ -375,11 +303,9 @@
                     <div class="medias">
                         <a href="https://soundcloud.com/sofmusique" id="soundcloud_footer"><i class="fab fa-soundcloud"></i></a>
                     </div>
-
                     <div class="medias">
                         <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube_footer"><i class="fab fa-youtube"></i></a>
                     </div>
-
                     <div class="medias">
                         <a href="https://www.facebook.com/sofmusique/" id="facebook_footer"><i class="fab fa-facebook"></i></a>
                     </div>
@@ -389,7 +315,6 @@
         </div>
     </div>
 </section>
-
 
 <!-- Jquery -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -401,5 +326,4 @@
 <script src="JS/app.js"></script>
 <script src="JS/greenSock.js"></script>
 </body>
-
 </html>

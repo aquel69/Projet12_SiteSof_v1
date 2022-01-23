@@ -1,9 +1,8 @@
-package com.sof.interface_site.proxie;
+package com.sof.interface_site.proxy;
 
 import com.sof.interface_site.model.Adresse;
 import com.sof.interface_site.model.Utilisateur;
 import com.sof.interface_site.model.UtilisateurAuth;
-import com.sof.interface_site.model.UtilisateurAuthentification;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

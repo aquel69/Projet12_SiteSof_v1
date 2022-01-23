@@ -44,7 +44,7 @@
             </div>
         <div class="row">
             <div class="col-4 text-center ensemble_photo_authentification">
-                <img src="ressources/sof_inscription.jpg" alt="photo sof en noir et blanc contre un mur" class="img-fluid photo_authentification">
+                <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoCreationCompte()})}" alt="photo sof en noir et blanc contre un mur" class="img-fluid photo_authentification">
             </div>
             <div class="col-7 formulaire_inscription">
                 <form th:action="@{/Inscription}" th:object="${utilisateur}" method="post">
