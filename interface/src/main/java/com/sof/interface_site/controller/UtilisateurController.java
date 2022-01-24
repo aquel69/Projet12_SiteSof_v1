@@ -11,9 +11,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class UtilisateurController {
+
+    private final String EMAIL_PATTERN ="^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+            + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+    private final String PASSWORD_PATTERN = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
+    private final Pattern patternEmail = Pattern.compile(EMAIL_PATTERN);
+    private final Pattern patternPassword = Pattern.compile(PASSWORD_PATTERN);
 
     @Autowired
     private MicroserviceAuthentification authentificationProxy;
@@ -25,6 +33,8 @@ public class UtilisateurController {
     private MicroserviceConcert concertProxy;
 
     private Utilisateur utilisateurAuthentifier;
+    private String error = null;
+
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -40,7 +50,8 @@ public class UtilisateurController {
 
     /**
      * permet de récupérer les donnéees saisies par l'utilisateur et de vérifier si l'authentification est valide
-     * si elle l'est l'utilisateur est renvoyé sur la page d'accueil sinon il reste sur la page authentification
+     * si elle l'est l'utilisateur est renvoyé sur la page d'accueil et le statut connecté apparait
+     * dans la barre de menu ou l'admin est connecté sur sa page
      * @param model
      * @param utilisateurPost
      * @return la page correspondante au role
@@ -52,8 +63,8 @@ public class UtilisateurController {
 
         interfaceSite(model, utilisateurAuthentifier);
 
-        System.out.println(utilisateurAuthentifier);
         if (utilisateurAuthentifier == null) {
+            error = "L'email our le mot de passe est incorrect";
             return "Index";
         } else if (utilisateurAuthentifier.getRoles().get(0).getIdRole() == 2){
             return "CreationCompte";
@@ -61,6 +72,23 @@ public class UtilisateurController {
             return "Newsletter";
         }
     }
+
+    /*@RequestMapping(value = "/ajoutEmail",method = RequestMethod.POST)
+    public String ajoutEmail(Model model, @RequestParam String emailNewsletter){
+
+        System.out.println(emailNewsletter);
+
+        interfaceSite(model, utilisateurAuthentifier);
+
+        return "index";
+
+        *//*if (utilisateurAuthentifier == null) {
+            error = "L'email our le mot de passe est incorrect";
+            return "Index";
+        } else {
+            return "Newsletter";
+        }*//*
+    }*/
 
     @RequestMapping(value = "/CreationCompte", method = RequestMethod.GET)
     public String inscription(Model model){
@@ -99,6 +127,14 @@ public class UtilisateurController {
         model.addAttribute("listeDateConcert", listeDateConcert);
     }
 
+    private boolean verificationEmail(String email) {
+        Matcher matcher = patternEmail.matcher(email);
+        return matcher.matches();
+    }
 
+    private boolean verificationMotDePasse(String motDePasse) {
+        Matcher matcher = patternPassword.matcher(motDePasse);
+        return matcher.matches();
+    }
 
 }
