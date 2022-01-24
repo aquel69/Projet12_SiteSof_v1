@@ -282,10 +282,10 @@
                         <form >
                             <div class="col-md-6">
                                 <label for="formulaire_inscription_newsletter_01" class="form-label text_form_newsletter">Email</label>
-                                <input type="text" class="form-control" id="formulaire_inscription_newsletter_01" required>
+                                <input th:value="${emailNewsletter}" name="emailNewsletter" type="email" class="form-control" id="formulaire_inscription_newsletter_01" aria-describedby="button-email">
                             </div>
                             <div class="col-12 text-start">
-                                <button class="btn btn-lg btn-primary bouton_newsletter" type="submit">Valider</button>
+                                <button id="button-email" class="btn btn-lg btn-primary bouton_newsletter" type="submit">Valider</button>
                             </div>
                         </form>
                     </div>
