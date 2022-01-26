@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class EmailNewsletter {
+public class NewsletterEmail {
 
     /**
      * email pour l'envoi des newsletters et id de la table email_newsletter
