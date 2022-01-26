@@ -4,12 +4,12 @@ import com.sof.interface_site.model.*;
 import com.sof.interface_site.proxy.MicroserviceAuthentification;
 import com.sof.interface_site.proxy.MicroserviceConcert;
 import com.sof.interface_site.proxy.MicroserviceInterfaceDonnees;
+import com.sof.interface_site.proxy.MicroserviceNewsletterEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,14 +32,19 @@ public class UtilisateurController {
     @Autowired
     private MicroserviceConcert concertProxy;
 
+    @Autowired
+    private MicroserviceNewsletterEmail newsletterEmailProxy;
+
     private Utilisateur utilisateurAuthentifier;
+    private NewsletterEmail newsletterEmail;
     private String error = null;
 
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String accueil(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateurGet){
+    public String accueil(Model model){
         utilisateurAuthentifier = new Utilisateur();
+        newsletterEmail = new NewsletterEmail();
 
         interfaceSite(model, utilisateurAuthentifier);
 
@@ -56,7 +61,7 @@ public class UtilisateurController {
      * @param utilisateurPost
      * @return la page correspondante au role
      */
-    @RequestMapping(value = "/",method = RequestMethod.POST)
+    @RequestMapping(value = "/authentification",method = RequestMethod.POST)
     public String validationAuthentification(Model model, @ModelAttribute("utilisateur") UtilisateurAuth utilisateurPost){
 
         utilisateurAuthentifier = authentificationProxy.login(utilisateurPost);
@@ -73,22 +78,19 @@ public class UtilisateurController {
         }
     }
 
-    /*@RequestMapping(value = "/ajoutEmail",method = RequestMethod.POST)
-    public String ajoutEmail(Model model, @RequestParam String emailNewsletter){
 
-        System.out.println(emailNewsletter);
+    @RequestMapping(value = "/ajoutEmail",method = RequestMethod.POST)
+    public String ajoutEmailNewsletter(Model model, @ModelAttribute("newsletterEmail") NewsletterEmail newsletterEmailPost){
+
+        System.out.println(newsletterEmailPost.getEmail());
+
+        newsletterEmailProxy.ajouterEmailNewsletter(newsletterEmailPost);
 
         interfaceSite(model, utilisateurAuthentifier);
 
-        return "index";
+        return "Index";
 
-        *//*if (utilisateurAuthentifier == null) {
-            error = "L'email our le mot de passe est incorrect";
-            return "Index";
-        } else {
-            return "Newsletter";
-        }*//*
-    }*/
+    }
 
     @RequestMapping(value = "/CreationCompte", method = RequestMethod.GET)
     public String inscription(Model model){
@@ -107,6 +109,7 @@ public class UtilisateurController {
     }
 
     private void interfaceSite(Model model, Utilisateur utilisateur) {
+
         //Accueil
         String urlVideoAccueil = interfaceDonneesProxy.getUrlVideoYoutube();
         //Biographie
@@ -125,6 +128,8 @@ public class UtilisateurController {
         model.addAttribute("albumInterface", albumInterface);
         model.addAttribute("photoInterface", photoInterface);
         model.addAttribute("listeDateConcert", listeDateConcert);
+        model.addAttribute("newsletterEmail", newsletterEmail);
+        model.addAttribute("utilisateur", utilisateurAuthentifier);
     }
 
     private boolean verificationEmail(String email) {

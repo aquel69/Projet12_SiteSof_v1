@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DaoEmailNewsletter extends JpaRepository<NewsletterEmail, Integer> {
+public interface DaoNewsletterEmail extends JpaRepository<NewsletterEmail, Integer> {
 
 
 }

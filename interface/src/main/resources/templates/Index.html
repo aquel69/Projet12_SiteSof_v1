@@ -84,14 +84,14 @@
     <h2>CONCERTS</h2>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-4 col-6">
                 <div class="compositionConcerts">
                     <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto1()})}" alt="photo sof jouant de la guitare" class="img-fluid composition_photo_concert composition_photo_concert--1">
                     <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto2()})}" alt="photo de dos guitare sof" class="img-fluid composition_photo_concert composition_photo_concert--2">
                     <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto3()})}" alt="photo scène festival cri du col" class="img-fluid composition_photo_concert composition_photo_concert--3">
                 </div>
             </div>
-            <div class="col-5 tableau_concert">
+            <div class="col-md-7 col-5 tableau_concert">
                 <h5 class="sous_titre_concert-1">A venir</h5>
                 <div class="table-responsive concert_venir">
                     <table class="table table-hover table-nowrap">
@@ -125,12 +125,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="dateConcert, inter : ${listeDateConcert}" th:if="${dateConcert.getDate() < #temporals.createNow()}">
-                            <td th:text="${#temporals.format(listeDateConcert[inter.index].getDate(),'dd-MM-yyyy')}"></td>
-                            <td th:text="${listeDateConcert[inter.index].getNomLieu()}"></td>
-                            <td th:text="${listeDateConcert[inter.index].getAdresse()}"></td>
-                            <td th:text="${listeDateConcert[inter.index].getTarif()}"></td>
-                        </tr>
+                            <tr th:each="dateConcert, inter : ${listeDateConcert}" th:if="${dateConcert.getDate() < #temporals.createNow()}">
+                                <td th:text="${#temporals.format(listeDateConcert[inter.index].getDate(),'dd-MM-yyyy')}"></td>
+                                <td th:text="${listeDateConcert[inter.index].getNomLieu()}"></td>
+                                <td th:text="${listeDateConcert[inter.index].getAdresse()}"></td>
+                                <td th:text="${listeDateConcert[inter.index].getTarif()}"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -213,7 +213,7 @@
                         <p class="paragraphe_authentification_3 text-center">afin que vous puissiez l'acquérir.</p>
                         <div class="row justify-content-center">
                         <div class="col-8 validationAuthentification">
-                            <form th:action="@{/}" th:object="${utilisateur}" method="post">
+                            <form th:action="@{/authentification}" th:object="${utilisateur}" method="post">
                                 <div class="col-md-12">
                                     <label for="validationAuthentification01" class="form-label texte_username_authentification">Username</label>
                                     <input type="text" th:field="*{username}" name="username" class="form-control texte_champ_username" id="validationAuthentification01" required>
@@ -279,10 +279,10 @@
                         <h6 class="titre_newsletter">Inscrivez-vous à la Newsletter</h6>
                     </div>
                     <div class="col-10 formulaire_inscription_newsletter">
-                        <form >
+                        <form th:action="@{/ajoutEmail}" th:object="${newsletterEmail}" method="post">
                             <div class="col-md-6">
                                 <label for="formulaire_inscription_newsletter_01" class="form-label text_form_newsletter">Email</label>
-                                <input th:value="${emailNewsletter}" name="emailNewsletter" type="email" class="form-control" id="formulaire_inscription_newsletter_01" aria-describedby="button-email">
+                                <input type="email" th:field="*{email}" name="email" class="form-control texte_email_newsletter" id="formulaire_inscription_newsletter_01" required>
                             </div>
                             <div class="col-12 text-start">
                                 <button id="button-email" class="btn btn-lg btn-primary bouton_newsletter" type="submit">Valider</button>
