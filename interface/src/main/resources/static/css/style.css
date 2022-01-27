@@ -88,11 +88,27 @@ header {
     background-position: top;
 }
 
-#video{
+
+.iframe_container{
+    width: 100%;
     position: relative;
-    top: 29%;
-    left: 60%;
 }
+
+.iframe_container::after{
+    content:"";
+    display: block;
+    width: 100%;
+    padding-bottom: calc(315/560*100%);
+}
+
+iframe{
+    position: absolute;
+    width: 27%;
+    height: 30%;
+    top:23%;
+    left:57%;
+}
+
 
 h1 {
     margin-left: 65%;
@@ -288,15 +304,15 @@ header #arrow {
 }
 
 .composition_photo_concert--1 {
-    left: 15rem;
+    left: 17rem;
     margin-top: 13rem;
 }
 .composition_photo_concert--2 {
-    left: 40rem;
+    left: 33rem;
     margin-top: 21rem;
 }
 .composition_photo_concert--3 {
-    left: 65rem;
+    left: 55rem;
     margin-top: 29rem;
 }
 
@@ -698,53 +714,270 @@ audio{
     padding-top: 2rem;
 }
 
-@media (max-width: 1920px) {
+
+
+@media (max-width: 2200px) {
+    h1{
+        top: 17rem;
+    }
+
+    header h2{
+        top: 20rem;
+    }
+
+    iframe{
+        left:60%;
+        top: 22%;
+    }
+
+    /* Section Concert */
+
     .composition_photo_concert--1 {
-        left: 9rem;
-        margin-top: 8rem;
+        left: 17rem;
+        margin-top: 13rem;
     }
     .composition_photo_concert--2 {
-        left: 18rem;
-        margin-top: 20rem;
+        left: 27rem;
+        margin-top: 25rem;
     }
     .composition_photo_concert--3 {
-        left: 11rem;
-        margin-top: 32rem;
+        left: 43rem;
+        margin-top: 37rem;
+    }
+}
+
+@media (max-width: 1920px) {
+    h1{
+        top: 13rem;
     }
 
-    .composition_photo_concert:hover {
-        outline: 1.5rem solid blueviolet;
-        transform: scale(1.05) translateY(-0.5rem);
-        box-shadow: 0 2.5rem 4rem rgba(0,0,0,0.5);
-        z-index:30;
+    header h2{
+        top: 16rem;
     }
 
-    .sous_titre_concert-2{
-        margin-top: 3rem;
-        font-size: 3rem;
-        font-family: 'Kaushan Script';
-        color: blueviolet;
+    iframe{
+        position: absolute;
+        width: 27%;
+        height: 30%;
+        top:18%;
+        left:61%;
     }
 
-    .concert_venir{
-        table-layout: fixed;
-        word-wrap: break-word;
-        margin-top: 2rem;
-        width: 100%;
-        height: 12rem;
-        max-height: 17rem;
-        overflow-y:scroll;
-    }
+    /* Section Concert */
 
-    .concert_historique{
-        margin-top: 2rem;
-        max-height: 20rem;
-        overflow-y:scroll;
+    .composition_photo_concert--1 {
+        left: 13rem;
+        margin-top: 13rem;
+    }
+    .composition_photo_concert--2 {
+        left: 23rem;
+        margin-top: 25rem;
+    }
+    .composition_photo_concert--3 {
+        left: 35rem;
+        margin-top: 37rem;
     }
 
     #concerts {
-        border-top: 1px dashed rgb(80, 79, 75);
-        background: #e8bb8c;
-        height:70rem;
+        height:85rem;
     }
+
+    /*section Album*/
+
+    #sous_titre_ep{
+        font-size: 3rem;
+        color: blueviolet;
+        padding-top: 0rem;
+        padding-bottom: 4rem;
+    }
+
+    #sous_titre_commander{
+        font-size: 3rem;
+        color: blueviolet;
+        padding-top: 0rem;
+        padding-bottom: 4rem;
+    }
+
+    .photo_album{
+        max-width: 100%;
+        margin-bottom: 5rem;
+    }
+
+    .photo_EP_front{
+        max-width: 30%;
+        box-shadow:5px 5px 10px #575659;
+    }
+
+    .lecteurs{
+        margin-top: 6rem;
+    }
+
+    .lecteur_1{
+        margin-top:3rem;
+    }
+
+    .lecteur_2{
+        margin-top:3rem;
+    }
+
+    .lecteur_3{
+        margin-top:3rem;
+    }
+
+    .lecteur_4{
+        margin-top:3rem;
+    }
+
+    .authentification_globale{
+        padding-bottom: 5rem;
+        margin-top: 3.5rem;
+        height: 580px;
+        width: 460px;
+    }
+
+    .titre_authentification{
+        font-size: 2.5rem;
+        margin-top: 3rem;
+    }
+
+    .paragraphe_authentification_1{
+        font-size: 1.8rem;
+        margin-top: 3rem;
+    }
+
+    .paragraphe_authentification_2{
+        font-size: 1.8rem;
+        margin-top: 1.5rem;
+    }
+
+    .paragraphe_authentification_3{
+        font-size: 1.8rem;
+        margin-top: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .form-label{
+        font-size: 1.3rem;
+    }
+
+    .validationAuthentification{
+        padding: 4rem;
+    }
+
+
+    /* Section Contact */
+    #contact {
+        border-top: 1px dashed rgb(80, 79, 75);
+        background-color: #f7f7f7;
+        background-image: linear-gradient(#f7f7f7, #eee6e6);
+        height:107rem;
+    }
+
+    .titreContact {
+        padding-top: 9.5rem;
+    }
+
+    .photo_contact{
+        max-width: 81%;
+    }
+
+    .envoi_mail{
+        height: 50rem;
+        border: 0.1rem solid #575659;
+        margin-bottom: 3rem;
+        margin-right: 7rem;
+    }
+
+    .ligne_envoi_mail{
+        height: 5%;
+        max-height: 5%;
+        margin: 0;
+    }
+
+    .titre_envoi_mail{
+        padding-top: 2rem;
+        font-size: 3rem;
+    }
+
+    .text_form_mail{
+        font-size: 1.7rem;
+        padding-top: 2rem;
+    }
+
+    .formulaire_envoi_mail{
+        height: 80%;
+        max-height: 80%;
+    }
+
+    #formulaire_envoi_mail_01{
+        height: 3rem;
+        max-height: 3rem;
+    }
+
+    #formulaire_envoi_mail_02{
+        padding-top: 1rem;
+        height: 3rem;
+        max-height: 3rem;
+    }
+
+    #formulaire_envoi_mail_03{
+        padding-top: 1rem;
+        height: 12rem;
+        max-height: 12rem;
+    }
+
+    .bouton_mail{
+        padding: 1rem 3rem 1rem 3rem;
+        margin-top: 3rem;
+    }
+
+    .newsletter{
+        height: 22rem;
+    }
+
+    .ligne_newsletter{
+        height: 15%;
+        max-height: 15%;
+        margin: 0;
+    }
+
+    .titre_newsletter{
+        padding-top: 2rem;
+        font-size: 3rem;
+    }
+
+    .formulaire_inscription_newsletter{
+        height: 65%;
+        max-height: 65%;
+    }
+
+    .text_form_newsletter{
+        font-size: 1.7rem;
+        padding-top: 2rem;
+    }
+
+    #formulaire_inscription_newsletter_01{
+        padding-top: 1rem;
+        height: 3rem;
+        max-height: 3rem;
+
+    }
+
+    .texte_email_newsletter{
+        height: 3rem;
+        font-size: 1.5rem;
+    }
+
+    .bouton_newsletter{
+        padding: 1rem 3rem 1rem 3rem;
+        margin-top: 2rem;
+    }
+
+
 }
+
+
+
+
+
+
