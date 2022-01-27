@@ -1,0 +1,25 @@
+
+    header {
+        height: 75vh;
+    }
+    
+    h1{
+        top: 18rem;
+        font-size: 5rem;
+        
+    }
+    
+    header h2 {
+        top: 19rem;
+        font-size: 1.8rem;
+        width: 50%;
+    }
+    
+    header #arrow {
+        height: 3.5rem;
+        width: 3.5rem;
+        top: 65%;
+        font-size: 2rem;
+        line-height: 3.5rem;
+   
+    }

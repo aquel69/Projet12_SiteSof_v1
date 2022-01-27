@@ -1,0 +1,184 @@
+@media (max-width: 1400px) {
+    #navigationBarre {
+        height: 8rem;
+    }
+
+    #navigationBarre a {
+        font-size: 2rem;
+        line-height: 5rem;
+
+    }
+
+    #navigationBarre a:first-child{
+        margin-left: 4rem;
+    }
+
+    #navigationBarre a:active {
+        font-size: 4rem;
+    }
+
+    #lien_icone a {
+        font-size: 2rem;
+        padding: 1rem 2rem;
+        line-height: 5.5rem;
+    }
+
+    #lien_icone a:active {
+        font-size: 2rem;
+    }
+
+    #soundcloud{
+        margin-left: 50rem;
+    }
+
+    .icon {
+        display: none;
+    }
+
+    /* Section Accueil */
+
+    h1{
+        font-size:10rem;
+        top: 13rem;
+        margin-left: 68%;
+    }
+
+    header h2{
+        font-size:2rem;
+        top: 16rem;
+    }
+
+    iframe{
+        top:22%;
+        left:61%;
+    }
+
+    /* Section Concert */
+
+    #concerts {
+        height:75rem;
+    }
+
+    .tableau_concert{
+        padding-top: 3rem;
+        font-size: 1.5rem;
+    }
+
+    .sous_titre_concert-1{
+        font-size: 2.5rem;
+    }
+
+    .sous_titre_concert-2{
+        margin-top: 1rem;
+        font-size: 2.5rem;
+    }
+
+    .composition_photo_concert--1 {
+        left: 9rem;
+        margin-top: 10rem;
+    }
+    .composition_photo_concert--2 {
+        left: 18rem;
+        margin-top: 22rem;
+    }
+    .composition_photo_concert--3 {
+        left: 11rem;
+        margin-top: 32rem;
+    }
+
+
+    .concert_venir{
+        margin-top: 2rem;
+        width: 100%;
+        height: 13rem;
+        max-height: 17rem;
+    }
+
+    .concert_historique{
+        margin-top: 2rem;
+        max-height: 20rem;
+    }
+
+    /*section Album*/
+
+    #album {
+        background-color: #f7f7f7;
+        background-image: linear-gradient(#eee6e6, #f7f7f7);
+        padding-bottom: 5rem;
+    }
+
+    .centerH {
+        text-align: center!important;
+        margin-bottom: 8rem!important;
+    }
+
+    .titreAlbum {
+        font-size: 4rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        display: inline-block;
+        background-color: #e8bb8c;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        letter-spacing: .2rem;
+        padding-top: 8.5rem;
+    }
+
+    #sous_titre_ep{
+        font-size: 3rem;
+        color: blueviolet;
+        padding-top: 0rem;
+        padding-bottom: 4rem;
+    }
+
+    #sous_titre_commander{
+        font-size: 3rem;
+        color: blueviolet;
+        padding-top: 0rem;
+        padding-bottom: 4rem;
+    }
+
+    .photo_album{
+        max-width: 100%;
+        margin-bottom: 0rem;
+    }
+
+    .photo_EP_front{
+        max-width: 30%;
+        box-shadow:5px 5px 10px #575659;
+    }
+
+
+    .lecteurs{
+        margin-top: 6rem;
+    }
+
+
+    .lecteur_1{
+        margin-top:3rem;
+
+    }
+
+    .lecteur_2{
+        margin-top:3rem;
+    }
+
+    .lecteur_3{
+        margin-top:3rem;
+    }
+
+    .lecteur_4{
+        margin-top:3rem;
+    }
+
+    .authentification_globale{
+        padding-bottom: 5rem;
+        margin-top: 3.5rem;
+        border-radius: 2rem;
+        border: 0.1rem solid #575659;
+        height: 662px;
+        width: 560px;
+    }
+
+}

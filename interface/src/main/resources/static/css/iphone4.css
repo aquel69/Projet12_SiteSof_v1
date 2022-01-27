@@ -1,0 +1,31 @@
+
+    header {
+        height: 100vh;
+    }
+    
+    h1{
+        top: 16rem;
+        line-height: 5rem; /* pour rapprocher les lettres sur iphone4 */
+        font-size: 5rem;
+    }
+    
+    header h2 {
+        top: 18rem;
+        font-size: 1.8rem;
+        width: 60%;
+    }
+    
+    header #arrow {
+        height: 4.5rem;
+        width: 4.5rem;
+        top: 90%;
+        font-size: 2.5rem;
+        line-height: 4.5rem;
+   
+    }
+    
+
+    .heading-secondary {
+
+        padding-top: 0rem;
+    }
