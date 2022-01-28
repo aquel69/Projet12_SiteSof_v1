@@ -89,7 +89,21 @@ public class UtilisateurController {
         interfaceSite(model, utilisateurAuthentifier);
 
         return "Index";
+    }
 
+    @RequestMapping(value = "/utilisateurEnvoiEmail",method = RequestMethod.POST)
+    public String envoiMailDeLUtilisateur(Model model, @RequestParam String nom, @RequestParam String email
+    , @RequestParam String message){
+
+        System.out.println(nom);
+        System.out.println(email);
+        System.out.println(message);
+
+        newsletterEmailProxy.envoyerEmailUtilisateurAAdmin(nom, email, message);
+
+        interfaceSite(model, utilisateurAuthentifier);
+
+        return "Index";
     }
 
     @RequestMapping(value = "/CreationCompte", method = RequestMethod.GET)
