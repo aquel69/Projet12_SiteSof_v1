@@ -605,6 +605,7 @@ audio{
     height: 20%;
     max-height: 20%;
     margin: 0;
+
 }
 
 .titre_envoi_mail{
@@ -615,6 +616,14 @@ audio{
 .text_form_mail{
     font-size: 2rem;
     padding-top: 2rem;
+}
+
+.texte_email_utilisateur{
+    font-size: 1.5rem;
+}
+
+.texte_message_utilisateur{
+    font-size: 1.5rem;
 }
 
 .formulaire_envoi_mail{
