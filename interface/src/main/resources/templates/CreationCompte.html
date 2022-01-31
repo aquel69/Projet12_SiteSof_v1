@@ -17,8 +17,8 @@
     <script src="https://kit.fontawesome.com/3a8fc215ae.js" crossorigin="anonymous"></script>
 
     <!-- Feuilles de style -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/styleInscription.css}">
-    <link rel="stylesheet" href="CSS/baseMedias.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styleCreationCompte.css}">
+    <!--<link rel="stylesheet" href="CSS/baseMedias.css">
     <link rel="stylesheet" media="only screen and (width: 320px) and (height: 480px)" href="CSS/iphone4.css">
     <link rel="stylesheet" media="only screen and (width: 768px) and (height: 1024px)" href="CSS/iPad_Mini.css">
     <link rel="stylesheet" media="only screen and (width: 360px) and (height: 640px)" href="CSS/galaxy_S5.css">
@@ -26,7 +26,7 @@
     <link rel="stylesheet" media="only screen and (width: 320px) and (height: 568px)" href="CSS/iPhone5_SE.css">
     <link rel="stylesheet" media="only screen and (width: 375px) and (height: 667px)" href="CSS/iPhone6_7_8.css">
     <link rel="stylesheet" media="only screen and (width: 414px) and (height: 736px)" href="CSS/iPhone6_7_8PLUS.css">
-    <link rel="stylesheet" media="only screen and (width: 1024px) and (height: 1366px)" href="CSS/iPadPro.css">
+    <link rel="stylesheet" media="only screen and (width: 1024px) and (height: 1366px)" href="CSS/iPadPro.css">-->
 <body>
 
 <!-- Accueil -->
@@ -47,53 +47,101 @@
                 <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoCreationCompte()})}" alt="photo sof en noir et blanc contre un mur" class="img-fluid photo_authentification">
             </div>
             <div class="col-7 formulaire_inscription">
-                <form th:action="@{/Inscription}" th:object="${utilisateur}" method="post">
+                <form th:action="@{/creationCompte}" th:object="${utilisateur}" method="post">
                     <div class="row formulaire_inscription_identite">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="formulaire_inscription_00" class="form-label text_form_inscription_nom">Nom Membre</label>
+                            <input type="text" class="form-control police_creation_compte" id="formulaire_inscription_00" th:field="*{username}" name="username" required>
+                            <div th:if="${#fields.hasErrors('username')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:errors="*{username}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <label for="formulaire_inscription_01" class="form-label text_form_inscription_nom">Nom</label>
-                            <input type="text" class="form-control" id="formulaire_inscription_01" required>
+                            <input type="text" class="form-control police_creation_compte" id="formulaire_inscription_01" th:field="*{nom}" name="nom" required/>
+                            <div th:if="${#fields.hasErrors('nom')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:errors="*{nom}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="formulaire_inscription_02" class="form-label text_form_inscription_prenom">Prénom</label>
-                            <input type="text" class="form-control" id="formulaire_inscription_02" required>
+                            <input type="text" class="form-control police_creation_compte" id="formulaire_inscription_02" th:field="*{prenom}" name="prenom" required>
+                            <div th:if="${#fields.hasErrors('prenom')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:errors="*{prenom}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <label for="formulaire_inscription_03" class="form-label text_form_inscription_adresse">Adresse</label>
-                        <input type="text" class="form-control" id="formulaire_inscription_03" required>
-                    </div>
-                    <div class="col-md-12">
-                        <label for="formulaire_inscription_04" class="form-label text_form_inscription_complement">Complément</label>
-                        <input type="text" class="form-control" id="formulaire_inscription_04" required>
-                    </div>
-                    <div class="row formulaire_inscription_coordonne">
-                        <div class="col-md-6">
-                            <label for="formulaire_inscription_05" class="form-label text_form_inscription_ville">Ville</label>
-                            <input type="text" class="form-control" id="formulaire_inscription_05" required>
+                    <div th:object="${adresse}">
+                        <div class="col-md-12">
+                            <label for="formulaire_inscription_03" class="form-label text_form_inscription_adresse">Adresse</label>
+                            <input type="text" class="form-control police_creation_compte" id="formulaire_inscription_03" th:field="*{adresse}" name="adresse" required>
+                            <div th:if="${#fields.hasErrors('adresse')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:errors="*{adresse}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="formulaire_inscription_06" class="form-label text_form_inscription_codePostal">Code Postal</label>
-                            <input type="text" class="form-control" id="formulaire_inscription_06" required>
+                        <div class="col-md-12">
+                            <label for="formulaire_inscription_04" class="form-label text_form_inscription_complement">Complément</label>
+                            <input type="text" class="form-control police_creation_compte" id="formulaire_inscription_04" th:field="*{complementAdresse}" name="complementAdresse">
+                            <div th:if="${#fields.hasErrors('complementAdresse')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:errors="*{complementAdresse}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="row formulaire_inscription_coordonne">
+                            <div class="col-md-6">
+                                <label for="formulaire_inscription_05" class="form-label text_form_inscription_ville">Ville</label>
+                                <input type="text" class="form-control police_creation_compte" id="formulaire_inscription_05" th:field="*{ville}" name="ville" required>
+                                <div th:if="${#fields.hasErrors('ville')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <span class="message_erreur" th:errors="*{ville}"></span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="formulaire_inscription_06" class="form-label text_form_inscription_codePostal">Code Postal</label>
+                                <input type="text" class="form-control police_creation_compte" id="formulaire_inscription_06" th:field="*{codePostal}" name="codePostal" required>
+                                <div th:if="${#fields.hasErrors('codePostal')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <span class="message_erreur" th:errors="*{codePostal}"></span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="formulaire_inscription_07" class="form-label text_form_inscription_email">Email</label>
-                            <input type="text" class="form-control" id="formulaire_inscription_07" required>
+                            <input type="email" class="form-control police_creation_compte" id="formulaire_inscription_07" th:field="*{email}" name="email" required>
+                            <div th:if="${messageErreurMail != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:text="${messageErreurMail}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <label for="formulaire_inscription_08" class="form-label text_form_inscription_confEmail">Confirmation Email</label>
-                            <input type="text" class="form-control" id="formulaire_inscription_08" required>
-                        </div>
+                            <input type="email" th:value="${confirmationEmail}" name="confirmationEmail" class="form-control police_creation_compte" id="formulaire_inscription_08" required>
+                            <div th:if="${messageErreurConfirmationMail != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:text="${messageErreurConfirmationMail}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                          </div>
                     </div>
                     <div class="row formulaire_inscription_authentification">
                         <div class="col-md-6">
                             <label for="formulaire_inscription_09" class="form-label text_form_inscription_mdp">Mot de Passe</label>
-                            <input type="text" class="form-control" id="formulaire_inscription_09" required>
+                            <input type="password" class="form-control police_creation_compte" id="formulaire_inscription_09" th:field="*{motDePasse}" name="motDePasse" required>
+                            <div th:if="${messageErreurMotDePasse != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:text="${messageErreurMotDePasse}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         </div>
+
                         <div class="col-md-6">
                             <label for="formulaire_inscription_010" class="form-label text_form_inscription_confMdp">Confirmation Mot de Passe</label>
-                            <input type="text" class="form-control" id="formulaire_inscription_010" required>
+                            <input type="password" th:value="${confirmationMotDePasse}" name="confirmationMotDePasse" class="form-control police_creation_compte" id="formulaire_inscription_010" required>
+
                         </div>
                     </div>
                     <div class="col-12 text-center">
