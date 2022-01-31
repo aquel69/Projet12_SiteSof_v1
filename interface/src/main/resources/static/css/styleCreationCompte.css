@@ -13,6 +13,10 @@ body{
 
 }
 
+.message_erreur{
+    font-size: 1.7rem;
+}
+
 .ensemble_retour_accueil{
     display: flex;
     height: 10rem;
@@ -134,10 +138,18 @@ body{
     font-size: 2.1rem;
 }
 
+.police_creation_compte{
+    font-size: 1.5rem;
+}
+
+#formulaire_inscription_00{
+    height: 3rem;
+    max-height: 3rem;
+}
+
 #formulaire_inscription_01{
     height: 3rem;
     max-height: 3rem;
-    font-size: 100%;
 }
 
 #formulaire_inscription_02{

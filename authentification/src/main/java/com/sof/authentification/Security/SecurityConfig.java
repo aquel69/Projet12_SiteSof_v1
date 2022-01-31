@@ -16,9 +16,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 
-@Configuration
+/*@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)*/
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
