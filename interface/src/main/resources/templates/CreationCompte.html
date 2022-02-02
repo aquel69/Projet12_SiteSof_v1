@@ -56,6 +56,10 @@
                                 <span class="message_erreur" th:errors="*{username}"></span>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
+                            <div th:if="${messageErreurUsernameDejaExistant != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:text="${messageErreurUsernameDejaExistant}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label for="formulaire_inscription_01" class="form-label text_form_inscription_nom">Nom</label>
@@ -141,7 +145,10 @@
                         <div class="col-md-6">
                             <label for="formulaire_inscription_010" class="form-label text_form_inscription_confMdp">Confirmation Mot de Passe</label>
                             <input type="password" th:value="${confirmationMotDePasse}" name="confirmationMotDePasse" class="form-control police_creation_compte" id="formulaire_inscription_010" required>
-
+                            <div th:if="${messageErreurConfirmationMotDePasse != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:text="${messageErreurConfirmationMotDePasse}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 text-center">

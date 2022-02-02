@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,12 +44,20 @@ public class UtilisateurController {
     private Utilisateur utilisateurAuthentifier;
     private NewsletterEmail newsletterEmail;
     private String error = null;
+    private boolean matchRegexEmail;
+    private boolean matchRegexPassword;
+    private String messageErreurMail = null;
+    private String messageErreurMotDePasse = null;
+    private String messageErreurConfirmationMail = null;
+    private String messageErreurConfirmationMotDePasse = null;
+    private String messageErreurUsernameDejaExistant = null;
+    private String messageInterface = null;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String accueil(Model model){
         utilisateurAuthentifier = new Utilisateur();
         newsletterEmail = new NewsletterEmail();
-
+        System.out.println(messageInterface);
         interfaceModelAccueil(model, utilisateurAuthentifier);
 
         System.out.println("Accueil");
@@ -120,29 +129,32 @@ public class UtilisateurController {
             , BindingResult bindingResult, @ModelAttribute("adresse") @Valid Adresse adresse
             , BindingResult bindingResult1, @RequestParam String confirmationEmail
             , @RequestParam String confirmationMotDePasse){
-        boolean matchRegexEmail = verificationEmail(utilisateur.getEmail());
-        boolean matchRegexPassword = verificationMotDePasse(utilisateur.getMotDePasse());
-        String messageErreurMail = null;
-        String messageErreurMotDePasse = null;
-        String messageErreurConfirmationMail = null;
+        matchRegexEmail = verificationEmail(utilisateur.getEmail());
+        matchRegexPassword = verificationMotDePasse(utilisateur.getMotDePasse());
+        messageErreurMail = null;
+        messageErreurMotDePasse = null;
+        messageErreurConfirmationMail = null;
+        messageErreurConfirmationMotDePasse = null;
+        messageErreurUsernameDejaExistant = null;
+        List<Utilisateur> utilisateurs;
 
-        if (bindingResult.hasErrors() || bindingResult1.hasErrors() || !matchRegexEmail  || !matchRegexPassword) {
-            if (!matchRegexEmail) {
-                messageErreurMail = "L\'adresse mail n'est pas valable";
-            }
-            if (!matchRegexPassword) {
-                messageErreurMotDePasse = "Le mot de passe comprend de 8 à 20 caractères et contient" +
-                        " au mois une majuscule, un chiffre et un caractère spécial comme ! @ # & ( )";
-            }
-            if (!verificationCorrespondanceEmail(utilisateur.getEmail(), confirmationEmail)) {
-                messageErreurConfirmationMail = "L\'adresse mail n'est pas valable";
-            }
+        utilisateurs = authentificationProxy.findAllUtilisateur();
 
+        if (bindingResult.hasErrors() || bindingResult1.hasErrors() || !matchRegexEmail  || !matchRegexPassword
+        || !verificationCorrespondanceEmail(utilisateur.getEmail(), confirmationEmail)
+        || !verificationCorrespondanceMotDePasse(utilisateur.getMotDePasse(), confirmationMotDePasse)
+        || !verificationUsernameDejaExistant(utilisateurs, utilisateur)) {
+
+            verificationErreursGlobale(utilisateur, confirmationEmail, confirmationMotDePasse, utilisateurs);
             interfaceModelCreationCompte(model, utilisateur, adresse, confirmationEmail, confirmationMotDePasse
-                      , messageErreurMail, messageErreurMotDePasse, messageErreurConfirmationMail);
+                        , messageErreurMail, messageErreurMotDePasse, messageErreurConfirmationMail
+                        , messageErreurConfirmationMotDePasse, messageErreurUsernameDejaExistant);
 
             return "CreationCompte";
         }
+
+        messageInterface = "Votre compte a bien été créé";
+
         interfaceModelAccueil(model, utilisateurAuthentifier);
 
         return "Index";
@@ -157,8 +169,29 @@ public class UtilisateurController {
         return "ConversationMembre";
     }
 
-    private void interfaceModelAccueil(Model model, Utilisateur utilisateur) {
 
+
+    public void verificationErreursGlobale(Utilisateur utilisateur, String confirmationEmail, String confirmationMotDePasse
+                , List<Utilisateur> utilisateurs){
+        if (!matchRegexEmail) {
+            messageErreurMail = "L\'adresse mail n'est pas valable";
+        }
+        if (!matchRegexPassword) {
+            messageErreurMotDePasse = "Le mot de passe comprend de 8 à 20 caractères et contient" +
+            " au moins une majuscule, un chiffre et un caractère spécial ! @ # & ( )";
+        }
+        if (!verificationCorrespondanceEmail(utilisateur.getEmail(), confirmationEmail)) {
+            messageErreurConfirmationMail = "Les adresses mails ne correspondent pas";
+        }
+        if (!verificationCorrespondanceMotDePasse(utilisateur.getMotDePasse(), confirmationMotDePasse)) {
+            messageErreurConfirmationMotDePasse = "Les mots de passe ne correspondent pas";
+        }
+        if (!verificationUsernameDejaExistant(utilisateurs, utilisateur)) {
+            messageErreurUsernameDejaExistant = "Le nom d'utilisateur est déjà existant";
+        }
+    }
+
+    private void interfaceModelAccueil(Model model, Utilisateur utilisateur) {
         //Accueil
         String urlVideoAccueil = interfaceDonneesProxy.getUrlVideoYoutube();
         //Biographie
@@ -179,6 +212,7 @@ public class UtilisateurController {
         model.addAttribute("listeDateConcert", listeDateConcert);
         model.addAttribute("newsletterEmail", newsletterEmail);
         model.addAttribute("utilisateur", utilisateurAuthentifier);
+        model.addAttribute("messageCompteCree", messageInterface);
     }
 
     private void interfaceModelCreationCompte(Model model, Utilisateur utilisateur, Adresse adresse) {
@@ -191,7 +225,8 @@ public class UtilisateurController {
 
     private void interfaceModelCreationCompte(Model model, Utilisateur utilisateur, Adresse adresse
             , String confirmationEmail, String confirmationMotDePasse
-            , String messageErreurMail, String messageErreurMotDePasse, String messageErreurConfirmationMail) {
+            , String messageErreurMail, String messageErreurMotDePasse, String messageErreurConfirmationMail
+            , String messageErreurConfirmationMotDePasse, String messageErreurUsernameDejaExistant) {
         PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
 
         model.addAttribute("utilisateur", utilisateur);
@@ -202,6 +237,9 @@ public class UtilisateurController {
         model.addAttribute("messageErreurMail", messageErreurMail);
         model.addAttribute("messageErreurMotDePasse", messageErreurMotDePasse);
         model.addAttribute("messageErreurConfirmationMail", messageErreurConfirmationMail);
+        model.addAttribute("messageErreurConfirmationMotDePasse", messageErreurConfirmationMotDePasse);
+        model.addAttribute("messageErreurUsernameDejaExistant", messageErreurUsernameDejaExistant);
+
     }
 
     public boolean verificationEmail(final String email) {
@@ -221,31 +259,21 @@ public class UtilisateurController {
         return false;
     }
 
-    /*private String envoyerErreur(Utilisateur utilisateur, Adresse adresse, BindingResult bindingResult
-            , BindingResult bindingResult1, Model model, String confirmationEmail, String confirmationMotDePasse) {
-        if(bindingResult.hasErrors() || bindingResult1.hasErrors() || verificationEmail(utilisateur.getEmail())
-                || verificationMotDePasse(utilisateur.getMotDePasse())){
-            if (verificationEmail(utilisateur.getEmail())) {
-                messageErreurMail = "L\'adresse mail n'est pas valable";
-                interfaceModelCreationCompte(model, utilisateur, adresse, confirmationEmail, confirmationMotDePasse
-                        , messageErreurMail, null);
-                return "CreationCompte";
-            }
-
-            if (verificationMotDePasse(utilisateur.getMotDePasse())) {
-                messageErreurMotDePasse = "Le mot de passe doit est compris entre 8 et 20 caractères et contient" +
-                        " au mois une majuscule et un caractère spécial comme ! @ # & ( )";
-                interfaceModelCreationCompte(model, utilisateur, adresse, confirmationEmail, confirmationMotDePasse
-                        , null, messageErreurMotDePasse);
-                return "CreationCompte";
-            }
-
-            interfaceModelCreationCompte(model, utilisateur, adresse, confirmationEmail, confirmationMotDePasse
-                    , null, null);
-
-            return "CreationCompte";
+    public boolean verificationCorrespondanceMotDePasse(String motDePasse, String confirmationMotDePasse) {
+        if (motDePasse.equals(confirmationMotDePasse)) {
+            return true;
         }
-        return null;
-    }*/
+        return false;
+    }
+
+    public boolean verificationUsernameDejaExistant(List<Utilisateur> listeUtilisateurs, Utilisateur utilisateur) {
+        for (Utilisateur utilisateurBoucle : listeUtilisateurs) {
+            if (utilisateurBoucle.getUsername().equals(utilisateur.getUsername())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 }

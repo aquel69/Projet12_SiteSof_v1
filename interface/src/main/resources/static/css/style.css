@@ -110,6 +110,7 @@ iframe{
 }
 
 
+
 h1 {
     margin-left: 65%;
     color: blueviolet;
@@ -756,6 +757,16 @@ audio{
 }
 
 @media (max-width: 1920px) {
+    .message_alerte_creation{
+        margin-top: 7rem;
+        width: 100%;
+        position: fixed;
+    }
+
+    .message_creation_compte {
+        font-size: 1.7rem;
+    }
+
     h1{
         top: 13rem;
     }
