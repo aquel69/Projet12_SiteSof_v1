@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @FeignClient(name = "microservice-authentification", url = "localhost:9091")
 public interface MicroserviceAuthentification {
@@ -23,5 +24,8 @@ public interface MicroserviceAuthentification {
 
     @PostMapping(value = "/Login", consumes = MediaType.APPLICATION_JSON_VALUE)
     Utilisateur login(@Valid @RequestBody UtilisateurAuth utilisateurAuth);
+
+    @GetMapping(value = "/TousLesUtilisateurs")
+    List<Utilisateur> findAllUtilisateur();
 
 }

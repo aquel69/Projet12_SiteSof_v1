@@ -46,6 +46,10 @@
         <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube" class="lien_nav_icone"><i class="fab fa-youtube"></i></a>
         <a href="https://www.facebook.com/sofmusique/" id="facebook" class="lien_nav_icone"><i class="fab fa-facebook"></i></a>
     </nav>
+    <div th:if="${messageCompteCree != null}" class="alert alert-warning alert-dismissible fade show message_alerte_creation" role="alert">
+        <span class="message_creation_compte" th:text="${messageCompteCree}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <h1>Sof</h1>
     <h2>Auteure - Compositrice - Interprète</h2>
     <div class="iframe_container">
@@ -225,7 +229,7 @@
                                     <label for="validationAuthentification02" class="form-label texte_motDePasse_authentification">Mot de passe</label>
                                     <input type="password" th:field="*{motDePasse}" name="motDePasse" class="form-control texte_champ_mot_de_passe" id="validationAuthentification02" required>
                                 </div>
-                                <p class="text-center mt-4 mb-5 texte_pas_de_compte" ><a th:href="@{|/CreationCompte|}">Vous n'avez pas de compte?</a></p>
+                                <p class="text-center mt-4 mb-5 texte_pas_de_compte" ><a th:href="@{|/creationCompte|}">Vous n'avez pas de compte?</a></p>
                                 <div class="col-12 text-center">
                                     <button class="btn btn-lg btn-primary bouton_authentification" type="submit">Valider</button>
                                 </div>
