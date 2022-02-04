@@ -28,7 +28,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private AuthenticationManager authenticationManager;
+    /*private AuthenticationManager authenticationManager;
 
     @Autowired
     AuthentificationController authentificationController;
@@ -80,12 +80,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.setHeader("Authorization", accessToken);
 
-        /*Map<String, String > tokens = new HashMap<>();
+        *//*Map<String, String > tokens = new HashMap<>();
         tokens.put("accessToken", accessToken);
-        *//*tokens.put("refreshToken", refreshToken);*//*
+        *//**//*tokens.put("refreshToken", refreshToken);*//**//*
         response.setContentType(APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), tokens);*/
-    }
+        new ObjectMapper().writeValue(response.getOutputStream(), tokens);*//*
+    }*/
 }
 
 

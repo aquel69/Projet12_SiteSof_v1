@@ -21,9 +21,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Component
-public class JWTAuthorizationFilter extends OncePerRequestFilter {
+public class JWTAuthorizationFilter /*extends OncePerRequestFilter*/ {
 
-    @Override
+    /*@Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
 
@@ -54,5 +54,5 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(user);
         filterChain.doFilter(httpServletRequest, httpServletResponse);
-    }
+    }*/
 }

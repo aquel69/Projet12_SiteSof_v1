@@ -1,13 +1,14 @@
 package com.sof.interface_site.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
-@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
+
+    public Role(){
+
+    }
 
     /**
      * id de la table utilisateur

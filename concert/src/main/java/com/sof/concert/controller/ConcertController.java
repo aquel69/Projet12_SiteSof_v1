@@ -15,7 +15,7 @@ public class ConcertController {
     @Autowired
     DaoConcertDate daoConcertDate;
 
-    @GetMapping(value = "/TousLesConcerts")
+    @GetMapping(value = "/tousLesConcerts")
     public List<ConcertDate> findAllUtilisateur() {
         List<ConcertDate> concerts = daoConcertDate.findAllUtilisateurByDate();
 

@@ -12,7 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +57,6 @@ public class UtilisateurController {
     public String accueil(Model model){
         utilisateurAuthentifier = new Utilisateur();
         newsletterEmail = new NewsletterEmail();
-        System.out.println(messageInterface);
         interfaceModelAccueil(model, utilisateurAuthentifier);
 
         System.out.println("Accueil");
@@ -81,10 +80,10 @@ public class UtilisateurController {
         interfaceModelAccueil(model, utilisateurAuthentifier);
 
         if (utilisateurAuthentifier == null) {
-            error = "L'email our le mot de passe est incorrect";
+            error = "L'email ou le mot de passe est incorrect";
             return "Index";
         } else if (utilisateurAuthentifier.getRoles().get(0).getIdRole() == 2){
-            return "CreationCompte";
+            return "ConversationMembre";
         } else {
             return "Newsletter";
         }
@@ -126,8 +125,8 @@ public class UtilisateurController {
 
     @RequestMapping(value = "/creationCompte", method = RequestMethod.POST)
     public String creationCompte(Model model, @ModelAttribute("utilisateur") @Valid Utilisateur utilisateur
-            , BindingResult bindingResult, @ModelAttribute("adresse") @Valid Adresse adresse
-            , BindingResult bindingResult1, @RequestParam String confirmationEmail
+            , BindingResult erreurUtilisateur, @ModelAttribute("adresse") @Valid Adresse adresse
+            , BindingResult erreurAdresse, @RequestParam String confirmationEmail
             , @RequestParam String confirmationMotDePasse){
         matchRegexEmail = verificationEmail(utilisateur.getEmail());
         matchRegexPassword = verificationMotDePasse(utilisateur.getMotDePasse());
@@ -140,7 +139,7 @@ public class UtilisateurController {
 
         utilisateurs = authentificationProxy.findAllUtilisateur();
 
-        if (bindingResult.hasErrors() || bindingResult1.hasErrors() || !matchRegexEmail  || !matchRegexPassword
+        if (erreurUtilisateur.hasErrors() || erreurAdresse.hasErrors() || !matchRegexEmail  || !matchRegexPassword
         || !verificationCorrespondanceEmail(utilisateur.getEmail(), confirmationEmail)
         || !verificationCorrespondanceMotDePasse(utilisateur.getMotDePasse(), confirmationMotDePasse)
         || !verificationUsernameDejaExistant(utilisateurs, utilisateur)) {
@@ -153,15 +152,21 @@ public class UtilisateurController {
             return "CreationCompte";
         }
 
-        messageInterface = "Votre compte a bien été créé";
+        Adresse adresseSave = authentificationProxy.addAdresse(adresse);
+        utilisateur.setAdresseUtilisateur(adresseSave);
+        utilisateur.setDateAjout(LocalDateTime.now());
+        authentificationProxy.saveUtilisateur(utilisateur);
+        authentificationProxy.saveRole(utilisateur);
 
+        messageInterface = "Votre compte a bien été créé";
         interfaceModelAccueil(model, utilisateurAuthentifier);
+        messageInterface = null;
 
         return "Index";
     }
 
 
-    @RequestMapping(value = "/ConversationMembre", method = RequestMethod.GET)
+    @RequestMapping(value = "/conversationMembre", method = RequestMethod.GET)
     public String conversationMembre(Model model){
         interfaceModelAccueil(model, utilisateurAuthentifier);
 
@@ -171,25 +176,6 @@ public class UtilisateurController {
 
 
 
-    public void verificationErreursGlobale(Utilisateur utilisateur, String confirmationEmail, String confirmationMotDePasse
-                , List<Utilisateur> utilisateurs){
-        if (!matchRegexEmail) {
-            messageErreurMail = "L\'adresse mail n'est pas valable";
-        }
-        if (!matchRegexPassword) {
-            messageErreurMotDePasse = "Le mot de passe comprend de 8 à 20 caractères et contient" +
-            " au moins une majuscule, un chiffre et un caractère spécial ! @ # & ( )";
-        }
-        if (!verificationCorrespondanceEmail(utilisateur.getEmail(), confirmationEmail)) {
-            messageErreurConfirmationMail = "Les adresses mails ne correspondent pas";
-        }
-        if (!verificationCorrespondanceMotDePasse(utilisateur.getMotDePasse(), confirmationMotDePasse)) {
-            messageErreurConfirmationMotDePasse = "Les mots de passe ne correspondent pas";
-        }
-        if (!verificationUsernameDejaExistant(utilisateurs, utilisateur)) {
-            messageErreurUsernameDejaExistant = "Le nom d'utilisateur est déjà existant";
-        }
-    }
 
     private void interfaceModelAccueil(Model model, Utilisateur utilisateur) {
         //Accueil
@@ -242,6 +228,26 @@ public class UtilisateurController {
 
     }
 
+    public void verificationErreursGlobale(Utilisateur utilisateur, String confirmationEmail, String confirmationMotDePasse
+            , List<Utilisateur> utilisateurs){
+        if (!matchRegexEmail) {
+            messageErreurMail = "L\'adresse mail n'est pas valable";
+        }
+        if (!matchRegexPassword) {
+            messageErreurMotDePasse = "Le mot de passe comprend de 8 à 20 caractères et contient" +
+                    " au moins une majuscule, un chiffre et un caractère spécial ! @ # & ( )";
+        }
+        if (!verificationCorrespondanceEmail(utilisateur.getEmail(), confirmationEmail)) {
+            messageErreurConfirmationMail = "Les adresses mails ne correspondent pas";
+        }
+        if (!verificationCorrespondanceMotDePasse(utilisateur.getMotDePasse(), confirmationMotDePasse)) {
+            messageErreurConfirmationMotDePasse = "Les mots de passe ne correspondent pas";
+        }
+        if (!verificationUsernameDejaExistant(utilisateurs, utilisateur)) {
+            messageErreurUsernameDejaExistant = "Le nom d'utilisateur est déjà existant";
+        }
+    }
+
     public boolean verificationEmail(final String email) {
         Matcher matcher = patternEmail.matcher(email);
         return matcher.matches();
@@ -272,7 +278,6 @@ public class UtilisateurController {
                 return false;
             }
         }
-
         return true;
     }
 

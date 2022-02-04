@@ -30,14 +30,17 @@ public class AuthentificationApplication extends SpringBootServletInitializer {
 	void init_utilisateur(){
 		Adresse adresse = new Adresse();
 
-		adresse.setIdAdresse(1);
-*//*
+		adresse.setIdAdresse(0);
+		adresse.setAdresse("20 rue de la poire");
+		adresse.setCodePostal("69330");
+		adresse.setVille("Jonage");
+
 		userService.addAdresse(adresse);
-		userService.saveUtilisateur(new Utilisateur("Rut", "Sophie",  "Sof", adresse, "sophierut@gmail.com", "123", dateTime));
-		userService.addRoleToUtilisateur("sophierut@gmail.com", "administrateur");*//*
+		*//*userService.saveUtilisateur(new Utilisateur("Rut", "Sophie",  "Sof", adresse, "sophierut@gmail.com", "123", dateTime));
+		userService.addRoleToUtilisateur("sophierut@gmail.com", "ROLE_ADMIN");*//*
 
 		userService.saveUtilisateur(new Utilisateur("Lardon", "Alexandre",  "Aquel", adresse, "alexandre.lardon@yahoo.fr", "123", dateTime));
-		userService.addRoleToUtilisateur("alexandre.lardon@yahoo.fr", "invite");
+		userService.addRoleToUtilisateur("Aquel");
 	}*/
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {

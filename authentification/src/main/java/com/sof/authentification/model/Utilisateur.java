@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -53,7 +54,7 @@ public class Utilisateur {
     @NonNull
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="adresse_id")
-    private Adresse adresse;
+    private Adresse adresseUtilisateur;
 
     /**
      * email de l'utilisateur

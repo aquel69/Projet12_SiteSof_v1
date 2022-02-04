@@ -21,7 +21,7 @@ import org.springframework.security.web.server.csrf.CookieServerCsrfTokenReposit
 @EnableGlobalMethodSecurity(prePostEnabled = true)*/
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+   /* @Autowired
     UserDetailsService userDetailsService;
 
     @Autowired
@@ -54,5 +54,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception{
         return super.authenticationManagerBean();
-    }
+    }*/
 }

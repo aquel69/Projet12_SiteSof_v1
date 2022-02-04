@@ -8,8 +8,8 @@ import java.util.List;
 public interface UserService {
 
     Utilisateur saveUtilisateur(Utilisateur utilisateur);
-    Utilisateur findUtilisateurByEmail(String email);
+    Utilisateur findUtilisateurByUsername(String username);
     Adresse addAdresse(Adresse adresse);
-    Utilisateur addRoleToUtilisateur(String email, String roleName);
+    Utilisateur addRoleToUtilisateur(String email);
 
 }
