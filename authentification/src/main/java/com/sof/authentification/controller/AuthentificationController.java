@@ -2,17 +2,21 @@ package com.sof.authentification.controller;
 
 import com.sof.authentification.Security.MyUserDetailService;
 import com.sof.authentification.dao.DaoAdresse;
+import com.sof.authentification.dao.DaoRole;
 import com.sof.authentification.dao.DaoUtilisateur;
 import com.sof.authentification.dao.DaoUtilisateurAuthentification;
 import com.sof.authentification.model.Adresse;
+import com.sof.authentification.model.Role;
 import com.sof.authentification.model.Utilisateur;
 import com.sof.authentification.model.UtilisateurAuth;
+import com.sof.authentification.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -28,10 +32,18 @@ public class AuthentificationController {
     DaoAdresse daoAdresse;
 
     @Autowired
+    UserServiceImpl userService;
+
+    @Autowired
+    DaoRole daoRole;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     MyUserDetailService myUserDetailService;
+
+    private Adresse adresseSave;
 
 
     /**
@@ -39,9 +51,9 @@ public class AuthentificationController {
      * @param adresse
      * @return le nombre de lignes ajoutées
      */
-    @PostMapping(value = "/AjouterAdresse")
-    public Adresse addAdresse(Adresse adresse){
-        return daoAdresse.save(adresse);
+    @PostMapping(value = "/ajouterAdresse")
+    public Adresse addAdresse(@RequestBody  Adresse adresse){
+        return userService.addAdresse(adresse);
     }
 
     /**
@@ -49,38 +61,61 @@ public class AuthentificationController {
      * @param utilisateur
      * @return le nombre de lignes ajoutées
      */
-    @PostMapping(value = "/AjouterUtilisateur")
+    @PostMapping(value = "/ajouterUtilisateur")
     public Utilisateur saveUtilisateur(@RequestBody Utilisateur utilisateur) {
-        Adresse adresse = daoAdresse.findByIdAdresse(daoAdresse.recupererDernierAdresse());
-        utilisateur.setMotDePasse(bCryptPasswordEncoder.encode(utilisateur.getMotDePasse()));
-        utilisateur.setAdresse(adresse);
+        /*utilisateur.setMotDePasse(bCryptPasswordEncoder.encode(utilisateur.getMotDePasse()));
+        utilisateur.setDateAjout(LocalDateTime.now());
+        Role role = findRoleByStatut("ROLE_MEMBER");
 
-        return daoUtilisateur.save(utilisateur);
+        utilisateur.getRoles().add(role);*/
+        return userService.saveUtilisateur(utilisateur);
     }
 
-    @GetMapping(value = "/UtilisateurSelonEmail/{email}")
-    public Utilisateur findUtilisateurByEmail(@PathVariable String email) {
-        Utilisateur utilisateur = daoUtilisateur.findByEmail(email);
+    @GetMapping(value = "/roleSelonStatut/{statut}")
+    public Role findRoleByStatut(@PathVariable String statut) {
+        Role role = daoRole.findByStatut(statut);
+
+        return role;
+    }
+
+
+    @PostMapping(value = "/ajouterRole")
+    public Utilisateur saveRole(@RequestBody Utilisateur utilisateur) {
+
+        return userService.addRoleToUtilisateur(utilisateur.getUsername());
+    }
+
+
+    @GetMapping(value = "/utilisateurSelonUsername/{username}")
+    public Utilisateur findUtilisateurByUsername(@PathVariable String username) {
+        Utilisateur utilisateur = daoUtilisateur.findByUsername(username);
         System.out.println(utilisateur.toString());
 
         return utilisateur;
     }
 
-    @GetMapping(value = "/TousLesUtilisateurs")
+    @GetMapping(value = "/tousLesUtilisateurs")
     public List<Utilisateur> findAllUtilisateur() {
         List<Utilisateur> utilisateurs = daoUtilisateur.findAll();
 
         return utilisateurs;
     }
 
-    @GetMapping(value = "/DerniereAdresse")
+    @GetMapping(value = "/derniereAdresse")
     public int recupererDernierAdresse(){
         int idDerniereAdresse = daoAdresse.recupererDernierAdresse();
 
         return idDerniereAdresse;
     }
 
-    @PostMapping(value = "/Login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/derniereUtilisateur")
+    public int recupererDernierUtilisateur(){
+        int idDerniereUtilisateur = daoUtilisateur.recupererDernierUtilisateur();
+
+        return idDerniereUtilisateur;
+    }
+
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Utilisateur login(@Valid @RequestBody UtilisateurAuth utilisateurAuth) {
         List<Utilisateur> listeDesMembres = daoUtilisateur.findAll();
         System.out.println(utilisateurAuth);

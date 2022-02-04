@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MyUserDetailService implements UserDetailsService {
+public class MyUserDetailService /*implements UserDetailsService*/ {
 
-    @Autowired
+    /*@Autowired
     DaoUtilisateur daoUtilisateur;
 
     @Override
@@ -37,6 +37,6 @@ public class MyUserDetailService implements UserDetailsService {
         });
 
         return new User(utilisateur.getUsername(), utilisateur.getMotDePasse(), auths);
-    }
+    }*/
 
 }

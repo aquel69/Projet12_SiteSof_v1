@@ -40,7 +40,7 @@ public class Utilisateur {
     /**
      * adresse du membre
      */
-    private Adresse idAdresse;
+    private Adresse adresseUtilisateur;
 
     /**
      * email du membre

@@ -30,16 +30,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Utilisateur saveUtilisateur(Utilisateur utilisateur) {
-        Adresse adresse = daoAdresse.findByIdAdresse(daoAdresse.recupererDernierAdresse());
+        //Adresse adresse = daoAdresse.findByIdAdresse(daoAdresse.recupererDernierAdresse());
         utilisateur.setMotDePasse(bCryptPasswordEncoder.encode(utilisateur.getMotDePasse()));
-        utilisateur.setAdresse(adresse);
+        //utilisateur.setAdresseUtilisateur(adresse);
 
         return daoUtilisateur.save(utilisateur);
     }
 
     @Override
-    public Utilisateur findUtilisateurByEmail(String email) {
-        return daoUtilisateur.findByEmail(email);
+    public Utilisateur findUtilisateurByUsername(String username) {
+        return daoUtilisateur.findByUsername(username);
     }
 
     @Override
@@ -48,9 +48,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Utilisateur addRoleToUtilisateur(String email, String statut) {
-        Utilisateur utilisateur = daoUtilisateur.findByEmail(email);
-        Role role = daoRole.findByStatut(statut);
+    public Utilisateur addRoleToUtilisateur(String username) {
+        Utilisateur utilisateur = daoUtilisateur.findByUsername(username);
+        Role role = daoRole.findByStatut("ROLE_MEMBER");
 
         utilisateur.getRoles().add(role);
 

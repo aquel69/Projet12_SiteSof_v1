@@ -9,7 +9,7 @@ import java.util.List;
 @FeignClient(name = "microservice-concert", url = "localhost:9090")
 public interface MicroserviceConcert {
 
-    @GetMapping(value = "/TousLesConcerts")
+    @GetMapping(value = "/tousLesConcerts")
     List<ConcertDate> findAllUtilisateur();
 
 }

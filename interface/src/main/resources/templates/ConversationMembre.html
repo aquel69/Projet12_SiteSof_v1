@@ -58,7 +58,7 @@
                         <div class="row formulaire_conversation">
                             <div class="col-12">
                                 <label for="formulaire_conversation_01" class="form-label text_form_formulaire_conversation">Nouveau Message</label>
-                                <input type="text" class="form-control" id="formulaire_conversation_01" required>
+                                <textarea th:value="${messageConversationMembre}" name="message" aria-describedby="button_conversation" type="text" class="form-control" id="formulaire_conversation_01" required></textarea>
                             </div>
                         </div>
                     </form>

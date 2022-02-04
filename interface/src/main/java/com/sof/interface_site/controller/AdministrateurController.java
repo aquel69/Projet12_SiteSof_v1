@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class AdministrateurController {
 
-    @RequestMapping(value = "/Newsletter", method = RequestMethod.GET)
+    @RequestMapping(value = "/newsletter", method = RequestMethod.GET)
     public String envoiEmail(){
         System.out.println("Newsletter");
         return "Newsletter";

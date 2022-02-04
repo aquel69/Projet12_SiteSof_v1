@@ -109,7 +109,15 @@ iframe{
     left:57%;
 }
 
+.message_alerte_creation{
+    margin-top: 7rem;
+    width: 100%;
+    position: fixed;
+}
 
+.message_creation_compte {
+    font-size: 1.7rem;
+}
 
 h1 {
     margin-left: 65%;
