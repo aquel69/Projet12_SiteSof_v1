@@ -14,6 +14,7 @@ body {
 /* Navigation */
 
 #navigationBarre {
+    display: inline-block;
     position: fixed;
     overflow: hidden;
     z-index: 40;
@@ -29,6 +30,7 @@ body {
 }
 
 #navigationBarre a {
+    pointer-events:auto;
     text-decoration: none;
     font-size: 3rem;
     padding: 1rem 5rem;
@@ -47,11 +49,15 @@ body {
 }
 
 #lien_icone{
+    /*width: 100%;
+    text-align: start;*/
+    pointer-events:auto;
+    display: inline-block;
     position: fixed;
-    z-index: 40;
+    z-index: 41;
 
     transition: all 0.4s ease-in-out;
-    text-align: end;
+
     /* anim GS */
     opacity: 0;
 }
@@ -61,13 +67,38 @@ body {
     font-size: 3rem;
     padding: 1rem 2rem;
     line-height: 6.5rem;
-    font-family: 'Kaushan Script';
     margin: auto;
     color: #f7f7f7;
 }
 
 #lien_icone a:active {
     font-size: 4rem;
+}
+
+#lien_deconnection{
+    text-align: end;
+    display: inline-block;
+    position: fixed;
+    z-index: 42;
+
+    transition: all 0.4s ease-in-out;
+
+    /* anim GS */
+    opacity: 0;
+}
+
+#lien_deconnection a {
+    text-decoration: none;
+    font-size: 1.8rem;
+    padding: 1rem 4rem 1rem 2rem;
+    line-height: 6.5rem;
+    font-family: 'Lato';
+    margin: auto;
+    color: #f7f7f7;
+}
+
+#lien_deconnection a:active {
+    font-size: 2rem;
 }
 
 #soundcloud{

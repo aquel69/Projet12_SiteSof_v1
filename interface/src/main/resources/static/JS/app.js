@@ -3,6 +3,7 @@
 let nav = document.getElementById('navigationBarre');
 let liens_icon = document.getElementsByClassName('lien_nav_icone');
 let liens = document.getElementsByClassName('liensNav');
+let lien_deconnection = document.getElementsByClassName('lien_deconnect');
 
 // onload pour commencer et onresize pour dynamique
 window.onresize = colorHeader;
@@ -24,10 +25,13 @@ function colorHeader() {
                 liens[2].style.color = "#373737";
                 liens[3].style.color = "#373737";
                 liens[4].style.color = "#373737";
+                liens[5].style.color = "#373737";
 
                 liens_icon[0].style.color = "#373737";
                 liens_icon[1].style.color = "#373737";
                 liens_icon[2].style.color = "#373737";
+
+                lien_deconnection[0].style.color = "#373737";
             } else {
 
                 nav.style.background = "#8A2BE2FF";
@@ -36,10 +40,13 @@ function colorHeader() {
                 liens[2].style.color = "#f7f7f7";
                 liens[3].style.color = "#f7f7f7";
                 liens[4].style.color = "#f7f7f7";
+                liens[5].style.color = "#f7f7f7";
 
                 liens_icon[0].style.color = "#f7f7f7";
                 liens_icon[1].style.color = "#f7f7f7";
                 liens_icon[2].style.color = "#f7f7f7";
+
+                lien_deconnection[0].style.color = "#f7f7f7";
             }
 
             // second else pour mettre la nav en clair et bloqué l'anim du dessus
@@ -51,10 +58,13 @@ function colorHeader() {
             liens[2].style.color = "#373737";
             liens[3].style.color = "#373737";
             liens[4].style.color = "#373737";
+            liens[5].style.color = "#373737";
 
             liens_icon[0].style.color = "#373737";
             liens_icon[1].style.color = "#373737";
             liens_icon[2].style.color = "#373737";
+
+            lien_deconnection[0].style.color = "#373737";
         }
     }
 };

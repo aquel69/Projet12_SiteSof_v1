@@ -33,8 +33,8 @@
 
 <header>
     <div class="col-1 ensemble_retour_accueil">
-        <a th:href="@{|/|}" class="retour_accueil_icone"><i class="fas fa-times"></i></a>
-        <h6 class="text_retour_accueil"><a th:href="@{|/|}">Se Déconnecter</a></h6>
+        <a th:href="@{|/|}" class="retour_accueil_icone"><i class="fas fa-reply"></i></a>
+        <h6 class="text_retour_accueil"><a th:href="@{|/|}">Retour Accueil</a></h6>
     </div>
 </header>
 <section>
@@ -44,30 +44,44 @@
         </div>
         <div class="row">
             <div class="col-4 text-center ensemble_photo_conversation">
-                <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoConversationMembre()})}" alt="photo sof tenant son ukulélé avec un pont dans le font" class="img-fluid photo_conversation">
+                <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoConversationMembre()})}" alt="photo sof tenant son ukulélé avec un pont dans le fond" class="img-fluid photo_conversation">
             </div>
-            <div class="col-6 ensemble_conversation">
-
+            <div class="col-6 ensemble_conversation" th:object="${conversation}">
                     <div class="row ensemble_historique_conversation">
                         <div class="col-12">
-                            <label for="historique_conversation_01" class="form-label text_form_conversation_historique">Historique Message</label>
-                            <input type="text" class="form-control" id="historique_conversation_01" required>
-                        </div>
-                    </div>
-                    <form>
-                        <div class="row formulaire_conversation">
-                            <div class="col-12">
-                                <label for="formulaire_conversation_01" class="form-label text_form_formulaire_conversation">Nouveau Message</label>
-                                <textarea th:value="${messageConversationMembre}" name="message" aria-describedby="button_conversation" type="text" class="form-control" id="formulaire_conversation_01" required></textarea>
+                            <label class="form-label text_form_conversation_historique">Historique Message</label>
+                            <div id="historique_conversation_01" class="list-group ">
+                                <div th:if="${!conversations.isEmpty()}" th:each="conversationBoucle, index : ${conversations}" class="list-group">
+                                    <a class="list-group-item list-group-item-action active mt-2 bloc_message">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1 " id="texte_interlocuteur" th:text="'Message de ' +  ${conversationBoucle.getInterlocuteur().getUsername()}"></p>
+                                            <small th:if="${localDateTimeMidnight.isEqual(conversationBoucle.getDateAjout())}"> aujourd'hui</small>
+                                            <small th:if="${!localDateTimeMidnight.isEqual(conversationBoucle.getDateAjout())}" th:text="'Il y a ' + ${localDateTime.getDayOfYear() - conversationBoucle.getDateAjout().getDayOfYear()} + ' jours'"></small>
+                                        </div>
+                                        <p id="texte_message_interlocuteur" class="mb-1" th:text="${conversationBoucle.getMessage()}"></p>
+                                    </a>
+                                </div>
+                                <div class="h-100 d-flex align-items-center justify-content-center" th:if="${conversations.isEmpty()}">
+                                    <h5 class="text-center">Pas de commentaire</h5>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                <form th:action="@{/conversationMembre}" th:object="${conversation}" method="post">
+                    <div class="row formulaire_conversation">
+                        <div class="col-12">
+                            <label for="formulaire_conversation_01" class="form-label text_form_formulaire_conversation">Nouveau Message</label>
+                            <textarea th:field="*{message}" name="message" aria-describedby="button_conversation" type="text" class="form-control" id="formulaire_conversation_01" required></textarea>
+                        </div>
+                    </div>
+
+                <!--th:value="${messageConversationMembre}"-->
                     <div class="row ensemble_bouton_conversation">
                         <div class="col-12 text-center">
                             <button class="btn btn-lg btn-primary bouton_conversation" type="submit">Valider</button>
                         </div>
                     </div>
-
+                </form>
             </div>
         </div>
     </div>

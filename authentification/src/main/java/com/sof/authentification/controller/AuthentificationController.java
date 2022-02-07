@@ -5,10 +5,7 @@ import com.sof.authentification.dao.DaoAdresse;
 import com.sof.authentification.dao.DaoRole;
 import com.sof.authentification.dao.DaoUtilisateur;
 import com.sof.authentification.dao.DaoUtilisateurAuthentification;
-import com.sof.authentification.model.Adresse;
-import com.sof.authentification.model.Role;
-import com.sof.authentification.model.Utilisateur;
-import com.sof.authentification.model.UtilisateurAuth;
+import com.sof.authentification.model.*;
 import com.sof.authentification.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -63,11 +60,6 @@ public class AuthentificationController {
      */
     @PostMapping(value = "/ajouterUtilisateur")
     public Utilisateur saveUtilisateur(@RequestBody Utilisateur utilisateur) {
-        /*utilisateur.setMotDePasse(bCryptPasswordEncoder.encode(utilisateur.getMotDePasse()));
-        utilisateur.setDateAjout(LocalDateTime.now());
-        Role role = findRoleByStatut("ROLE_MEMBER");
-
-        utilisateur.getRoles().add(role);*/
         return userService.saveUtilisateur(utilisateur);
     }
 
@@ -116,22 +108,21 @@ public class AuthentificationController {
     }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Utilisateur login(@Valid @RequestBody UtilisateurAuth utilisateurAuth) {
+    public UtilisateurAuthentification login(@Valid @RequestBody UtilisateurAuth utilisateurAuth) {
         List<Utilisateur> listeDesMembres = daoUtilisateur.findAll();
-        System.out.println(utilisateurAuth);
-        Utilisateur utilisateurAuthentifie = verificationAuthentification(listeDesMembres, utilisateurAuth.getMotDePasse()
+        UtilisateurAuthentification utilisateurAuthentifie = verificationAuthentification(listeDesMembres, utilisateurAuth.getMotDePasse()
                 , utilisateurAuth.getUsername());
 
         return utilisateurAuthentifie;
     }
 
-    private Utilisateur verificationAuthentification(List<Utilisateur> listeDesMembres, String motDePasse, String username){
+    private UtilisateurAuthentification verificationAuthentification(List<Utilisateur> listeDesMembres, String motDePasse, String username){
         for (Utilisateur utilisateur : listeDesMembres) {
             if (utilisateur.getUsername().equals(username)) {
                 if (bCryptPasswordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
-                    utilisateur = daoUtilisateur.findByUsername(username);
+                    UtilisateurAuthentification utilisateurAuthentification = daoUtilisateurAuthentification.findByUsername(username);
 
-                    return utilisateur;
+                    return utilisateurAuthentification;
                 }
             }
         }

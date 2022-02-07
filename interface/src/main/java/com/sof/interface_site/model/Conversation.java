@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class Commentaire {
+public class Conversation {
 
     /**
      * id de la table commentaire
@@ -15,19 +15,19 @@ public class Commentaire {
     private int idCommentaire;
 
     /**
-     * commentaire
+     * message
      */
-    private String commentaire;
+    private String message;
 
     /**
      * utilisateur
      */
-    private Utilisateur membre;
+    private UtilisateurAuthentification membre;
 
     /**
      * utilisateur
      */
-    private Utilisateur interlocuteur;
+    private UtilisateurAuthentification interlocuteur;
 
     /**
      * date du commentaire

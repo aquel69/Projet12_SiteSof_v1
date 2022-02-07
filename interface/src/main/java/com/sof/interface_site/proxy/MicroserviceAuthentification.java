@@ -1,9 +1,6 @@
 package com.sof.interface_site.proxy;
 
-import com.sof.interface_site.model.Adresse;
-import com.sof.interface_site.model.Role;
-import com.sof.interface_site.model.Utilisateur;
-import com.sof.interface_site.model.UtilisateurAuth;
+import com.sof.interface_site.model.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +27,7 @@ public interface MicroserviceAuthentification {
     Utilisateur findUtilisateurByEmail(@PathVariable String email);
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    Utilisateur login(@Valid @RequestBody UtilisateurAuth utilisateurAuth);
+    UtilisateurAuthentification login(@Valid @RequestBody UtilisateurAuth utilisateurAuth);
 
     @GetMapping(value = "/tousLesUtilisateurs")
     List<Utilisateur> findAllUtilisateur();
