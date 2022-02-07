@@ -1,10 +1,7 @@
 package com.sof.interface_site.controller;
 
 import com.sof.interface_site.model.*;
-import com.sof.interface_site.proxy.MicroserviceAuthentification;
-import com.sof.interface_site.proxy.MicroserviceConcert;
-import com.sof.interface_site.proxy.MicroserviceInterfaceDonnees;
-import com.sof.interface_site.proxy.MicroserviceNewsletterEmail;
+import com.sof.interface_site.proxy.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +9,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,8 +42,14 @@ public class UtilisateurController {
     @Autowired
     private MicroserviceNewsletterEmail newsletterEmailProxy;
 
-    private Utilisateur utilisateurAuthentifier;
+    @Autowired
+    private MicroserviceConversation conversationProxy;
+
+    private UtilisateurAuthentification utilisateurAuthentifier;
+    private Utilisateur utilisateur;
     private NewsletterEmail newsletterEmail;
+    private Conversation conversation;
+    private Role role;
     private String error = null;
     private boolean matchRegexEmail;
     private boolean matchRegexPassword;
@@ -55,9 +62,21 @@ public class UtilisateurController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String accueil(Model model){
-        utilisateurAuthentifier = new Utilisateur();
+        utilisateur = new Utilisateur();
+
+        if (utilisateurAuthentifier == null) {
+            utilisateurAuthentifier = new UtilisateurAuthentification();
+            role = new Role();
+
+            role.setStatut("ROLE_USER");
+            utilisateurAuthentifier.getRoles().add(0, role);
+        }
+
         newsletterEmail = new NewsletterEmail();
-        interfaceModelAccueil(model, utilisateurAuthentifier);
+
+
+        model.addAttribute("utilisateurAuthentifier", utilisateurAuthentifier);
+        interfaceModelAccueil(model, utilisateur);
 
         System.out.println("Accueil");
         return "Index";
@@ -77,13 +96,14 @@ public class UtilisateurController {
 
         utilisateurAuthentifier = authentificationProxy.login(utilisateurPost);
 
-        interfaceModelAccueil(model, utilisateurAuthentifier);
+        model.addAttribute("utilisateurAuthentifier", utilisateurAuthentifier);
+        interfaceModelAccueil(model, utilisateur);
 
         if (utilisateurAuthentifier == null) {
             error = "L'email ou le mot de passe est incorrect";
             return "Index";
         } else if (utilisateurAuthentifier.getRoles().get(0).getIdRole() == 2){
-            return "ConversationMembre";
+            return "Index";
         } else {
             return "Newsletter";
         }
@@ -97,7 +117,7 @@ public class UtilisateurController {
 
         newsletterEmailProxy.ajouterEmailNewsletter(newsletterEmailPost);
 
-        interfaceModelAccueil(model, utilisateurAuthentifier);
+        interfaceModelAccueil(model, utilisateur);
 
         return "Index";
     }
@@ -108,7 +128,7 @@ public class UtilisateurController {
 
         newsletterEmailProxy.envoyerEmailUtilisateurAAdmin(nom, email, message);
 
-        interfaceModelAccueil(model, utilisateurAuthentifier);
+        interfaceModelAccueil(model, utilisateur);
 
         return "Index";
     }
@@ -159,7 +179,7 @@ public class UtilisateurController {
         authentificationProxy.saveRole(utilisateur);
 
         messageInterface = "Votre compte a bien été créé";
-        interfaceModelAccueil(model, utilisateurAuthentifier);
+        interfaceModelAccueil(model, utilisateur);
         messageInterface = null;
 
         return "Index";
@@ -168,7 +188,26 @@ public class UtilisateurController {
 
     @RequestMapping(value = "/conversationMembre", method = RequestMethod.GET)
     public String conversationMembre(Model model){
-        interfaceModelAccueil(model, utilisateurAuthentifier);
+        conversation = new Conversation();
+        interfaceModelConversation(model);
+
+        System.out.println("ConversationMembre");
+        return "ConversationMembre";
+    }
+
+    @RequestMapping(value = "/conversationMembre", method = RequestMethod.POST)
+    public String conversationMembre(Model model, @ModelAttribute("conversation") @Valid Conversation conversation
+            , BindingResult erreurConversation){
+        conversation.setMessage(conversation.getMessage().replace("\n", "").replace("\r", ""));
+
+        conversation.setMembre(utilisateurAuthentifier);
+        conversation.setDateAjout(LocalDateTime.now());
+        conversation.setInterlocuteur(utilisateurAuthentifier);
+
+        conversationProxy.saveConversation(conversation);
+        conversationProxy.conversationsSelonMembre(utilisateurAuthentifier.getIdUtilisateur());
+
+        interfaceModelConversation(model);
 
         System.out.println("ConversationMembre");
         return "ConversationMembre";
@@ -199,6 +238,7 @@ public class UtilisateurController {
         model.addAttribute("newsletterEmail", newsletterEmail);
         model.addAttribute("utilisateur", utilisateurAuthentifier);
         model.addAttribute("messageCompteCree", messageInterface);
+        model.addAttribute("utilisateur", utilisateur);
     }
 
     private void interfaceModelCreationCompte(Model model, Utilisateur utilisateur, Adresse adresse) {
@@ -225,6 +265,23 @@ public class UtilisateurController {
         model.addAttribute("messageErreurConfirmationMail", messageErreurConfirmationMail);
         model.addAttribute("messageErreurConfirmationMotDePasse", messageErreurConfirmationMotDePasse);
         model.addAttribute("messageErreurUsernameDejaExistant", messageErreurUsernameDejaExistant);
+
+    }
+
+    private void interfaceModelConversation(Model model) {
+        conversation = new Conversation();
+        LocalTime midnight = LocalTime.MIDNIGHT;
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
+        List<Conversation> conversations = conversationProxy.conversationsSelonMembre(utilisateurAuthentifier.getIdUtilisateur());
+        PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
+
+        /*model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("adresse", adresse);*/
+        model.addAttribute("photoInterface", photoInterface);
+        model.addAttribute("conversation", conversation);
+        model.addAttribute("conversations", conversations);
+        model.addAttribute("localDateTimeMidnight",LocalDateTime.of(today, midnight));
+        model.addAttribute("localDateTime",LocalDateTime.now());
 
     }
 

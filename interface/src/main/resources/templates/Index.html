@@ -39,6 +39,7 @@
         <a href="#concerts" class="liensNav" onclick="toggleNav()">Concerts</a>
         <a href="#album" class="liensNav" onclick="toggleNav()">Album</a>
         <a href="#contact" class="liensNav" onclick="toggleNav()">Contact</a>
+        <a th:if="${utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:href="@{|/conversationMembre|}" class="liensNav">Conversation</a>
         <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
     </nav>
     <nav id="lien_icone">
@@ -46,6 +47,11 @@
         <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube" class="lien_nav_icone"><i class="fab fa-youtube"></i></a>
         <a href="https://www.facebook.com/sofmusique/" id="facebook" class="lien_nav_icone"><i class="fab fa-facebook"></i></a>
     </nav>
+
+    <nav id="lien_deconnection">
+        <a th:text="'se déconnecter'" class="lien_deconnect"></a>
+    </nav>
+
     <div th:if="${messageCompteCree != null}" class="alert alert-warning alert-dismissible fade show message_alerte_creation" role="alert">
         <span class="message_creation_compte" th:text="${messageCompteCree}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -330,7 +336,7 @@
 <!-- Bootstrap 5 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<script src="JS/app.js"></script>
-<script src="JS/greenSock.js"></script>
+<script type="javascript" src="JS/app.js"></script>
+<script type="application/javascript" src="JS/greenSock.js"></script>
 </body>
 </html>

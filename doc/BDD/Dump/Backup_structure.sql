@@ -252,7 +252,7 @@ CREATE TABLE public.commentaire (
 );
 
 
-ALTER TABLE public.commentaire OWNER TO postgres;
+ALTER TABLE public.conversation OWNER TO postgres;
 
 --
 -- TOC entry 225 (class 1259 OID 77121)
@@ -275,7 +275,7 @@ ALTER TABLE public.commentaire_id_commentaire_seq OWNER TO postgres;
 -- Name: commentaire_id_commentaire_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.commentaire_id_commentaire_seq OWNED BY public.commentaire.id_commentaire;
+ALTER SEQUENCE public.commentaire_id_commentaire_seq OWNED BY public.conversation.id_conversation;
 
 
 --
@@ -583,7 +583,7 @@ ALTER TABLE ONLY public.biographie_interface ALTER COLUMN id_biographie_interfac
 -- Name: commentaire id_commentaire; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.commentaire ALTER COLUMN id_commentaire SET DEFAULT nextval('public.commentaire_id_commentaire_seq'::regclass);
+ALTER TABLE ONLY public.conversation ALTER COLUMN id_conversation SET DEFAULT nextval('public.commentaire_id_commentaire_seq'::regclass);
 
 
 --
@@ -675,8 +675,8 @@ ALTER TABLE ONLY public.biographie_interface
 -- Name: commentaire commentaire_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.commentaire
-    ADD CONSTRAINT commentaire_pk PRIMARY KEY (id_commentaire);
+ALTER TABLE ONLY public.conversation
+    ADD CONSTRAINT commentaire_pk PRIMARY KEY (id_conversation);
 
 
 --
@@ -756,8 +756,8 @@ ALTER TABLE ONLY public.utilisateur
 -- Name: commentaire membre_commentaire_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.commentaire
-    ADD CONSTRAINT membre_commentaire_fk FOREIGN KEY (membre) REFERENCES public.utilisateur(id_utilisateur);
+ALTER TABLE ONLY public.conversation
+    ADD CONSTRAINT membre_commentaire_fk FOREIGN KEY (membre_id) REFERENCES public.utilisateur(id_utilisateur);
 
 
 --
@@ -765,8 +765,8 @@ ALTER TABLE ONLY public.commentaire
 -- Name: commentaire membre_commentaire_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.commentaire
-    ADD CONSTRAINT membre_commentaire_fk1 FOREIGN KEY (interlocuteur) REFERENCES public.utilisateur(id_utilisateur);
+ALTER TABLE ONLY public.conversation
+    ADD CONSTRAINT membre_commentaire_fk1 FOREIGN KEY (interlocuteur_id) REFERENCES public.utilisateur(id_utilisateur);
 
 
 --

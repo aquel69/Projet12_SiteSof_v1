@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class UtilisateurAuthentification {
@@ -23,6 +26,5 @@ public class UtilisateurAuthentification {
     /**
      * role de l'utilisateur
      */
-    private int role;
-
+    private List<Role> roles = new ArrayList<>();
 }

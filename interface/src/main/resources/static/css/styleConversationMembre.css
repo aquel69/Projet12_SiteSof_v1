@@ -73,6 +73,33 @@ body{
 .ensemble_historique_conversation{
     border-bottom: 0.1rem solid #575659;
     padding-bottom: 5rem;
+    height: 45rem;
+    max-height: 45rem;
+    min-height: 45rem;
+
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: blueviolet #f7f7f7;
+
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 1.5rem;
+    height: 100%;
+}
+
+*::-webkit-scrollbar-track {
+    background: #f7f7f7;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: blueviolet;
+    border-radius: 20px;
+    border: 3px solid #f7f7f7;
+
 }
 
 .text_form_conversation_historique{
@@ -86,14 +113,32 @@ body{
     padding-bottom: 1rem;
 }
 
+.bloc_message {
+    width: 99%;
+}
+
 #historique_conversation_01{
-    height: 38rem;
+    overflow: scroll;
     max-height: 38rem;
 }
+
 
 #formulaire_conversation_01{
     height: 20rem;
     max-height: 20rem;
+    font-size: 1.3rem;
+}
+
+#texte_interlocuteur {
+    font-size: 1.3rem;
+}
+
+small {
+    font-size: 1.2rem;
+}
+
+#texte_message_interlocuteur {
+    font-size: 1.5rem;
 }
 
 .bouton_conversation{

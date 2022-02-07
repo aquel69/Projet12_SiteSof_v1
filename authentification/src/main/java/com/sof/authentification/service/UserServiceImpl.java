@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         Utilisateur utilisateur = daoUtilisateur.findByUsername(username);
         Role role = daoRole.findByStatut("ROLE_MEMBER");
 
-        utilisateur.getRoles().add(role);
+        utilisateur.getRoles().add(0, role);
 
         daoUtilisateur.save(utilisateur);
 
