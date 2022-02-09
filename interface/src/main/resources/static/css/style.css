@@ -13,62 +13,64 @@ body {
 
 /* Navigation */
 
-#navigationBarre {
-    display: inline-block;
+.barre_menu {
+    box-sizing: border-box;
+
     position: fixed;
-    overflow: hidden;
-    z-index: 40;
     width: 100%;
+    height: 9rem;
+    z-index: 40;
     background-color: blueviolet;
-    text-align: center;
-    height: 10rem;
     clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 55% 70%, 50% 90%, 45% 70%, 0% 70%);
     transition: all 0.4s ease-in-out;
-    /* anim GS */
-    opacity: 0;
+    opacity: 1;
+
+}
+
+.barre_menu_texte {
+    height: 6.3rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+
+#navigationBarre {
 
 }
 
 #navigationBarre a {
-    pointer-events:auto;
     text-decoration: none;
     font-size: 3rem;
-    padding: 1rem 5rem;
-    line-height: 6.5rem;
     font-family: 'Kaushan Script';
-    margin: auto;
     color: #f7f7f7;
+    margin : 0rem 3rem 0rem 3rem;
 }
 
 #navigationBarre a:first-child{
-    margin-left: 4rem;
+
 }
 
 #navigationBarre a:active {
     font-size: 4rem;
 }
 
+div_icone{
+
+}
+
 #lien_icone{
-    /*width: 100%;
-    text-align: start;*/
-    pointer-events:auto;
-    display: inline-block;
-    position: fixed;
-    z-index: 41;
-
+    z-index: 40;
     transition: all 0.4s ease-in-out;
+    opacity: 1;
 
-    /* anim GS */
-    opacity: 0;
 }
 
 #lien_icone a {
     text-decoration: none;
     font-size: 3rem;
-    padding: 1rem 2rem;
-    line-height: 6.5rem;
-    margin: auto;
     color: #f7f7f7;
+    margin: 0rem 1rem 0rem 1rem;
+
 }
 
 #lien_icone a:active {
@@ -76,24 +78,16 @@ body {
 }
 
 #lien_deconnection{
-    text-align: end;
-    display: inline-block;
-    position: fixed;
-    z-index: 42;
-
+     z-index: 42;
     transition: all 0.4s ease-in-out;
+    opacity: 1;
 
-    /* anim GS */
-    opacity: 0;
 }
 
 #lien_deconnection a {
     text-decoration: none;
     font-size: 1.8rem;
-    padding: 1rem 4rem 1rem 2rem;
-    line-height: 6.5rem;
     font-family: 'Lato';
-    margin: auto;
     color: #f7f7f7;
 }
 
@@ -102,7 +96,6 @@ body {
 }
 
 #soundcloud{
-    margin-left: 50rem;
 }
 
 .icon {
@@ -800,6 +793,7 @@ audio{
         margin-top: 7rem;
         width: 100%;
         position: fixed;
+        z-index: 50;
     }
 
     .message_creation_compte {
