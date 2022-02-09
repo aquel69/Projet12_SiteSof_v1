@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -110,22 +111,29 @@ public class AuthentificationController {
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public UtilisateurAuthentification login(@Valid @RequestBody UtilisateurAuth utilisateurAuth) {
         List<Utilisateur> listeDesMembres = daoUtilisateur.findAll();
-        UtilisateurAuthentification utilisateurAuthentifie = verificationAuthentification(listeDesMembres, utilisateurAuth.getMotDePasse()
+        UtilisateurAuthentification utilisateurAuthentifier = verificationAuthentification(listeDesMembres, utilisateurAuth.getMotDePasse()
                 , utilisateurAuth.getUsername());
 
-        return utilisateurAuthentifie;
+        return utilisateurAuthentifier;
     }
 
     private UtilisateurAuthentification verificationAuthentification(List<Utilisateur> listeDesMembres, String motDePasse, String username){
+        UtilisateurAuthentification utilisateurAuthentification = new UtilisateurAuthentification();
+        List<Role> roles = new ArrayList<>();
+        Role role = new Role();
         for (Utilisateur utilisateur : listeDesMembres) {
             if (utilisateur.getUsername().equals(username)) {
                 if (bCryptPasswordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
-                    UtilisateurAuthentification utilisateurAuthentification = daoUtilisateurAuthentification.findByUsername(username);
+                    utilisateurAuthentification = daoUtilisateurAuthentification.findByUsername(username);
 
                     return utilisateurAuthentification;
                 }
             }
         }
-        return null;
+        role.setStatut("ROLE_USER");
+        roles.add(role);
+        utilisateurAuthentification.setRoles(roles);
+
+        return utilisateurAuthentification;
     }
 }

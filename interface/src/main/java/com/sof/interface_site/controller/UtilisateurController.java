@@ -50,7 +50,7 @@ public class UtilisateurController {
     private NewsletterEmail newsletterEmail;
     private Conversation conversation;
     private Role role;
-    private String error = null;
+    private String erreur = null;
     private boolean matchRegexEmail;
     private boolean matchRegexPassword;
     private String messageErreurMail = null;
@@ -96,13 +96,14 @@ public class UtilisateurController {
 
         utilisateurAuthentifier = authentificationProxy.login(utilisateurPost);
 
-        model.addAttribute("utilisateurAuthentifier", utilisateurAuthentifier);
         interfaceModelAccueil(model, utilisateur);
 
-        if (utilisateurAuthentifier == null) {
-            error = "L'email ou le mot de passe est incorrect";
+        if (utilisateurAuthentifier.getRoles().get(0).getStatut().equals("ROLE_USER")) {
+            erreur = "L'email ou le mot de passe est incorrect";
+            model.addAttribute("erreurAuthentification", erreur);
+            erreur = null;
             return "Index";
-        } else if (utilisateurAuthentifier.getRoles().get(0).getIdRole() == 2){
+        } else if (utilisateurAuthentifier.getRoles().get(0).getStatut().equals("ROLE_MEMBER")){
             return "Index";
         } else {
             return "Newsletter";
@@ -239,6 +240,7 @@ public class UtilisateurController {
         model.addAttribute("utilisateur", utilisateurAuthentifier);
         model.addAttribute("messageCompteCree", messageInterface);
         model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("utilisateurAuthentifier", utilisateurAuthentifier);
     }
 
     private void interfaceModelCreationCompte(Model model, Utilisateur utilisateur, Adresse adresse) {

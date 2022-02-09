@@ -33,27 +33,39 @@
 <!-- Accueil -->
 
 <header id="accueil">
-    <nav id="navigationBarre">
-        <a href="#accueil" class="liensNav" onclick="toggleNav()">Accueil</a>
-        <a href="#bio" class="liensNav" onclick="toggleNav()">Bio</a>
-        <a href="#concerts" class="liensNav" onclick="toggleNav()">Concerts</a>
-        <a href="#album" class="liensNav" onclick="toggleNav()">Album</a>
-        <a href="#contact" class="liensNav" onclick="toggleNav()">Contact</a>
-        <a th:if="${utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:href="@{|/conversationMembre|}" class="liensNav">Conversation</a>
-        <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
-    </nav>
-    <nav id="lien_icone">
-        <a href="https://soundcloud.com/sofmusique" id="soundcloud" class="lien_nav_icone"><i class="fab fa-soundcloud"></i></a>
-        <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube" class="lien_nav_icone"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.facebook.com/sofmusique/" id="facebook" class="lien_nav_icone"><i class="fab fa-facebook"></i></a>
-    </nav>
-
-    <nav id="lien_deconnection">
-        <a th:text="'se déconnecter'" class="lien_deconnect"></a>
-    </nav>
-
+    <div class="barre_menu">
+        <div class="barre_menu_texte d-flex justify-content-between align-items-center flex-lg-row gap-2">
+            <div id="div_icone">
+                <nav id="lien_icone">
+                    <a href="https://soundcloud.com/sofmusique" id="soundcloud" class="lien_nav_icone"><i class="fab fa-soundcloud"></i></a>
+                    <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube" class="lien_nav_icone"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/sofmusique/" id="facebook" class="lien_nav_icone"><i class="fab fa-facebook"></i></a>
+                </nav>
+            </div>
+            <div>
+                <nav id="navigationBarre">
+                    <a href="#accueil" class="liensNav" onclick="toggleNav()">Accueil</a>
+                    <a href="#bio" class="liensNav" onclick="toggleNav()">Bio</a>
+                    <a href="#concerts" class="liensNav" onclick="toggleNav()">Concerts</a>
+                    <a href="#album" class="liensNav" onclick="toggleNav()">Album</a>
+                    <a href="#contact" class="liensNav" onclick="toggleNav()">Contact</a>
+                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:href="@{|/conversationMembre|}" class="liensNav">Conversation</a>
+                    <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
+                </nav>
+            </div>
+            <div>
+                <nav id="lien_deconnection">
+                    <a th:text="'se déconnecter'" class="lien_deconnect"></a>
+                </nav>
+            </div>
+        </div>
+    </div>
     <div th:if="${messageCompteCree != null}" class="alert alert-warning alert-dismissible fade show message_alerte_creation" role="alert">
         <span class="message_creation_compte" th:text="${messageCompteCree}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${erreurAuthentification != null}" class="alert alert-warning alert-dismissible fade show message_alerte_creation" role="alert">
+        <span class="message_creation_compte" th:text="${erreurAuthentification}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <h1>Sof</h1>
