@@ -51,7 +51,7 @@ public class Conversation {
      * date du commentaire
      */
     @NonNull
-    @Column(name="date_ajout", columnDefinition = "TIMESTAMP")
+    @Column(name="date_ajout", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private LocalDateTime dateAjout;
 
 

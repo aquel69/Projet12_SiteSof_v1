@@ -1,6 +1,7 @@
 package com.sof.interface_site.proxy;
 
 import com.sof.interface_site.model.NewsletterEmail;
+import com.sof.interface_site.model.UtilisateurAuthentification;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,5 +20,8 @@ public interface MicroserviceNewsletterEmail {
     @PostMapping(value="/envoyerEmailUtilisateurAAdmin/{nom}/{email}/{message}")
     void envoyerEmailUtilisateurAAdmin(@PathVariable String nom, @PathVariable String email
             , @PathVariable String message);
+
+    @PostMapping(value="/envoyerEmailBienvenue")
+    void envoyerEmailBienvenue(@RequestBody UtilisateurAuthentification utilisateurAuthentification);
 
 }

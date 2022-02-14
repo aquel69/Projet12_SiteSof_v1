@@ -1,7 +1,7 @@
 // Navigation bar color change
 
-let nav = document.getElementById('navigationBarre');
-let liens_icon = document.getElementsByClassName('lien_nav_icone');
+let nav = document.getElementById('barre_menu');
+let liens_icon = document.getElementsByClassName('icone');
 let liens = document.getElementsByClassName('liensNav');
 let lien_deconnection = document.getElementsByClassName('lien_deconnect');
 
@@ -18,35 +18,42 @@ function colorHeader() {
 
         if (myWidth > 768) {
             if ( document.documentElement.scrollTop > 2950 ) {
-
                 nav.style.background = "#e8bb8c";
                 liens[0].style.color = "#373737";
                 liens[1].style.color = "#373737";
                 liens[2].style.color = "#373737";
                 liens[3].style.color = "#373737";
                 liens[4].style.color = "#373737";
-                liens[5].style.color = "#373737";
+                if (liens[5] != null) {
+                    liens[5].style.color = "#373737";
+                }
 
                 liens_icon[0].style.color = "#373737";
                 liens_icon[1].style.color = "#373737";
                 liens_icon[2].style.color = "#373737";
 
                 lien_deconnection[0].style.color = "#373737";
+                lien_deconnection[1].style.color = "#373737";
             } else {
 
                 nav.style.background = "#8A2BE2FF";
+
+
                 liens[0].style.color = "#f7f7f7";
                 liens[1].style.color = "#f7f7f7";
                 liens[2].style.color = "#f7f7f7";
                 liens[3].style.color = "#f7f7f7";
                 liens[4].style.color = "#f7f7f7";
-                liens[5].style.color = "#f7f7f7";
+                if (liens[5] != null) {
+                    liens[5].style.color = "#f7f7f7";
+                }
 
                 liens_icon[0].style.color = "#f7f7f7";
                 liens_icon[1].style.color = "#f7f7f7";
                 liens_icon[2].style.color = "#f7f7f7";
 
                 lien_deconnection[0].style.color = "#f7f7f7";
+                lien_deconnection[1].style.color = "#f7f7f7";
             }
 
             // second else pour mettre la nav en clair et bloqué l'anim du dessus
@@ -65,6 +72,7 @@ function colorHeader() {
             liens_icon[2].style.color = "#373737";
 
             lien_deconnection[0].style.color = "#373737";
+            lien_deconnection[1].style.color = "#373737";
         }
     }
 };

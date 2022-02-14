@@ -1,8 +1,10 @@
 package com.sof.newsletter_email.controller;
 
 import com.sof.newsletter_email.dao.DaoNewsletterEmail;
+import com.sof.newsletter_email.dao.DaoUtilisateurAuthentification;
 import com.sof.newsletter_email.model.Mail;
 import com.sof.newsletter_email.model.NewsletterEmail;
+import com.sof.newsletter_email.model.UtilisateurAuthentification;
 import com.sof.newsletter_email.service.EmailService;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
@@ -19,6 +21,9 @@ public class NewsLetterEmailController {
 
     @Autowired
     private DaoNewsletterEmail daoNewsletterEmail;
+
+    @Autowired
+    private DaoUtilisateurAuthentification daoUtilisateurAuthentification;
 
     @Autowired
     private Configuration freemarkerConfig;
@@ -38,6 +43,13 @@ public class NewsLetterEmailController {
         return listeEmailNewsletters;
     }
 
+    @GetMapping(value = "/utilisateurSelonUsername/{username}")
+    public UtilisateurAuthentification findUtilisateurByUsername(@PathVariable String username) {
+        UtilisateurAuthentification utilisateur = daoUtilisateurAuthentification.findByUsername(username);
+
+        return utilisateur;
+    }
+
 
     @PostMapping(value="/ajouterEmailNewsletter")
     public void ajouterEmailNewsletter(@RequestBody NewsletterEmail newsletterEmail) {
@@ -51,8 +63,17 @@ public class NewsLetterEmailController {
 
         mail.setEmetteur(nom);
         mail.setMessage(message);
-        mail.setFrom(email);
+        mail.setExpediteur(email);
 
         emailService.sendEmail(mail);
+    }
+
+    @PostMapping(value="/envoyerEmailBienvenue")
+    public void envoyerEmailBienvenue(@RequestBody UtilisateurAuthentification utilisateurAuthentification) throws MessagingException, TemplateException, IOException {
+        Mail mail = new Mail();
+
+        mail.setUtilisateurAuthentification(utilisateurAuthentification);
+
+        emailService.sendEmailBienvenue(mail);
     }
 }

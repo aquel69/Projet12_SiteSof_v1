@@ -33,13 +33,13 @@
 <!-- Accueil -->
 
 <header id="accueil">
-    <div class="barre_menu">
-        <div class="barre_menu_texte d-flex justify-content-between align-items-center flex-lg-row gap-2">
+    <div id="barre_menu">
+        <div id="barre_menu_texte" class="barre_menu_texte d-flex justify-content-between align-items-center flex-lg-row gap-2">
             <div id="div_icone">
                 <nav id="lien_icone">
-                    <a href="https://soundcloud.com/sofmusique" id="soundcloud" class="lien_nav_icone"><i class="fab fa-soundcloud"></i></a>
-                    <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube" class="lien_nav_icone"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.facebook.com/sofmusique/" id="facebook" class="lien_nav_icone"><i class="fab fa-facebook"></i></a>
+                    <a href="https://soundcloud.com/sofmusique" id="soundcloud" class="icone"><i class="fab fa-soundcloud"></i></a>
+                    <a href="https://www.youtube.com/channel/UCl4RM8cSHK-F-2kQwF1y7Wg" id="youtube" class="icone"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/sofmusique/" id="facebook" class="icone"><i class="fab fa-facebook"></i></a>
                 </nav>
             </div>
             <div>
@@ -55,25 +55,45 @@
             </div>
             <div>
                 <nav id="lien_deconnection">
-                    <a th:text="'se déconnecter'" class="lien_deconnect"></a>
+                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:text="'déconnexion'" th:href="@{|/deconnexion|}" class="lien_deconnect"></a>
+                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_USER')}" th:text="'se connecter'" th:href="@{|#lien_authentification|}" class="lien_deconnect"></a>
                 </nav>
             </div>
         </div>
     </div>
-    <div th:if="${messageCompteCree != null}" class="alert alert-warning alert-dismissible fade show message_alerte_creation" role="alert">
+    <div th:if="${messageCompteCree != null}" class="alert alert-warning alert-dismissible fade show message_alerte" role="alert">
         <span class="message_creation_compte" th:text="${messageCompteCree}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div th:if="${erreurAuthentification != null}" class="alert alert-warning alert-dismissible fade show message_alerte_creation" role="alert">
+    <div th:if="${erreurAuthentification != null}" class="alert alert-warning alert-dismissible fade show message_alerte" role="alert">
         <span class="message_creation_compte" th:text="${erreurAuthentification}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <h1>Sof</h1>
-    <h2>Auteure - Compositrice - Interprète</h2>
-    <div class="iframe_container">
-        <iframe id="video" width="560" height="315" th:src="${urlVideo}" title="YouTube video player"
-                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
+    <div th:if="${messageEmailNewsletter != null}" class="alert alert-warning alert-dismissible fade show message_alerte" role="alert">
+        <span class="message_creation_compte" th:text="${messageEmailNewsletter}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${messageEnvoiMail != null}" class="alert alert-warning alert-dismissible fade show message_alerte" role="alert">
+        <span class="message_creation_compte" th:text="${messageEnvoiMail}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="row ligne_groupe_titre g-0">
+        <div class="col-7 p-0"></div>
+            <div id="accueil_groupe_titre" class="text-center col-3 p-0">
+                <div>
+                    <h1>Sof</h1>
+                </div>
+                <div>
+                    <h2>Auteure - Compositrice - Interprète</h2>
+                </div>
+
+                <div class="iframe_container">
+                    <iframe id="video" width="560" height="315" th:src="${urlVideo}" title="YouTube video player"
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
     </div>
     <a href="#bio" id="arrow"><i class="fas fa-chevron-down"></i></a>
 </header>
@@ -111,9 +131,15 @@
         <div class="row">
             <div class="col-xxl-5 col-xl-4 ">
                 <div class="compositionConcerts">
-                    <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto1()})}" alt="photo sof jouant de la guitare" class="img-fluid composition_photo_concert composition_photo_concert--1">
-                    <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto2()})}" alt="photo de dos guitare sof" class="img-fluid composition_photo_concert composition_photo_concert--2">
-                    <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto3()})}" alt="photo scène festival cri du col" class="img-fluid composition_photo_concert composition_photo_concert--3">
+                    <div >
+                        <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto1()})}" alt="photo sof jouant de la guitare" class="img-fluid composition_photo_concert composition_photo_concert--1">
+                    </div>
+                    <div>
+                        <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto2()})}" alt="photo de dos guitare sof" class="img-fluid composition_photo_concert composition_photo_concert--2">
+                    </div>
+                    <div>
+                        <img th:src="@{/ressources/{image}(image=${concertInterface.getPhoto3()})}" alt="photo scène festival cri du col" class="img-fluid composition_photo_concert composition_photo_concert--3">
+                    </div>
                 </div>
             </div>
             <div class="col-xxl-6 col-xl-7 tableau_concert">
@@ -221,7 +247,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4 text-center">
+            <div id="lien_authentification" class="col-4 text-center">
                 <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoAlbum()})}" alt="photo sof tenant un ukulélé dans la nature" class="img-fluid photo_album">
             </div>
             <div class="col-4">
@@ -233,9 +259,9 @@
                 <div class="row justify-content-center">
                     <div class="authentification_globale col-8">
                         <h6 class="titre_authentification text-center">Authentification</h6>
-                        <p class="paragraphe_authentification_1 text-center">Vous souhaitez écouter mon EP où vous voulez ?
-                        <p class="paragraphe_authentification_2 text-center">Créez vous un compte et nous pourrons échanger,</p>
-                        <p class="paragraphe_authentification_3 text-center">afin que vous puissiez l'acquérir.</p>
+                        <p class="paragraphe_authentification_1 text-center">Vous souhaitez acquérir mon EP ?
+                        <p class="paragraphe_authentification_2 text-center">Créez un compte et nous pourrons échanger.</p>
+                        <p class="paragraphe_authentification_3 text-center"></p>
                         <div class="row justify-content-center">
                         <div class="col-8 validationAuthentification">
                             <form th:action="@{/authentification}" th:object="${utilisateur}" method="post">
@@ -277,7 +303,7 @@
             <div class="col-8">
                 <div class="row justify-content-center envoi_mail">
                     <div class="col-10 ligne_envoi_mail">
-                        <h6 class="titre_envoi_mail">Envoyez un mail</h6>
+                        <h6 class="titre_envoi_mail">Envoi d'un message</h6>
                     </div>
                     <div class="col-10 formulaire_envoi_mail">
                         <form th:action="@{/utilisateurEnvoiEmail}" method="post">
@@ -299,15 +325,30 @@
                         </form>
                     </div>
                 </div>
-                <div class="row justify-content-center newsletter">
+                <div th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_USER')}" class="row justify-content-center newsletter">
                     <div class="col-10 ligne_newsletter">
-                        <h6 class="titre_newsletter">Inscrivez-vous à la Newsletter</h6>
+                        <h6 class="titre_newsletter">Inscription à la Newsletter</h6>
                     </div>
                     <div class="col-10 formulaire_inscription_newsletter">
                         <form th:action="@{/ajoutEmail}" th:object="${newsletterEmail}" method="post">
                             <div class="col-md-6">
                                 <label for="formulaire_inscription_newsletter_01" class="form-label text_form_newsletter">Email</label>
                                 <input type="email" th:field="*{email}" name="email" class="form-control texte_email_newsletter" id="formulaire_inscription_newsletter_01" required>
+                            </div>
+                            <div class="col-12 text-start">
+                                <button id="button-email" class="btn btn-lg btn-primary bouton_newsletter" type="submit">Valider</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" class="row justify-content-center newsletter">
+                    <div class="col-10 ligne_newsletter">
+                        <h6 class="titre_newsletter">Inscription à la Newsletter</h6>
+                    </div>
+                    <div class="col-10 formulaire_inscription_newsletter">
+                        <form th:action="@{/ajoutEmailMembre}" th:object="${utilisateurAuthentifier}" method="post">
+                            <div  class="col-md-6">
+                                <p class="ajoutNewsletterMembre" >Cochez la case et validez pour vous inscrire à la newsletter<input class="form-check-input caseACocher mx-4" type="checkbox" th:value="${utilisateurAuthentifier.getEmail()}" name="email"></p>
                             </div>
                             <div class="col-12 text-start">
                                 <button id="button-email" class="btn btn-lg btn-primary bouton_newsletter" type="submit">Valider</button>
@@ -348,7 +389,7 @@
 <!-- Bootstrap 5 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<script type="javascript" src="JS/app.js"></script>
-<script type="application/javascript" src="JS/greenSock.js"></script>
+<script src="JS/app.js"></script>
+<script src="JS/greenSock.js"></script>
 </body>
 </html>

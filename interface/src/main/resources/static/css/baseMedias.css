@@ -19,7 +19,7 @@
 @media (max-width: 768px) {
 
 
-#navigationBarre a:not(:nth-child(6)) {
+#navigationBarre a:not(:nth-child(7)) {
     display: none;
 }
 .icon {
@@ -45,7 +45,7 @@
     height: 38rem;
 }
 
-#navigationBarre.responsive a:not(:nth-child(6)) {
+#navigationBarre.responsive a:not(:nth-child(7)) {
 
     display: block;
     text-align: center;

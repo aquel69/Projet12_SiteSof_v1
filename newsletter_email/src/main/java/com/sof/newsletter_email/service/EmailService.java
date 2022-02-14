@@ -30,16 +30,34 @@ public class EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
         helper.setSubject("Email de l'utilisateur " + mail.getEmetteur());
         helper.setTo("alexandre.lardon@yahoo.fr");
-        String emailContent = getEmailContent(mail);
+        String emailContent = getEmailUserContent(mail);
         helper.setText(emailContent, true);
         javaMailSender.send(mimeMessage);
     }
 
-    String getEmailContent(Mail mail) throws IOException, TemplateException {
+    String getEmailUserContent(Mail mail) throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> model = new HashMap<>();
         model.put("mail", mail);
         configuration.getTemplate("EmailUtilisateur.ftl").process(model, stringWriter);
+        return stringWriter.getBuffer().toString();
+    }
+
+    public void sendEmailBienvenue(Mail mail) throws MessagingException, IOException, TemplateException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+        helper.setSubject("Votre compte a été créé sur le site de Sof");
+        helper.setTo(mail.getUtilisateurAuthentification().getEmail());
+        String emailContent = getEmailBienvenueContent(mail);
+        helper.setText(emailContent, true);
+        javaMailSender.send(mimeMessage);
+    }
+
+    String getEmailBienvenueContent(Mail mail) throws IOException, TemplateException {
+        StringWriter stringWriter = new StringWriter();
+        Map<String, Object> model = new HashMap<>();
+        model.put("mail", mail);
+        configuration.getTemplate("EmailBienvenue.ftl").process(model, stringWriter);
         return stringWriter.getBuffer().toString();
     }
 
