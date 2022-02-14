@@ -2,7 +2,6 @@ html {
     font-size: 62.5%;
 }
 
-
 body {
     margin: 0;
     font-family: 'Lato', 'sans-serif';
@@ -10,12 +9,9 @@ body {
 
 }
 
-
 /* Navigation */
-
-.barre_menu {
+#barre_menu {
     box-sizing: border-box;
-
     position: fixed;
     width: 100%;
     height: 9rem;
@@ -23,19 +19,13 @@ body {
     background-color: blueviolet;
     clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 55% 70%, 50% 90%, 45% 70%, 0% 70%);
     transition: all 0.4s ease-in-out;
-    opacity: 1;
-
+    opacity: 0;
 }
 
 .barre_menu_texte {
     height: 6.3rem;
     padding-left: 5rem;
     padding-right: 5rem;
-}
-
-
-#navigationBarre {
-
 }
 
 #navigationBarre a {
@@ -46,31 +36,22 @@ body {
     margin : 0rem 3rem 0rem 3rem;
 }
 
-#navigationBarre a:first-child{
-
-}
-
 #navigationBarre a:active {
     font-size: 4rem;
 }
 
-div_icone{
-
-}
-
 #lien_icone{
     z-index: 40;
-    transition: all 0.4s ease-in-out;
-    opacity: 1;
 
+    transition: all 0.4s ease-in-out;
+    opacity: 0;
 }
 
 #lien_icone a {
     text-decoration: none;
+    margin: 1rem;
     font-size: 3rem;
     color: #f7f7f7;
-    margin: 0rem 1rem 0rem 1rem;
-
 }
 
 #lien_icone a:active {
@@ -78,9 +59,9 @@ div_icone{
 }
 
 #lien_deconnection{
-     z-index: 42;
+    z-index: 42;
     transition: all 0.4s ease-in-out;
-    opacity: 1;
+    opacity: 0;
 
 }
 
@@ -93,9 +74,6 @@ div_icone{
 
 #lien_deconnection a:active {
     font-size: 2rem;
-}
-
-#soundcloud{
 }
 
 .icon {
@@ -112,29 +90,8 @@ header {
     background-position: top;
 }
 
-
-.iframe_container{
-    width: 100%;
-    position: relative;
-}
-
-.iframe_container::after{
-    content:"";
-    display: block;
-    width: 100%;
-    padding-bottom: calc(315/560*100%);
-}
-
-iframe{
-    position: absolute;
-    width: 27%;
-    height: 30%;
-    top:23%;
-    left:57%;
-}
-
-.message_alerte_creation{
-    margin-top: 7rem;
+.message_alerte{
+    margin-top: 6rem;
     width: 100%;
     position: fixed;
 }
@@ -143,28 +100,51 @@ iframe{
     font-size: 1.7rem;
 }
 
+.ligne_accueil {
+    box-sizing: border-box;
+}
+
+.ligne_groupe_titre{
+    padding-top:20rem;
+}
+
+#accueil_groupe_titre {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin: 0;
+    width: 60rem;
+}
+
 h1 {
-    margin-left: 65%;
     color: blueviolet;
-    position: relative;
-    top: 23rem;
     font-family: 'Kaushan Script';
     font-size:18rem;
-    /* Anim GS */
     opacity: 0;
 }
 
 header h2 {
-
-    margin-left: 60%;
     color: blueviolet;
-    position: relative;
-    top: 26rem;
     font-family: 'Abril Fatface';
     font-size: 3rem;
     letter-spacing: 0.2rem;
-    /* Anim GS */
     opacity: 0;
+}
+
+.iframe_container{
+    /*width: 100%;*/
+}
+
+.iframe_container::after{
+/*    content:"";
+    display: block;
+    width: 100%;
+    padding-bottom: calc(315/560*100%);*/
+}
+
+iframe{
+/*    width: 100%;
+    height: 100%*/
 }
 
 header #arrow {
@@ -269,7 +249,7 @@ header #arrow {
 
 
 .composition_photo {
-    width: 55%;
+    width: 100%;
     box-shadow: 0 1.5rem 4rem rgba(0,0,0,0.4);
     border-radius: 2px;
     position: absolute;
@@ -730,6 +710,14 @@ audio{
     margin-top: 4rem;
 }
 
+.ajoutNewsletterMembre {
+    font-size: 1.7rem;
+}
+
+.caseACocher {
+    font-size: 1.5rem;
+}
+
 .texte_mention{
     padding-top: 1rem;
     font-size: 1.5rem;
@@ -808,13 +796,13 @@ audio{
         top: 16rem;
     }
 
-    iframe{
+    /*iframe{
         position: absolute;
         width: 27%;
         height: 30%;
         top:18%;
         left:61%;
-    }
+    }*/
 
     /* Section Concert */
 

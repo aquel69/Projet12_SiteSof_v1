@@ -6,14 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,9 +76,7 @@ public class UtilisateurController {
 
         newsletterEmail = new NewsletterEmail();
 
-
-        model.addAttribute("utilisateurAuthentifier", utilisateurAuthentifier);
-        interfaceModelAccueil(model, utilisateur);
+        interfaceModelAccueil(model);
 
         System.out.println("Accueil");
         return "Index";
@@ -96,7 +96,7 @@ public class UtilisateurController {
 
         utilisateurAuthentifier = authentificationProxy.login(utilisateurPost);
 
-        interfaceModelAccueil(model, utilisateur);
+        interfaceModelAccueil(model);
 
         if (utilisateurAuthentifier.getRoles().get(0).getStatut().equals("ROLE_USER")) {
             erreur = "L'email ou le mot de passe est incorrect";
@@ -111,14 +111,53 @@ public class UtilisateurController {
     }
 
 
+    /**
+     * permet de récupérer les donnéees saisies par l'utilisateur et de vérifier si l'authentification est valide
+     * si elle l'est l'utilisateur est renvoyé sur la page d'accueil et le statut connecté apparait
+     * dans la barre de menu ou l'admin est connecté sur sa page
+     * @return la page correspondante au role
+     */
+    @RequestMapping(value = "/deconnexion",method = RequestMethod.GET)
+    public String deconnexion(Model model){
+
+        utilisateurAuthentifier = null;
+        utilisateurAuthentifier = new UtilisateurAuthentification();
+        role.setStatut("ROLE_USER");
+        utilisateurAuthentifier.getRoles().add(0, role);
+
+        interfaceModelAccueil(model);
+
+        return "Index";
+    }
+
+
     @RequestMapping(value = "/ajoutEmail",method = RequestMethod.POST)
     public String ajoutEmailNewsletter(Model model, @ModelAttribute("newsletterEmail") NewsletterEmail newsletterEmailPost){
+        String messageEmailNewsletter = messageEmailNewsletter(newsletterEmailPost);
 
-        System.out.println(newsletterEmailPost.getEmail());
+        if (messageEmailNewsletter.equals("Votre adresse a été ajoutée à la newsletter")) {
+            newsletterEmailProxy.ajouterEmailNewsletter(newsletterEmailPost);
+        }
 
-        newsletterEmailProxy.ajouterEmailNewsletter(newsletterEmailPost);
+        model.addAttribute("messageEmailNewsletter", messageEmailNewsletter);
+        interfaceModelAccueil(model);
 
-        interfaceModelAccueil(model, utilisateur);
+        return "Index";
+    }
+
+    @RequestMapping(value = "/ajoutEmailMembre",method = RequestMethod.POST)
+    public String ajoutEmailNewsletterMembre(Model model, @RequestParam String email){
+        NewsletterEmail newsletterEmail = new NewsletterEmail();
+        newsletterEmail.setEmail(email);
+
+        String messageEmailNewsletter = messageEmailNewsletter(newsletterEmail);
+
+        if (messageEmailNewsletter.equals("Votre adresse a été ajoutée à la newsletter")) {
+            newsletterEmailProxy.ajouterEmailNewsletter(newsletterEmail);
+        }
+
+        model.addAttribute("messageEmailNewsletter", messageEmailNewsletter);
+        interfaceModelAccueil(model);
 
         return "Index";
     }
@@ -126,10 +165,13 @@ public class UtilisateurController {
     @RequestMapping(value = "/utilisateurEnvoiEmail",method = RequestMethod.POST)
     public String envoiMailDeLUtilisateur(Model model, @RequestParam String nom, @RequestParam String email
     , @RequestParam String message){
+        String messageEnvoiMail = "Votre message a bien été envoyé";
 
         newsletterEmailProxy.envoyerEmailUtilisateurAAdmin(nom, email, message);
 
-        interfaceModelAccueil(model, utilisateur);
+        interfaceModelAccueil(model);
+
+        model.addAttribute("messageEnvoiMail", messageEnvoiMail);
 
         return "Index";
     }
@@ -179,8 +221,11 @@ public class UtilisateurController {
         authentificationProxy.saveUtilisateur(utilisateur);
         authentificationProxy.saveRole(utilisateur);
 
-        messageInterface = "Votre compte a bien été créé";
-        interfaceModelAccueil(model, utilisateur);
+        UtilisateurAuthentification utilisateurAuthentification = authentificationProxy
+                .findUtilisateurByUsername(utilisateur.getUsername());
+        newsletterEmailProxy.envoyerEmailBienvenue(utilisateurAuthentification);
+        messageInterface = "Votre compte a bien été créé ! Un message vous a été envoyé sur votre boite mail";
+        interfaceModelAccueil(model);
         messageInterface = null;
 
         return "Index";
@@ -217,7 +262,7 @@ public class UtilisateurController {
 
 
 
-    private void interfaceModelAccueil(Model model, Utilisateur utilisateur) {
+    private void interfaceModelAccueil(Model model) {
         //Accueil
         String urlVideoAccueil = interfaceDonneesProxy.getUrlVideoYoutube();
         //Biographie
@@ -277,8 +322,6 @@ public class UtilisateurController {
         List<Conversation> conversations = conversationProxy.conversationsSelonMembre(utilisateurAuthentifier.getIdUtilisateur());
         PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
 
-        /*model.addAttribute("utilisateur", utilisateur);
-        model.addAttribute("adresse", adresse);*/
         model.addAttribute("photoInterface", photoInterface);
         model.addAttribute("conversation", conversation);
         model.addAttribute("conversations", conversations);
@@ -305,6 +348,19 @@ public class UtilisateurController {
         if (!verificationUsernameDejaExistant(utilisateurs, utilisateur)) {
             messageErreurUsernameDejaExistant = "Le nom d'utilisateur est déjà existant";
         }
+    }
+
+    public String messageEmailNewsletter(NewsletterEmail newsletterEmail){
+        List<NewsletterEmail> newsletterEmailList = newsletterEmailProxy.recupererTousLesEmailsNewsletter();
+
+        if (!verificationEmail(newsletterEmail.getEmail())) {
+            return "L\'adresse mail n'est pas valable";
+        }
+        if (!verificationEmailNewsletterDejaExistant(newsletterEmailList, newsletterEmail)) {
+            return "Vous êtes déjà inscrit à la newsletter";
+        }
+
+        return "Votre adresse a été ajoutée à la newsletter";
     }
 
     public boolean verificationEmail(final String email) {
@@ -334,6 +390,15 @@ public class UtilisateurController {
     public boolean verificationUsernameDejaExistant(List<Utilisateur> listeUtilisateurs, Utilisateur utilisateur) {
         for (Utilisateur utilisateurBoucle : listeUtilisateurs) {
             if (utilisateurBoucle.getUsername().equals(utilisateur.getUsername())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean verificationEmailNewsletterDejaExistant(List<NewsletterEmail> listeEmailsNewletter, NewsletterEmail newsletterEmail) {
+        for (NewsletterEmail newsletterEmailBoucle : listeEmailsNewletter) {
+            if (newsletterEmailBoucle.getEmail().equals(newsletterEmail.getEmail())) {
                 return false;
             }
         }

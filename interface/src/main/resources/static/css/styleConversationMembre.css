@@ -118,10 +118,13 @@ body{
 }
 
 #historique_conversation_01{
-    overflow: scroll;
+    overflow-y: scroll;
     max-height: 38rem;
 }
 
+.text_pas_de_commentaire {
+    font-size: 1.8rem;
+}
 
 #formulaire_conversation_01{
     height: 20rem;

@@ -80,11 +80,10 @@ public class AuthentificationController {
 
 
     @GetMapping(value = "/utilisateurSelonUsername/{username}")
-    public Utilisateur findUtilisateurByUsername(@PathVariable String username) {
-        Utilisateur utilisateur = daoUtilisateur.findByUsername(username);
-        System.out.println(utilisateur.toString());
+    public UtilisateurAuthentification findUtilisateurByUsername(@PathVariable String username) {
+        UtilisateurAuthentification utilisateurAuthentification = daoUtilisateurAuthentification.findByUsername(username);
 
-        return utilisateur;
+        return utilisateurAuthentification;
     }
 
     @GetMapping(value = "/tousLesUtilisateurs")

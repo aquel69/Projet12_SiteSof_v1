@@ -16,12 +16,12 @@ TweenMax.to("#accueil h2", 3, {
     ease: Expo.easeInOut
 })
 
-TweenMax.to("#navigationBarre", 1, {
+TweenMax.to("#barre_menu", 1, {
     opacity: 1,
     ease: Expo.easeInOut
 })
 
-TweenMax.from("#navigationBarre", 1.5, {
+TweenMax.from("#barre_menu", 1.5, {
     delay: .2,
     y: -40,
     ease: Expo.easeIn

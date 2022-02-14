@@ -26,6 +26,9 @@ public interface MicroserviceAuthentification {
     @GetMapping(value = "/utilisateurSelonEmail/{email}")
     Utilisateur findUtilisateurByEmail(@PathVariable String email);
 
+    @GetMapping(value = "/utilisateurSelonUsername/{username}")
+    UtilisateurAuthentification findUtilisateurByUsername(@PathVariable String username);
+
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     UtilisateurAuthentification login(@Valid @RequestBody UtilisateurAuth utilisateurAuth);
 
