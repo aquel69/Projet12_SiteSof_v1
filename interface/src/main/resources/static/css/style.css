@@ -259,6 +259,7 @@ header #arrow {
 }
 
 .composition_photo--1 {
+
     left: 0;
     top: -2rem;
 }
@@ -788,21 +789,20 @@ audio{
         font-size: 1.7rem;
     }
 
-    h1{
-        top: 13rem;
+    .ligne_groupe_titre{
+        padding-top:10rem;
     }
 
-    header h2{
-        top: 16rem;
+    /*section bio*/
+    .composition_photo--1 {
+        width: 60%;
     }
-
-    /*iframe{
-        position: absolute;
-        width: 27%;
-        height: 30%;
-        top:18%;
-        left:61%;
-    }*/
+    .composition_photo--2 {
+        width: 60%;
+    }
+    .composition_photo--3 {
+        width: 60%;
+    }
 
     /* Section Concert */
 

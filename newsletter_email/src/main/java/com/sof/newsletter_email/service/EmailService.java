@@ -43,6 +43,24 @@ public class EmailService {
         return stringWriter.getBuffer().toString();
     }
 
+    public void sendEmailNewletter(Mail mail) throws MessagingException, IOException, TemplateException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+        helper.setSubject(mail.getObjet());
+        helper.setTo(mail.getDestinataire());
+        String emailContent = getEmailNewsletterContent(mail);
+        helper.setText(emailContent, true);
+        javaMailSender.send(mimeMessage);
+    }
+
+    String getEmailNewsletterContent(Mail mail) throws IOException, TemplateException {
+        StringWriter stringWriter = new StringWriter();
+        Map<String, Object> model = new HashMap<>();
+        model.put("mail", mail);
+        configuration.getTemplate("EmailNewsletter.ftl").process(model, stringWriter);
+        return stringWriter.getBuffer().toString();
+    }
+
     public void sendEmailBienvenue(Mail mail) throws MessagingException, IOException, TemplateException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);

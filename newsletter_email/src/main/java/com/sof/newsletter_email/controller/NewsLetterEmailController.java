@@ -76,4 +76,16 @@ public class NewsLetterEmailController {
 
         emailService.sendEmailBienvenue(mail);
     }
+
+    @PostMapping(value="/envoyerEmailNewsletter")
+    public void envoyerEmailNewsletter(@PathVariable String objet
+            , @PathVariable String message, @PathVariable String emailDestinataire) throws MessagingException, TemplateException, IOException {
+        Mail mail = new Mail();
+
+        mail.setObjet(objet);
+        mail.setMessage(message);
+        mail.setDestinataire(emailDestinataire);
+
+        emailService.sendEmailNewletter(mail);
+    }
 }

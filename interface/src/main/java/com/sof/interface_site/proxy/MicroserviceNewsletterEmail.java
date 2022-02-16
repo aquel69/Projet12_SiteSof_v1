@@ -24,4 +24,7 @@ public interface MicroserviceNewsletterEmail {
     @PostMapping(value="/envoyerEmailBienvenue")
     void envoyerEmailBienvenue(@RequestBody UtilisateurAuthentification utilisateurAuthentification);
 
+    @PostMapping(value="/envoyerEmailNewsletter")
+    void envoyerEmailNewsletter(@PathVariable String objet, @PathVariable String message, @PathVariable String emailDestinataire);
+
 }
