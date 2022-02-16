@@ -13,10 +13,10 @@
     <div class="row">
         <div class="col-12">
             <nav id="navigationBarre">
-                <a href="#accueil" class="liensNav" onclick="toggleNav()">Newsletter</a>
+                <a th:href="@{|/newsletter|}" class="liensNav">Newsletter</a>
                 <a href="#bio" class="liensNav" onclick="toggleNav()">Ajout Concert</a>
-                <a href="#concerts" class="liensNav" onclick="toggleNav()">Conversation</a>
-                <a href="#album" class="liensNav" onclick="toggleNav()">Se déconnecter</a>
+                <a th:href="@{|/conversationAdministrateur|}" class="liensNav" onclick="toggleNav()">Conversation</a>
+                <a class="liensNav" th:href="@{|/deconnexion|}">Se déconnecter</a>
                 <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
             </nav>
         </div>

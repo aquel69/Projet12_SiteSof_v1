@@ -18,7 +18,7 @@
 
     <!-- Feuilles de style -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/styleHeader.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/styleNewsletter.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styleConversationAdministrateur.css}">
 
 <body>
 
@@ -28,20 +28,20 @@
 <div class="container-fluid g-0">
     <div class="row titre_global_newsletter g-0 align-items-center">
         <div class="col-12 titre_newsletter">
-            <h3 class="text-center titre_ajout_newsletter">AJOUT D'UNE NEWSLETTER</h3>
+            <h3 class="text-center titre_ajout_newsletter">CONVERSATION</h3>
         </div>
     </div>
     <div class="row justify-content-center g-0">
         <div class="col-5 formulaire_newsletter">
-            <form th:action="@{/envoiNewsletter}" method="post">
+            <form >
                 <div class="row formulaire_ensemble_newsletter g-0">
                     <div class="col-md-12 formulaire_ensemble_objet">
                         <label for="formulaire_newsletter_objet" class="form-label text_form_newsletter_objet">Objet :</label>
-                        <input th:value="${objet}" name="objet" type="text" class="form-control texte_objet" id="formulaire_newsletter_objet" required>
+                        <input type="text" class="form-control texte_objet" id="formulaire_newsletter_objet" required>
                     </div>
                     <div class="col-md-12 formulaire_ensemble_texte">
                         <label for="formulaire_newsletter_texte" class="form-label text_form_newsletter_texte">Texte :</label>
-                        <textarea th:value="${message}" name="message" type="text" class="form-control texte_newsletter" id="formulaire_newsletter_texte" required></textarea>
+                        <textarea type="text" class="form-control texte_newsletter" id="formulaire_newsletter_texte" required></textarea>
                     </div>
                     <div class="col-12 text-center">
                         <button class="btn btn-lg btn-primary bouton_newsletter" type="submit">Valider</button>

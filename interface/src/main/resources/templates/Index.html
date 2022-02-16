@@ -115,9 +115,14 @@
         </div>
         <div class="col-1-of-2">
             <div class="composition">
-                <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto1()})}" alt="photo concert sof" class="composition_photo composition_photo--1">
-                <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto2()})}" class="composition_photo composition_photo--2">
-                <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto3()})}" class="composition_photo composition_photo--3">
+                <div class="bio_photo_1">
+                    <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto1()})}" alt="photo concert sof" class="composition_photo composition_photo--1">
+                <div class="bio_photo_2">
+                    <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto2()})}" class="composition_photo composition_photo--2">
+                </div>
+                <div class="bio_photo_3">
+                    <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto3()})}" class="composition_photo composition_photo--3">
+                </div>
             </div>
         </div>
     </div>
