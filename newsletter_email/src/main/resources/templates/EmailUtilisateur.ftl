@@ -14,7 +14,7 @@
             </tr>
             <tr>
                 <td>
-                    <p>Le message provient de l'adresse email suivante : ${mail.from}</p>
+                    <p>Le message provient de l'adresse email suivante : ${mail.expediteur}</p>
                 </td>
             </tr>
         </table>

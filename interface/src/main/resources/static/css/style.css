@@ -258,16 +258,19 @@ header #arrow {
     outline-offset: 2rem;
 }
 
-.composition_photo--1 {
 
+.composition_photo--1 {
+    width: 60%;
     left: 0;
     top: -2rem;
 }
 .composition_photo--2 {
+    width: 60%;
     right: 0;
     top: 2rem;
 }
 .composition_photo--3 {
+    width: 60%;
     left: 20%;
     top: 10rem;
 }
