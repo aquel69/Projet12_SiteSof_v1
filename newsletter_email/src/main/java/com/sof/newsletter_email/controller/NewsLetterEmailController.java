@@ -78,14 +78,14 @@ public class NewsLetterEmailController {
     }
 
     @PostMapping(value="/envoyerEmailNewsletter")
-    public void envoyerEmailNewsletter(@PathVariable String objet
-            , @PathVariable String message, @PathVariable String emailDestinataire) throws MessagingException, TemplateException, IOException {
-        Mail mail = new Mail();
+    public void envoyerEmailNewsletter(@RequestBody Mail mail)
+            throws MessagingException, TemplateException, IOException {
+        Mail mailAEnvoyer = new Mail();
 
-        mail.setObjet(objet);
-        mail.setMessage(message);
-        mail.setDestinataire(emailDestinataire);
+        mailAEnvoyer.setObjet(mail.getObjet());
+        mailAEnvoyer.setMessage(mail.getMessage());
+        mailAEnvoyer.setDestinataire(mail.getDestinataire());
 
-        emailService.sendEmailNewletter(mail);
+        emailService.sendEmailNewletter(mailAEnvoyer);
     }
 }

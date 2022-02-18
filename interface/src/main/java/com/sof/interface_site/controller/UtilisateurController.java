@@ -106,6 +106,9 @@ public class UtilisateurController {
         } else if (utilisateurAuthentifier.getRoles().get(0).getStatut().equals("ROLE_MEMBER")){
             return "Index";
         } else {
+            Mail mail = new Mail();
+            model.addAttribute("mail", mail);
+
             return "Newsletter";
         }
     }

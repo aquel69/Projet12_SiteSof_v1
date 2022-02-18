@@ -33,15 +33,17 @@
     </div>
     <div class="row justify-content-center g-0">
         <div class="col-5 formulaire_newsletter">
-            <form th:action="@{/envoiNewsletter}" method="post">
+            <form th:action="@{/envoiNewsletter}" th:object="${mail}" method="post">
                 <div class="row formulaire_ensemble_newsletter g-0">
                     <div class="col-md-12 formulaire_ensemble_objet">
                         <label for="formulaire_newsletter_objet" class="form-label text_form_newsletter_objet">Objet :</label>
-                        <input th:value="${objet}" name="objet" type="text" class="form-control texte_objet" id="formulaire_newsletter_objet" required>
+                        <input th:field="*{objet}" name="objet" type="text" class="form-control texte_objet" id="formulaire_newsletter_objet" required>
                     </div>
+
+
                     <div class="col-md-12 formulaire_ensemble_texte">
-                        <label for="formulaire_newsletter_texte" class="form-label text_form_newsletter_texte">Texte :</label>
-                        <textarea th:value="${message}" name="message" type="text" class="form-control texte_newsletter" id="formulaire_newsletter_texte" required></textarea>
+                        <label for="area1" class="form-label text_form_newsletter_texte">Texte :</label>
+                        <textarea th:field="*{message}" name="message" type="text" class="form-control texte_newsletter" id="area1"></textarea>
                     </div>
                     <div class="col-12 text-center">
                         <button class="btn btn-lg btn-primary bouton_newsletter" type="submit">Valider</button>
@@ -55,6 +57,12 @@
 
 
 <!-- Bootstrap 5 -->
+<!--<script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script>-->
+<script src="JS/nicEdit.js"></script>
+<script type="text/javascript">
+    bkLib.onDomLoaded(function() { nicEditors.push(new nicEditor({externalCSS : 'news.css'}).panelInstance(document.getElementById('area1'))) });
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
