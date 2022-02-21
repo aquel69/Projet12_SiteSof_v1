@@ -3,9 +3,7 @@ package com.sof.concert.controller;
 import com.sof.concert.dao.DaoConcertDate;
 import com.sof.concert.model.ConcertDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +18,16 @@ public class ConcertController {
         List<ConcertDate> concerts = daoConcertDate.findAllUtilisateurByDate();
 
         return concerts;
+    }
+
+    @PostMapping(value="/ajouterUnConcert")
+    public void ajouterUnConcert(@RequestBody ConcertDate concertDate) {
+        daoConcertDate.save(concertDate);
+    }
+
+    @DeleteMapping(value="/supprimerUnConcert/{idConcert}")
+    public void supprimerUnConcert(@PathVariable int idConcert) {
+        daoConcertDate.deleteById(idConcert);
     }
 
 }

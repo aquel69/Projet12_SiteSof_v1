@@ -1,0 +1,138 @@
+html {
+    font-size: 62.5%;
+}
+
+body{
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #f7f7f7, #d4d1d5) no-repeat;
+    font-family: 'Lato', 'sans-serif';
+}
+
+.titre_global_ajout_concert{
+    min-height: 10rem;
+    margin-top: 15rem;
+    background-color: #e8bb8c;
+}
+
+.titre_ajout_concert{
+    font-size: 3rem;
+    color: blueviolet;
+}
+
+.ajout_concert_formulaire_globale{
+    height: 100rem;
+
+}
+
+.formulaire_ajout_concert{
+    border-right: 0.2rem #575659 solid;
+}
+
+#sous_titre_ajout_concert{
+    font-size: 3rem;
+    color: #575659;
+    padding-bottom: 7rem;
+}
+
+#sous_titre_suppression_concert{
+    font-size: 3rem;
+    color: #575659;
+    padding-bottom: 7rem;
+}
+
+.ensemble_ajout_concert_00{
+    padding-bottom: 2rem;
+}
+
+.ensemble_ajout_concert_01{
+    padding-bottom: 2rem;
+}
+
+.ensemble_ajout_concert_02{
+    padding-bottom: 2rem;
+}
+
+.ensemble_ajout_concert_03{
+    padding-bottom: 4rem;
+}
+
+#formulaire_ajout_concert_00{
+
+}
+
+#formulaire_ajout_concert_01{
+
+}
+
+#formulaire_ajout_concert_02{
+
+}
+
+#formulaire_ajout_concert_03{
+
+}
+
+.text_form_concert_date{
+    font-size: 1.7rem;
+    padding-bottom: 0.5rem;
+}
+
+.text_form_concert_nom{
+    font-size: 1.7rem;
+}
+
+.text_form_concert_adresse{
+    font-size: 1.7rem;
+}
+
+.text_form_concert_tarif{
+    font-size: 1.7rem;
+}
+
+.police_ajout_concert{
+    font-size: 1.7rem;
+}
+
+.bouton_ajout_concert{
+    padding: 1rem 6rem 1rem 6rem;
+    margin-top: 6rem;
+    font-size: 1.5rem;
+}
+
+.formulaire_retire_concert{
+    font-size: 1.7rem;
+}
+
+.concert_suppression{
+    table-layout: fixed;
+    word-wrap: break-word;
+    margin-top: 2rem;
+    height: 34rem;
+    max-height: 34rem;
+    overflow-y:scroll;
+}
+
+.bouton_supression_concert{
+    padding: 1rem 6rem 1rem 6rem;
+    margin-top: 6rem;
+    font-size: 1.5rem;
+}
+
+.message_erreur{
+    font-size: 1.7rem;
+}
+
+@media (max-width: 1920px) {
+    .titre_global_ajout_concert{
+        min-height: 10rem;
+        margin-top: 12rem;
+        background-color: #e8bb8c;
+    }
+
+    .bouton_newsletter{
+        padding: 1rem 6rem 1rem 6rem;
+        margin-top: 3rem;
+    }
+}

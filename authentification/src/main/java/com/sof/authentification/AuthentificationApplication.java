@@ -1,7 +1,5 @@
 package com.sof.authentification;
 
-import com.sof.authentification.model.Adresse;
-import com.sof.authentification.model.Utilisateur;
 import com.sof.authentification.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +9,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })

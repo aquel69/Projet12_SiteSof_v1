@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sof</title>
+    <!-- Favicon -->
+    <link rel="icon" href="ressources/favicon.ico" type="image/x-icon">
+    <!-- Polices de caractères -->
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Feuilles de style -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styleHeader.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styleAjoutConcert.css}">
+
+<body>
+
+<!-- Newsletter -->
+
+<div th:insert="Header :: header()"></div>
+<div class="container-fluid g-0">
+    <div class="row titre_global_ajout_concert g-0 align-items-center">
+        <div class="col-12 titre_ajout_concert">
+            <h3 class="text-center titre_ajout_concert">AJOUT CONCERT</h3>
+        </div>
+    </div>
+    <div class="row ajout_concert_formulaire_globale justify-content-center align-items-center g-0">
+        <div class="col-6 formulaire_ajout_concert">
+            <h4 id="sous_titre_ajout_concert" class="text-center">Ajout d'un Concert</h4>
+            <form th:action="@{/ajoutConcertPost}" method="post">
+                <div class="row formulaire_inscription_identite justify-content-center align-items-center g-0">
+                    <div class="col-md-8 ensemble_ajout_concert_00">
+                        <label for="formulaire_ajout_concert_00" class="form-label text_form_concert_nom">Date</label>
+                        <input type="text" class="form-control police_ajout_concert" id="formulaire_ajout_concert_00" th:value="*{dateTime}" name="dateTime" required/>
+                        <div th:if="${messageErreurDate != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <span class="message_erreur" th:text="${messageErreurDate}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div th:object="${concert}" class="col-md-8">
+                        <div class="col-md-12 ensemble_ajout_concert_01">
+                            <label for="formulaire_ajout_concert_01" class="form-label text_form_concert_nom">Nom</label>
+                            <input type="text" class="form-control police_ajout_concert" id="formulaire_ajout_concert_01" th:field="*{nomLieu}" name="nomLieu" required/>
+                            <div th:if="${#fields.hasErrors('nomLieu')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:errors="*{nomLieu}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ensemble_ajout_concert_02">
+                            <label for="formulaire_ajout_concert_02" class="form-label text_form_concert_adresse">Adresse</label>
+                            <input type="text" class="form-control police_ajout_concert" id="formulaire_ajout_concert_02" th:field="*{adresse}" name="adresse" required>
+                            <div th:if="${#fields.hasErrors('adresse')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:errors="*{adresse}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ensemble_ajout_concert_03">
+                            <label for="formulaire_ajout_concert_03" class="form-label text_form_concert_tarif">Tarif</label>
+                            <input type="text" class="form-control police_ajout_concert" id="formulaire_ajout_concert_03" th:field="*{tarif}" name="tarif" required>
+                            <div th:if="${#fields.hasErrors('tarif')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="message_erreur" th:errors="*{tarif}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center">
+                    <button class="btn btn-lg btn-primary bouton_ajout_concert" type="submit">Valider</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-6 formulaire_retire_concert">
+            <form th:action="@{/supprimerUnConcert}" method="post">
+                <div class="row formulaire_inscription_identite justify-content-center align-items-center g-0">
+                    <h4 id="sous_titre_suppression_concert" class="text-center">Suppression d'un Concert</h4>
+                    <div class="col-md-8 table-responsive concert_suppression">
+                        <table class="table table-hover table-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Adresse</th>
+                                <th scope="col">Supprimer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="dateConcert, inter : ${listeDateConcert}">
+                                <td th:text="${#temporals.format(listeDateConcert[inter.index].getDate(),'dd-MM-yyyy')}"></td>
+                                <td th:text="${listeDateConcert[inter.index].getNomLieu()}"></td>
+                                <td th:text="${listeDateConcert[inter.index].getAdresse()}"></td>
+                                <td class="align-middle text-center" ><input class="form-check-input" type="radio" th:value="${listeDateConcert[inter.index].getIdConcertDate()}" name="idConcert"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <button class="btn btn-lg btn-primary bouton_supression_concert" type="submit">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<!-- Bootstrap 5 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

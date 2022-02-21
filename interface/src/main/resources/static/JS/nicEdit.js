@@ -11,6 +11,9 @@ var bkExtend = function(){
 	for (var prop in args[1]) args[0][prop] = args[1][prop];
 	return args[0];
 };
+
+
+
 function bkClass() { }
 bkClass.prototype.construct = function() {};
 bkClass.extend = function(def) {
