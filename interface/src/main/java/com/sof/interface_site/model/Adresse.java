@@ -17,13 +17,13 @@ public class Adresse {
     /**
      * adresse
      */
-    @Size(min=5, max = 100, message = "L\'adresse doit être compris entre 5 et 100 caractères")
+    @Size(min=5, max = 100, message = "L'' adresse doit contenir entre 5 et 100 caractères")
     private String adresse;
 
     /**
      * complément de l'adresse
      */
-    @Size(min=0, max = 100, message = "Le complément d'adresse' doit être compris entre 0 et 100 caractères")
+    @Size(min=0, max = 100, message = "Le complément d'' adresse doit être compris entre 0 et 100 caractères")
     private String complementAdresse;
 
     /**

@@ -14,4 +14,9 @@ public interface DaoConcertDate  extends JpaRepository<ConcertDate, Integer> {
     @Query(value = "SELECT * FROM concert_date ORDER BY \"date\" DESC", nativeQuery = true)
     List<ConcertDate> findAllUtilisateurByDate();
 
+
+
+    /*@Query(value = "DELETE FROM concert_date WHERE id_concert_date = ?", nativeQuery = true)*/
+    List<ConcertDate> deleteById(int id);
+
 }
