@@ -24,18 +24,40 @@ public class UtilisateurAuthentification {
     private int idUtilisateur;
 
     /**
-     * email du membre
+     * nom de l'utilisateur
      */
     @NonNull
-    @Column(name="email")
-    private String email;
+    @Column(name="nom")
+    private String nom;
+
+    /**
+     * prénom de l'utilisateur
+     */
+    @NonNull
+    @Column(name="prenom")
+    private String prenom;
+
+    /**
+     * username de l'utilisateur
+     */
+    @NonNull
+    @Column(name="username")
+    private String username;
+
+    /**
+     * adresse de l'utilisateur
+     */
+    @NonNull
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="adresse_id")
+    private Adresse adresseUtilisateur;
 
     /**
      * email du membre
      */
     @NonNull
-    @Column(name="username")
-    private String username;
+    @Column(name="email")
+    private String email;
 
     /**
      * role de l'utilisateur
