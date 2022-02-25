@@ -23,7 +23,6 @@
 <body>
 
 <!-- Newsletter -->
-
 <div th:insert="Header :: header()"></div>
 <div class="container-fluid g-0">
     <div class="row titre_global_conversation_administrateur g-0 align-items-center">
@@ -31,9 +30,128 @@
             <h3 class="text-center titre_conversation_administrateur">CONVERSATION</h3>
         </div>
     </div>
-    <div class="row justify-content-center g-0">
-        <div class="col-5 formulaire_newsletter">
+    <div class="row global_conversation_administrateur">
+        <div class="col-3 justify-content-center ensemble_conversation_administrateur">
+            <div>
+                <h4 class="text-center sous_titre_conversation_administrateur">Selection du Membre</h4>
+            </div>
+            <form th:action="@{/selectionDuMembre}" method="post">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 table-responsive selection_membre_conversation text-center">
+                        <table class="table table-hover table-nowrap text-center tableau_selection_membre">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Membre</th>
+                                    <th scope="col">Sélection</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="membreConversation, inter : ${listeMembresConversation}">
+                                    <td th:text="${membreConversation.getMembre().getUsername()}"></td>
+                                    <td class="align-middle text-center" ><input class="form-check-input" type="radio" th:value="${membreConversation.getMembre().getUsername()}" name="usernameMembre"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button class="btn btn-lg btn-primary bouton_selection_membre_conversation" type="submit">Valider</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-3 ensemble_conversation_administrateur">
+            <div>
+                <h4 class="text-center sous_titre_conversation_administrateur">Fiche du membre</h4>
+                <div class="row justify-content-center">
+                    <div class="col-md-10 table-responsive selection_membre_conversation">
+                        <table class="table table-hover table-nowrap tableau_fiche_membre">
+                            <tbody th:object="${membreSelectionne}">
+                                <tr>
+                                    <td>Username</td>
+                                    <td th:text="${membreSelectionne.getUsername()}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Nom</td>
+                                    <td th:text="${membreSelectionne.getNom()}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Prénom</td>
+                                    <td th:text="${membreSelectionne.getPrenom()}"></td>
+                                </tr>
+                                <tr>
+                                    <td class="espace_tableau"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Adresse</td>
+                                    <td th:if="${membreSelectionne.getAdresseUtilisateur() != null}" th:text="${membreSelectionne.getAdresseUtilisateur().getAdresse()}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Complément</td>
+                                    <td th:if="${membreSelectionne.getAdresseUtilisateur() != null}" th:text="${membreSelectionne.getAdresseUtilisateur().getComplementAdresse()}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Code Postal</td>
+                                    <td th:if="${membreSelectionne.getAdresseUtilisateur() != null}" th:text="${membreSelectionne.getAdresseUtilisateur().getCodePostal()}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Ville</td>
+                                    <td th:if="${membreSelectionne.getAdresseUtilisateur() != null}" th:text="${membreSelectionne.getAdresseUtilisateur().getVille()}"></td>
+                                </tr>
+                                <tr>
+                                    <td class="espace_tableau"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td th:text="${membreSelectionne.getEmail()}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 ensemble_conversation" th:object="${conversation}">
+            <h4 class="text-center sous_titre_conversation_administrateur_01">Conversation</h4>
+            <div class="row justify-content-center ensemble_historique_conversation">
+                <div class="col-10">
+                    <label class="form-label text_form_conversation_historique">Historique Message</label>
+                    <div th:if="${!conversations.isEmpty()}" id="historique_conversation_01" class="list-group ">
+                        <div  th:each="conversationBoucle, index : ${conversations}" class="list-group">
+                            <a class="list-group-item list-group-item-action active mt-2 bloc_message">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <p class="mb-1 " id="texte_interlocuteur" th:text="'Message de ' +  ${conversationBoucle.getInterlocuteur().getUsername()}"></p>
+                                    <small th:if="${localDateTimeMidnight.isBefore(conversationBoucle.getDateAjout())}"> aujourd'hui</small>
+                                    <small th:if="${localDateTimeMidnight.isAfter(conversationBoucle.getDateAjout())}" th:text="'Il y a ' + ${localDateTime.getDayOfYear() - conversationBoucle.getDateAjout().getDayOfYear()} + ' jours'"></small>
+                                </div>
+                                <p id="texte_message_interlocuteur" class="mb-1" th:text="${conversationBoucle.getMessage()}"></p>
+                            </a>
+                        </div>
+                        <div class="h-100 d-flex align-items-center justify-content-center" th:if="${conversations.isEmpty()}">
+                            <h5 class="text-center">Pas de commentaire</h5>
+                        </div>
+                    </div>
+                    <div  th:if="${conversations.isEmpty()}" id="historique_conversation_02" class="h-100 d-flex align-items-center justify-content-center">
+                        <h5 class="text_pas_de_commentaire text-center">Pas de commentaire</h5>
+                    </div>
+                </div>
+            </div>
+            <form th:action="@{/conversationAdministrateurPost}" th:object="${conversation}" method="post">
+                <div class="row justify-content-center formulaire_conversation">
+                    <div class="col-10">
+                        <label for="formulaire_conversation_01" class="form-label text_form_formulaire_conversation">Nouveau Message</label>
+                        <textarea th:field="*{message}" name="message" aria-describedby="button_conversation" type="text" class="form-control" id="formulaire_conversation_01" required></textarea>
+                    </div>
+                </div>
 
+                <!--th:value="${messageConversationMembre}"-->
+                <div class="row ensemble_bouton_conversation">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-lg btn-primary bouton_conversation" type="submit">Valider</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 

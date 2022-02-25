@@ -18,6 +18,9 @@ public interface MicroserviceConversation {
     @GetMapping(value = "/conversationsSelonMembre/{idMembre}")
     List<Conversation> conversationsSelonMembre(@PathVariable int idMembre);
 
+    @GetMapping(value = "/conversationsSelonMembre")
+    List<Conversation> conversationSelonDateAjoutPourListeMembre();
+
     @PostMapping(value = "/ajouterConversation")
     Conversation saveConversation(@RequestBody Conversation conversation);
 }

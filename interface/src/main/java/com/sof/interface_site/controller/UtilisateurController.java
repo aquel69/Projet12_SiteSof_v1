@@ -113,7 +113,6 @@ public class UtilisateurController {
         }
     }
 
-
     /**
      * permet de récupérer les donnéees saisies par l'utilisateur et de vérifier si l'authentification est valide
      * si elle l'est l'utilisateur est renvoyé sur la page d'accueil et le statut connecté apparait
@@ -406,6 +405,10 @@ public class UtilisateurController {
             }
         }
         return true;
+    }
+
+    public UtilisateurAuthentification getUtilisateurAuthentifier() {
+        return this.utilisateurAuthentifier;
     }
 
 }

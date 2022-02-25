@@ -15,7 +15,6 @@
                 <p>Merci pour votre inscription. Vous pouvez désormais échanger avec moi ou encore acquérir mon EP.</p>
                 <p>Pour cela, identifiez-vous sur mon site en cliquant sur <a href="https://localhost:8443">ce lien</a> et utiliser l’onglet 'Conversation'.</p>
                 <p>Pensez à vous inscrire à la newsletter pour être informé des futurs événements (Concert, CD...).</p>
-                <p>Pensez à vous inscrire à la newsletter pour être informé des futurs événements (Concert, CD...).</p>
             </td>
         </tr>
         <tr>

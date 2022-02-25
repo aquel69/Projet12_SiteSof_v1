@@ -15,9 +15,129 @@ body{
     background-color: #e8bb8c;
 }
 
+.global_conversation_administrateur{
+    margin-top: 5rem;
+}
+
 .titre_conversation_administrateur{
     font-size: 3rem;
     color: blueviolet;
+}
+
+.sous_titre_conversation_administrateur{
+    font-size: 2.5rem;
+    margin-top: 5rem;
+    margin-bottom: 10rem;
+    color: blueviolet;
+}
+
+.sous_titre_conversation_administrateur_01 {
+    font-size: 2.5rem;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    color: blueviolet;
+}
+
+.ensemble_conversation_administrateur{
+    border-right: 0.1rem solid #575659;
+}
+
+.bouton_selection_membre_conversation {
+    padding: 1rem 6rem 1rem 6rem;
+    margin-top: 6rem;
+    font-size: 1.5rem;
+}
+
+.tableau_selection_membre{
+    font-size: 1.7rem;
+}
+
+.tableau_fiche_membre{
+    font-size: 1.7rem;
+
+}
+
+.espace_tableau{
+    height: 6rem;
+}
+
+.ensemble_historique_conversation{
+    border-bottom: 0.1rem solid #575659;
+    padding-bottom: 5rem;
+    height: 45rem;
+    max-height: 45rem;
+    min-height: 45rem;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: blueviolet #f7f7f7;
+
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 1.5rem;
+    height: 100%;
+}
+
+*::-webkit-scrollbar-track {
+    background: #f7f7f7;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: blueviolet;
+    border-radius: 20px;
+    border: 3px solid #f7f7f7;
+
+}
+
+.text_form_conversation_historique{
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+
+.text_form_formulaire_conversation{
+    font-size: 2rem;
+    margin-top: 4rem;
+    padding-bottom: 1rem;
+}
+
+.bloc_message {
+    width: 99%;
+}
+
+#historique_conversation_01{
+    overflow-y: scroll;
+    max-height: 38rem;
+}
+
+.text_pas_de_commentaire {
+    font-size: 1.8rem;
+}
+
+#formulaire_conversation_01{
+    height: 20rem;
+    max-height: 20rem;
+    font-size: 1.3rem;
+}
+
+#texte_interlocuteur {
+    font-size: 1.3rem;
+}
+
+small {
+    font-size: 1.2rem;
+}
+
+#texte_message_interlocuteur {
+    font-size: 1.5rem;
+}
+
+.bouton_conversation{
+    padding: 1rem 6rem 1rem 6rem;
+    margin-top: 6rem;
+    font-size: 1.5rem;
 }
 
 .bouton_conversation_administrateur{

@@ -27,6 +27,13 @@ public class ConversationController {
         return conversations;
     }
 
+    @GetMapping(value = "/conversationsSelonMembre")
+    public List<Conversation> conversationSelonDateAjoutPourListeMembre() {
+        List<Conversation> conversations = daoConversation.conversationSelonDateAjoutPourListeMembre();
+
+        return conversations;
+    }
+
     @PostMapping(value = "/ajouterConversation")
     public Conversation saveConversation(@RequestBody Conversation conversation) {
         return daoConversation.save(conversation);

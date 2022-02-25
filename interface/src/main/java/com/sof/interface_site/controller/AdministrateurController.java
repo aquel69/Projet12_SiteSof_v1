@@ -1,10 +1,9 @@
 package com.sof.interface_site.controller;
 
-import com.sof.interface_site.model.ConcertDate;
-import com.sof.interface_site.model.Mail;
-import com.sof.interface_site.model.NewsletterEmail;
+import com.sof.interface_site.model.*;
 import com.sof.interface_site.proxy.MicroserviceAuthentification;
 import com.sof.interface_site.proxy.MicroserviceConcert;
+import com.sof.interface_site.proxy.MicroserviceConversation;
 import com.sof.interface_site.proxy.MicroserviceNewsletterEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -43,21 +45,38 @@ public class AdministrateurController {
     @Autowired
     private MicroserviceConcert microserviceConcert;
 
+    @Autowired
+    private MicroserviceConversation microserviceConversation;
+
+    @Autowired
+    private UtilisateurController utilisateurController;
+
     private Mail mail;
-
     private ConcertDate concert;
-
     private String dateTime;
-
     private List<ConcertDate> listeDateConcert;
+    private List<Conversation> listeMembresConversation;
+    private UtilisateurAuthentification membreSelectionne;
+    private Adresse adresseMembre;
+    private List<Conversation> listeConversationSelonMembreSelectionne;
+    private Conversation conversation;
+    private UtilisateurAuthentification utilisateurSof;
 
     @RequestMapping(value = "/newsletter", method = RequestMethod.GET)
     public String redactionNewsletter(Model model){
-        mail = new Mail();
+        if(utilisateurSof == null) {
+            utilisateurSof = utilisateurController.getUtilisateurAuthentifier();
+        }
 
-        model.addAttribute("mail", mail);
-        System.out.println("Newsletter");
-        return "Newsletter";
+        if (utilisateurSof.getRoles().get(0).getStatut().equals("ROLE_ADMIN")) {
+            mail = new Mail();
+
+            model.addAttribute("mail", mail);
+            System.out.println("Newsletter");
+            return "Newsletter";
+        } else {
+            return utilisateurController.accueil(model);
+        }
     }
 
     @RequestMapping(value = "/envoiNewsletter", method = RequestMethod.POST)
@@ -131,10 +150,57 @@ public class AdministrateurController {
         return "AjoutConcert";
     }
 
-
     @RequestMapping(value = "/conversationAdministrateur", method = RequestMethod.GET)
-    public String conversationAdministrateur(){
+    public String conversationAdministrateur(Model model){
+        if (listeMembresConversation == null) {
+            listeMembresConversation = new ArrayList<>();
+            listeConversationSelonMembreSelectionne = new ArrayList<>();
+            listeMembresConversation = microserviceConversation.conversationSelonDateAjoutPourListeMembre();
+            adresseMembre = new Adresse();
+            membreSelectionne = new UtilisateurAuthentification(adresseMembre);
+            conversation = new Conversation();
+        }
+
+        interfaceModelConversation(model);
+
+        model.addAttribute("listeMembresConversation", listeMembresConversation);
+        model.addAttribute("membreSelectionne", membreSelectionne);
         System.out.println("conversationAdministrateur");
+        return "ConversationAdministrateur";
+    }
+
+    @RequestMapping(value = "/conversationAdministrateurPost", method = RequestMethod.POST)
+    public String conversationAdministrateurPost(Model model, @ModelAttribute("conversation") @Valid Conversation conversation
+            , BindingResult erreurConversation){
+        conversation.setMessage(conversation.getMessage().replace("\n", "").replace("\r", ""));
+
+        UtilisateurAuthentification utilisateurSof = microserviceAuthentification.findUtilisateurByUsername("Sof");
+
+        conversation.setMembre(membreSelectionne);
+        conversation.setDateAjout(LocalDateTime.now());
+        conversation.setInterlocuteur(utilisateurSof);
+
+        microserviceConversation.saveConversation(conversation);
+        microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
+
+        interfaceModelConversation(model);
+        model.addAttribute("listeMembresConversation", listeMembresConversation);
+        model.addAttribute("membreSelectionne", membreSelectionne);
+
+        System.out.println("ConversationMembre");
+        return "ConversationAdministrateur";
+    }
+
+    @RequestMapping(value = "/selectionDuMembre", method = RequestMethod.POST)
+    public String selectionDuMembreConversation(Model model, @RequestParam String usernameMembre){
+
+        membreSelectionne = microserviceAuthentification.findUtilisateurByUsername(usernameMembre);
+        microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
+
+        interfaceModelConversation(model);
+        model.addAttribute("listeMembresConversation", listeMembresConversation);
+        model.addAttribute("membreSelectionne", membreSelectionne);
+
         return "ConversationAdministrateur";
     }
 
@@ -147,6 +213,19 @@ public class AdministrateurController {
     public boolean verificationDate(final String date) {
         Matcher matcher = patternEmail.matcher(date);
         return matcher.matches();
+    }
+
+    private void interfaceModelConversation(Model model) {
+
+        LocalTime midnight = LocalTime.MIDNIGHT;
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
+        listeConversationSelonMembreSelectionne = microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
+
+        model.addAttribute("conversation", conversation);
+        model.addAttribute("conversations", listeConversationSelonMembreSelectionne);
+        model.addAttribute("localDateTimeMidnight",LocalDateTime.of(today, midnight));
+        model.addAttribute("localDateTime",LocalDateTime.now());
+
     }
 
 }
