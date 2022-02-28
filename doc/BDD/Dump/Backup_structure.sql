@@ -5,7 +5,7 @@
 -- Dumped from database version 12.2
 -- Dumped by pg_dump version 12.2
 
--- Started on 2022-01-24 18:39:08
+-- Started on 2022-02-28 18:48:17
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -240,15 +240,15 @@ ALTER SEQUENCE public.biographie_interface_id_biographie_interface_seq OWNED BY 
 
 --
 -- TOC entry 226 (class 1259 OID 77123)
--- Name: commentaire; Type: TABLE; Schema: public; Owner: postgres
+-- Name: conversation; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.commentaire (
-    id_commentaire character varying NOT NULL,
-    commentaire character varying NOT NULL,
-    date_ajout date NOT NULL,
-    membre numeric NOT NULL,
-    interlocuteur numeric NOT NULL
+CREATE TABLE public.conversation (
+    id_conversation character varying NOT NULL,
+    message character varying NOT NULL,
+    date_ajout timestamp with time zone NOT NULL,
+    membre_id numeric NOT NULL,
+    interlocuteur_id numeric NOT NULL
 );
 
 
@@ -284,7 +284,7 @@ ALTER SEQUENCE public.commentaire_id_commentaire_seq OWNED BY public.conversatio
 --
 
 CREATE TABLE public.concert_date (
-    id_concert_date character varying NOT NULL,
+    id_concert_date numeric NOT NULL,
     adresse character varying NOT NULL,
     nom_lieu character varying NOT NULL,
     tarif character varying NOT NULL,
@@ -425,7 +425,8 @@ CREATE TABLE public.photo_interface (
     photo_contact character varying NOT NULL,
     photo_creation_compte character varying NOT NULL,
     photo_conversation_membre character varying NOT NULL,
-    photo_modification_compte character varying NOT NULL
+    photo_modification_compte character varying NOT NULL,
+    photo_gestion_compte character varying NOT NULL
 );
 
 
@@ -579,15 +580,7 @@ ALTER TABLE ONLY public.biographie_interface ALTER COLUMN id_biographie_interfac
 
 
 --
--- TOC entry 2780 (class 2604 OID 77126)
--- Name: commentaire id_commentaire; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.conversation ALTER COLUMN id_conversation SET DEFAULT nextval('public.commentaire_id_commentaire_seq'::regclass);
-
-
---
--- TOC entry 2776 (class 2604 OID 77082)
+-- TOC entry 2776 (class 2604 OID 77176)
 -- Name: concert_date id_concert_date; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -600,6 +593,14 @@ ALTER TABLE ONLY public.concert_date ALTER COLUMN id_concert_date SET DEFAULT ne
 --
 
 ALTER TABLE ONLY public.concert_interface ALTER COLUMN id_concert_interface SET DEFAULT nextval('public.concert_interface_id_concert_interface_seq'::regclass);
+
+
+--
+-- TOC entry 2780 (class 2604 OID 77126)
+-- Name: conversation id_conversation; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.conversation ALTER COLUMN id_conversation SET DEFAULT nextval('public.commentaire_id_commentaire_seq'::regclass);
 
 
 --
@@ -672,7 +673,7 @@ ALTER TABLE ONLY public.biographie_interface
 
 --
 -- TOC entry 2803 (class 2606 OID 77131)
--- Name: commentaire commentaire_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: conversation commentaire_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.conversation
@@ -680,7 +681,7 @@ ALTER TABLE ONLY public.conversation
 
 
 --
--- TOC entry 2795 (class 2606 OID 77087)
+-- TOC entry 2795 (class 2606 OID 77178)
 -- Name: concert_date concert_date_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -753,7 +754,7 @@ ALTER TABLE ONLY public.utilisateur
 
 --
 -- TOC entry 2809 (class 2606 OID 77142)
--- Name: commentaire membre_commentaire_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: conversation membre_commentaire_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.conversation
@@ -762,7 +763,7 @@ ALTER TABLE ONLY public.conversation
 
 --
 -- TOC entry 2810 (class 2606 OID 77147)
--- Name: commentaire membre_commentaire_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: conversation membre_commentaire_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.conversation
@@ -787,7 +788,7 @@ ALTER TABLE ONLY public.utilisateur_role
     ADD CONSTRAINT utilisateur_utilisateur_role_fk FOREIGN KEY (utilisateur_id) REFERENCES public.utilisateur(id_utilisateur);
 
 
--- Completed on 2022-01-24 18:39:08
+-- Completed on 2022-02-28 18:48:18
 
 --
 -- PostgreSQL database dump complete
