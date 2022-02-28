@@ -70,6 +70,12 @@ public class AuthentificationController {
         return role;
     }
 
+    @GetMapping(value = "/userInfo/listeDesRolesSelonUtilisateur/{idUtilisateur}")
+    public List<String> listeDesRolesSelonUtilisateur(@PathVariable int idUtilisateur) {
+        List<String> listeRoles = daoRole.listeDesRolesDeLUtilisateur(idUtilisateur);
+
+        return listeRoles;
+    }
 
     @PostMapping(value = "/ajouterRole")
     public Utilisateur saveRole(@RequestBody Utilisateur utilisateur) {
@@ -78,9 +84,23 @@ public class AuthentificationController {
     }
 
 
-    @GetMapping(value = "/utilisateurSelonUsername/{username}")
-    public UtilisateurAuthentification findUtilisateurByUsername(@PathVariable String username) {
+    @GetMapping(value = "/utilisateurAuthentificationSelonUsername/{username}")
+    public UtilisateurAuthentification findUtilisateurAuthentificationByUsername(@PathVariable String username) {
         UtilisateurAuthentification utilisateurAuthentification = daoUtilisateurAuthentification.findByUsername(username);
+
+        return utilisateurAuthentification;
+    }
+
+    @GetMapping(value = "/utilisateurSelonUsername/{username}")
+    public Utilisateur findUtilisateurByUsername(@PathVariable String username) {
+        Utilisateur utilisateur = daoUtilisateur.findByUsername(username);
+
+        return utilisateur;
+    }
+
+    @GetMapping(value = "/utilisateurSelonId/{id}")
+    public UtilisateurAuthentification findUtilisateurById(@PathVariable int id) {
+        UtilisateurAuthentification utilisateurAuthentification = daoUtilisateurAuthentification.findById(id);
 
         return utilisateurAuthentification;
     }
@@ -90,6 +110,13 @@ public class AuthentificationController {
         List<Utilisateur> utilisateurs = daoUtilisateur.findAll();
 
         return utilisateurs;
+    }
+
+    @GetMapping(value = "/adresseSelonId/{id}")
+    public Adresse adresseSelonId(@PathVariable int id){
+        Adresse adresse = daoAdresse.adresseSelonId(id);
+
+        return adresse;
     }
 
     @GetMapping(value = "/derniereAdresse")

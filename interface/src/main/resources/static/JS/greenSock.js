@@ -52,59 +52,50 @@ TweenMax.from("#lien_deconnection", 1.5, {
 
 /* navbar qui apparait 1 par 1 */
 
-TweenMax.from("#navigationBarre a:nth-child(1)", 2.5, {
+TweenMax.from("#navigationBarre a:nth-child(1)", 2.0, {
     delay: 1.2,
     opacity: 0,
     y: 20,
     ease: Expo.easeInOut
 })
-TweenMax.from("#navigationBarre a:nth-child(2)", 3, {
+TweenMax.from("#navigationBarre a:nth-child(2)", 2.3, {
     delay: 1.2,
     opacity: 0,
     y: 20,
     ease: Expo.easeInOut
 })
-TweenMax.from("#navigationBarre a:nth-child(3)", 3.5, {
+TweenMax.from("#navigationBarre a:nth-child(3)", 2.6, {
     delay: 1.2,
     opacity: 0,
     y: 20,
     ease: Expo.easeInOut
 })
-TweenMax.from("#navigationBarre a:nth-child(4)", 4, {
+TweenMax.from("#navigationBarre a:nth-child(4)", 3, {
     delay: 1.2,
     opacity: 0,
     y: 20,
     ease: Expo.easeInOut
 })
-TweenMax.from("#navigationBarre a:nth-child(5)", 4.5, {
+TweenMax.from("#navigationBarre a:nth-child(5)", 3.3, {
     delay: 1.2,
     opacity: 0,
     y: 20,
     ease: Expo.easeInOut
 })
-TweenMax.from("#navigationBarre a:nth-child(6)", 5, {
+TweenMax.from("#navigationBarre a:nth-child(6)", 3.6, {
     delay: 1.2,
     opacity: 0,
     y: 20,
     ease: Expo.easeInOut
 })
-
-TweenMax.from("#lien_icone a:nth-child(1)", 5.5, {
-    delay: 1.2,
-    opacity: 0,
-    y: 20,
-    ease: Expo.easeInOut
-})
-
-
-TweenMax.from("#lien_icone a:nth-child(2)", 6, {
+TweenMax.from("#navigationBarre a:nth-child(7)", 4.0, {
     delay: 1.2,
     opacity: 0,
     y: 20,
     ease: Expo.easeInOut
 })
 
-TweenMax.from("#lien_icone a:nth-child(3)", 6.5, {
+TweenMax.from("#lien_icone a:nth-child(1)", 4, {
     delay: 1.2,
     opacity: 0,
     y: 20,
@@ -112,7 +103,50 @@ TweenMax.from("#lien_icone a:nth-child(3)", 6.5, {
 })
 
 
-TweenMax.from("#lien_deconnection a:nth-child(1)", 7.0, {
+TweenMax.from("#lien_icone a:nth-child(2)", 4.3, {
+    delay: 1.2,
+    opacity: 0,
+    y: 20,
+    ease: Expo.easeInOut
+})
+
+TweenMax.from("#lien_icone a:nth-child(3)", 4.6, {
+    delay: 1.2,
+    opacity: 0,
+    y: 20,
+    ease: Expo.easeInOut
+})
+
+
+TweenMax.from("#lien_deconnection a:nth-child(1)", 4.0, {
+    delay: 1.2,
+    opacity: 0,
+    y: 20,
+    ease: Expo.easeInOut
+})
+
+TweenMax.from("#lien_deconnection a:nth-child(2)", 4.3, {
+    delay: 1.2,
+    opacity: 0,
+    y: 20,
+    ease: Expo.easeInOut
+})
+
+TweenMax.from("#lien_deconnection a:nth-child(3)", 4.0, {
+    delay: 1.2,
+    opacity: 0,
+    y: 20,
+    ease: Expo.easeInOut
+})
+
+TweenMax.from("#lien_deconnection a:nth-child(4)", 4.3, {
+    delay: 1.2,
+    opacity: 0,
+    y: 20,
+    ease: Expo.easeInOut
+})
+
+TweenMax.from("#lien_deconnection a:nth-child(5)", 4.0, {
     delay: 1.2,
     opacity: 0,
     y: 20,

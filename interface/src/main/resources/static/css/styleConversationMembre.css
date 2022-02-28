@@ -114,7 +114,12 @@ body{
 }
 
 .bloc_message {
-    width: 99%;
+    width: 97%;
+
+}
+
+.bloc_message_admin {
+    width: 97%;
 }
 
 #historique_conversation_01{
@@ -136,12 +141,21 @@ body{
     font-size: 1.3rem;
 }
 
+#texte_interlocuteur_admin {
+    font-size: 1.3rem;
+}
+
 small {
     font-size: 1.2rem;
 }
 
 #texte_message_interlocuteur {
     font-size: 1.5rem;
+}
+
+#texte_message_interlocuteur_admin{
+    font-size: 1.5rem;
+
 }
 
 .bouton_conversation{

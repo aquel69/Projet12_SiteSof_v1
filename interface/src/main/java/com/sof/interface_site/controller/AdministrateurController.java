@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -49,6 +46,9 @@ public class AdministrateurController {
     private MicroserviceConversation microserviceConversation;
 
     @Autowired
+    private AuthentificationController authentificationController;
+
+    @Autowired
     private UtilisateurController utilisateurController;
 
     private Mail mail;
@@ -60,23 +60,22 @@ public class AdministrateurController {
     private Adresse adresseMembre;
     private List<Conversation> listeConversationSelonMembreSelectionne;
     private Conversation conversation;
-    private UtilisateurAuthentification utilisateurSof;
+    private UtilisateurAuthentification utilisateurVerificationAdmin;
 
-    @RequestMapping(value = "/newsletter", method = RequestMethod.GET)
-    public String redactionNewsletter(Model model){
-        if(utilisateurSof == null) {
-            utilisateurSof = utilisateurController.getUtilisateurAuthentifier();
-        }
-
-        if (utilisateurSof.getRoles().get(0).getStatut().equals("ROLE_ADMIN")) {
+    @RequestMapping(value = "/newsletter/{id}", method = RequestMethod.GET)
+    public String redactionNewsletter(Model model, @PathVariable int id){
+        String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
+        if (verificationUtilisateurConnecte.equals("Index")) {
+            utilisateurController.accueil(model);
+            return "Index";
+        } else {
             mail = new Mail();
 
             model.addAttribute("mail", mail);
-            System.out.println("Newsletter");
-            return "Newsletter";
-        } else {
-            return utilisateurController.accueil(model);
+            model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
         }
+
+        return "Newsletter";
     }
 
     @RequestMapping(value = "/envoiNewsletter", method = RequestMethod.POST)
@@ -94,23 +93,31 @@ public class AdministrateurController {
 
         model.addAttribute("messageEnvoiMail", messageEnvoiMail);
 
-        System.out.println("Newsletter");
         return "Newsletter";
     }
 
-    @RequestMapping(value = "/ajoutConcert", method = RequestMethod.GET)
-    public String ajoutConcert(Model model){
-        listeDateConcert = microserviceConcert.findAllUtilisateur();
-        concert = new ConcertDate();
+    @RequestMapping(value = "/ajoutConcert/{id}", method = RequestMethod.GET)
+    public String ajoutConcert(Model model, @PathVariable int id){
+        String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
+        if (verificationUtilisateurConnecte.equals("Index")) {
+            utilisateurController.accueil(model);
+            return "Index";
+        } else {
 
-        modelConcert(model, concert);
+            listeDateConcert = microserviceConcert.findAllUtilisateur();
+            concert = new ConcertDate();
+
+            modelConcert(model, concert);
+            model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
+        }
 
         return "AjoutConcert";
     }
 
 
     @RequestMapping(value = "/ajoutConcertPost", method = RequestMethod.POST)
-    public String ajouterUnConcert(Model model, @Valid @ModelAttribute("concert") ConcertDate concert, BindingResult erreurConcert, @RequestParam String dateTime){
+    public String ajouterUnConcert(Model model, @Valid @ModelAttribute("concert") ConcertDate concert
+            , BindingResult erreurConcert, @RequestParam String dateTime){
 
         if (erreurConcert.hasErrors() || !verificationDate(dateTime)) {
             String messageErreurDate = "Le format de la date doit être dd-mm-yyyy";
@@ -135,6 +142,8 @@ public class AdministrateurController {
 
         modelConcert(model, concert);
 
+        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
+
         return "AjoutConcert";
     }
 
@@ -147,34 +156,46 @@ public class AdministrateurController {
 
         modelConcert(model, concert);
 
+        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
+
         return "AjoutConcert";
     }
 
-    @RequestMapping(value = "/conversationAdministrateur", method = RequestMethod.GET)
-    public String conversationAdministrateur(Model model){
-        if (listeMembresConversation == null) {
-            listeMembresConversation = new ArrayList<>();
-            listeConversationSelonMembreSelectionne = new ArrayList<>();
-            listeMembresConversation = microserviceConversation.conversationSelonDateAjoutPourListeMembre();
-            adresseMembre = new Adresse();
-            membreSelectionne = new UtilisateurAuthentification(adresseMembre);
-            conversation = new Conversation();
+    @RequestMapping(value = "/conversationAdministrateur/{id}", method = RequestMethod.GET)
+    public String conversationAdministrateur(Model model, @PathVariable int id){
+        String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
+        if (verificationUtilisateurConnecte.equals("Index")) {
+            utilisateurController.accueil(model);
+            return "Index";
+        } else {
+
+            if (listeMembresConversation == null) {
+                listeMembresConversation = new ArrayList<>();
+                listeConversationSelonMembreSelectionne = new ArrayList<>();
+                listeMembresConversation = microserviceConversation.conversationSelonDateAjoutPourListeMembre();
+                adresseMembre = new Adresse();
+                membreSelectionne = new UtilisateurAuthentification(adresseMembre);
+                conversation = new Conversation();
+            }
+
+            interfaceModelConversation(model);
+
+            model.addAttribute("listeMembresConversation", listeMembresConversation);
+            model.addAttribute("membreSelectionne", membreSelectionne);
+            model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
         }
 
-        interfaceModelConversation(model);
-
-        model.addAttribute("listeMembresConversation", listeMembresConversation);
-        model.addAttribute("membreSelectionne", membreSelectionne);
-        System.out.println("conversationAdministrateur");
         return "ConversationAdministrateur";
     }
 
     @RequestMapping(value = "/conversationAdministrateurPost", method = RequestMethod.POST)
-    public String conversationAdministrateurPost(Model model, @ModelAttribute("conversation") @Valid Conversation conversation
-            , BindingResult erreurConversation){
-        conversation.setMessage(conversation.getMessage().replace("\n", "").replace("\r", ""));
+    public String conversationAdministrateurPost(Model model, @ModelAttribute("conversation")
+                @Valid Conversation conversation, BindingResult erreurConversation){
+        conversation.setMessage(conversation.getMessage()
+                .replace("\n", "").replace("\r", ""));
 
-        UtilisateurAuthentification utilisateurSof = microserviceAuthentification.findUtilisateurByUsername("Sof");
+        UtilisateurAuthentification utilisateurSof = microserviceAuthentification
+                .findUtilisateurAuthentificationByUsername("Sof");
 
         conversation.setMembre(membreSelectionne);
         conversation.setDateAjout(LocalDateTime.now());
@@ -184,6 +205,7 @@ public class AdministrateurController {
         microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
 
         interfaceModelConversation(model);
+        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
         model.addAttribute("listeMembresConversation", listeMembresConversation);
         model.addAttribute("membreSelectionne", membreSelectionne);
 
@@ -193,11 +215,11 @@ public class AdministrateurController {
 
     @RequestMapping(value = "/selectionDuMembre", method = RequestMethod.POST)
     public String selectionDuMembreConversation(Model model, @RequestParam String usernameMembre){
-
-        membreSelectionne = microserviceAuthentification.findUtilisateurByUsername(usernameMembre);
+        membreSelectionne = microserviceAuthentification.findUtilisateurAuthentificationByUsername(usernameMembre);
         microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
 
         interfaceModelConversation(model);
+        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
         model.addAttribute("listeMembresConversation", listeMembresConversation);
         model.addAttribute("membreSelectionne", membreSelectionne);
 
@@ -219,7 +241,8 @@ public class AdministrateurController {
 
         LocalTime midnight = LocalTime.MIDNIGHT;
         LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
-        listeConversationSelonMembreSelectionne = microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
+        listeConversationSelonMembreSelectionne = microserviceConversation
+                .conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
 
         model.addAttribute("conversation", conversation);
         model.addAttribute("conversations", listeConversationSelonMembreSelectionne);
@@ -228,4 +251,11 @@ public class AdministrateurController {
 
     }
 
+    private String verificationUtilisateurConnecte(int id) {
+        UtilisateurAuthentification utilisateurVerification = microserviceAuthentification.findUtilisateurById(id);
+        if( authentificationController.getUtilisateurAuthentifier() == null || !authentificationController.getUtilisateurAuthentifier().getUsername().equals(utilisateurVerification.getUsername())) {
+             return "Index";
+        }
+        return "autre";
+    }
 }
