@@ -9,14 +9,14 @@
 
 <!-- Accueil -->
 
-<header id="accueil" th:fragment="header()">
+<header id="accueil" th:fragment="header(utilisateurAuthentifier)">
     <div class="row">
         <div class="col-12">
             <nav id="navigationBarre">
-                <a th:href="@{|/newsletter|}" class="liensNav">Newsletter</a>
-                <a th:href="@{|/ajoutConcert|}" class="liensNav" onclick="toggleNav()">Ajout Concert</a>
-                <a th:href="@{|/conversationAdministrateur|}" class="liensNav" onclick="toggleNav()">Conversation</a>
-                <a class="liensNav" th:href="@{|/deconnexion|}">Se déconnecter</a>
+                <a th:href="@{|/|}" class="liensNav">Accueil</a>
+                <a th:href="@{|/newsletter/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav">Newsletter</a>
+                <a th:href="@{|/ajoutConcert/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav" onclick="toggleNav()">Ajout Concert</a>
+                <a th:href="@{|/conversationAdministrateur/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav" onclick="toggleNav()">Conversation</a>
                 <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
             </nav>
         </div>

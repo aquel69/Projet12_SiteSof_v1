@@ -47,4 +47,9 @@ public class PhotoInterface {
      */
     private String photoModificationCompte;
 
+    /**
+     * photo de la page gestion du compte
+     */
+    private String photoGestionCompte;
+
 }

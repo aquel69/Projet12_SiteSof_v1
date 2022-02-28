@@ -72,4 +72,11 @@ public class PhotoInterface {
     @Column(name="photo_modification_compte")
     private String photoModificationCompte;
 
+    /**
+     * photo de la page gestion du compte
+     */
+    @NonNull
+    @Column(name="photo_gestion_compte")
+    private String photoGestionCompte;
+
 }

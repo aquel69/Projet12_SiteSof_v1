@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -47,6 +44,9 @@ public class UtilisateurController {
     @Autowired
     private MicroserviceConversation conversationProxy;
 
+    @Autowired
+    private AuthentificationController authentificationController;
+
     private UtilisateurAuthentification utilisateurAuthentifier;
     private Utilisateur utilisateur;
     private NewsletterEmail newsletterEmail;
@@ -64,74 +64,22 @@ public class UtilisateurController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String accueil(Model model){
-        utilisateur = new Utilisateur();
-
-        if (utilisateurAuthentifier == null) {
+        if (authentificationController.getUtilisateurAuthentifier() == null) {
             utilisateurAuthentifier = new UtilisateurAuthentification();
             role = new Role();
+            utilisateur = new Utilisateur();
+            newsletterEmail = new NewsletterEmail();
 
             role.setStatut("ROLE_USER");
             utilisateurAuthentifier.getRoles().add(0, role);
-        }
-
-        newsletterEmail = new NewsletterEmail();
-
-        interfaceModelAccueil(model);
-
-        System.out.println("Accueil");
-        return "Index";
-    }
-
-
-    /**
-     * permet de récupérer les donnéees saisies par l'utilisateur et de vérifier si l'authentification est valide
-     * si elle l'est l'utilisateur est renvoyé sur la page d'accueil et le statut connecté apparait
-     * dans la barre de menu ou l'admin est connecté sur sa page
-     * @param model
-     * @param utilisateurPost
-     * @return la page correspondante au role
-     */
-    @RequestMapping(value = "/authentification",method = RequestMethod.POST)
-    public String validationAuthentification(Model model, @ModelAttribute("utilisateur") UtilisateurAuth utilisateurPost){
-
-        utilisateurAuthentifier = authentificationProxy.login(utilisateurPost);
-
-        interfaceModelAccueil(model);
-
-        if (utilisateurAuthentifier.getRoles().get(0).getStatut().equals("ROLE_USER")) {
-            erreur = "L'email ou le mot de passe est incorrect";
-            model.addAttribute("erreurAuthentification", erreur);
-            erreur = null;
-            return "Index";
-        } else if (utilisateurAuthentifier.getRoles().get(0).getStatut().equals("ROLE_MEMBER")){
-            return "Index";
         } else {
-            Mail mail = new Mail();
-            model.addAttribute("mail", mail);
-
-            return "Newsletter";
+            utilisateurAuthentifier = authentificationController.getUtilisateurAuthentifier();
         }
-    }
-
-    /**
-     * permet de récupérer les donnéees saisies par l'utilisateur et de vérifier si l'authentification est valide
-     * si elle l'est l'utilisateur est renvoyé sur la page d'accueil et le statut connecté apparait
-     * dans la barre de menu ou l'admin est connecté sur sa page
-     * @return la page correspondante au role
-     */
-    @RequestMapping(value = "/deconnexion",method = RequestMethod.GET)
-    public String deconnexion(Model model){
-
-        utilisateurAuthentifier = null;
-        utilisateurAuthentifier = new UtilisateurAuthentification();
-        role.setStatut("ROLE_USER");
-        utilisateurAuthentifier.getRoles().add(0, role);
 
         interfaceModelAccueil(model);
 
         return "Index";
     }
-
 
     @RequestMapping(value = "/ajoutEmail",method = RequestMethod.POST)
     public String ajoutEmailNewsletter(Model model, @ModelAttribute("newsletterEmail") NewsletterEmail newsletterEmailPost){
@@ -224,7 +172,7 @@ public class UtilisateurController {
         authentificationProxy.saveRole(utilisateur);
 
         UtilisateurAuthentification utilisateurAuthentification = authentificationProxy
-                .findUtilisateurByUsername(utilisateur.getUsername());
+                .findUtilisateurAuthentificationByUsername(utilisateur.getUsername());
         newsletterEmailProxy.envoyerEmailBienvenue(utilisateurAuthentification);
         messageInterface = "Votre compte a bien été créé ! Un message vous a été envoyé sur votre boite mail";
         interfaceModelAccueil(model);
@@ -233,14 +181,78 @@ public class UtilisateurController {
         return "Index";
     }
 
+    @RequestMapping(value = "/modificationCompte/{id}", method = RequestMethod.GET)
+    public String modificationCompte(Model model, @PathVariable int id){
+        String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
+        if (verificationUtilisateurConnecte.equals("Index")) {
+            accueil(model);
+            return "Index";
+        } else {
+            Utilisateur utilisateur = authentificationProxy.findUtilisateurByUsername(authentificationController.getUtilisateurAuthentifier().getUsername());
 
-    @RequestMapping(value = "/conversationMembre", method = RequestMethod.GET)
-    public String conversationMembre(Model model){
-        conversation = new Conversation();
-        interfaceModelConversation(model);
+            interfaceModelCreationCompte(model, utilisateur, utilisateur.getAdresseUtilisateur());
+        }
 
-        System.out.println("ConversationMembre");
-        return "ConversationMembre";
+        return "ModificationCompte";
+    }
+
+    @RequestMapping(value = "/modificationCompte", method = RequestMethod.POST)
+    public String modificationCompte(Model model, @ModelAttribute("utilisateur") @Valid Utilisateur utilisateur
+            , BindingResult erreurUtilisateur, @ModelAttribute("adresse") @Valid Adresse adresse
+            , BindingResult erreurAdresse, @RequestParam String nouveauEmail
+            , @RequestParam String nouveauMotDePasse){
+        matchRegexEmail = verificationEmail(utilisateur.getEmail());
+        matchRegexPassword = verificationMotDePasse(utilisateur.getMotDePasse());
+        messageErreurMail = null;
+        messageErreurMotDePasse = null;
+        messageErreurConfirmationMail = null;
+        messageErreurConfirmationMotDePasse = null;
+        messageErreurUsernameDejaExistant = null;
+        List<Utilisateur> utilisateurs;
+
+        utilisateurs = authentificationProxy.findAllUtilisateur();
+
+        if (erreurUtilisateur.hasErrors() || erreurAdresse.hasErrors() || !matchRegexEmail  || !matchRegexPassword
+                || !verificationCorrespondanceEmail(utilisateur.getEmail(), nouveauEmail)
+                || !verificationCorrespondanceMotDePasse(utilisateur.getMotDePasse(), nouveauMotDePasse)
+                || !verificationUsernameDejaExistant(utilisateurs, utilisateur)) {
+
+            verificationErreursGlobale(utilisateur, nouveauEmail, nouveauMotDePasse, utilisateurs);
+            interfaceModelCreationCompte(model, utilisateur, adresse, nouveauEmail, nouveauMotDePasse
+                    , messageErreurMail, messageErreurMotDePasse, messageErreurConfirmationMail
+                    , messageErreurConfirmationMotDePasse, messageErreurUsernameDejaExistant);
+
+            return "ModificationCompte";
+        }
+
+        Adresse adresseSave = authentificationProxy.addAdresse(adresse);
+        utilisateur.setAdresseUtilisateur(adresseSave);
+        utilisateur.setDateAjout(LocalDateTime.now());
+        authentificationProxy.saveUtilisateur(utilisateur);
+        authentificationProxy.saveRole(utilisateur);
+
+        UtilisateurAuthentification utilisateurAuthentification = authentificationProxy
+                .findUtilisateurAuthentificationByUsername(utilisateur.getUsername());
+        newsletterEmailProxy.envoyerEmailBienvenue(utilisateurAuthentification);
+        messageInterface = "Votre compte a bien été créé ! Un message vous a été envoyé sur votre boite mail";
+        interfaceModelAccueil(model);
+        messageInterface = null;
+
+        return "ModificationCompte";
+    }
+
+    @RequestMapping(value = "/conversationMembre/{id}", method = RequestMethod.GET)
+    public String conversationMembre(Model model, @PathVariable int id){
+        String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
+        if (verificationUtilisateurConnecte.equals("Index")) {
+            accueil(model);
+            return "Index";
+        } else {
+            interfaceModelConversation(model);
+
+            System.out.println("ConversationMembre");
+            return "ConversationMembre";
+        }
     }
 
     @RequestMapping(value = "/conversationMembre", method = RequestMethod.POST)
@@ -248,12 +260,12 @@ public class UtilisateurController {
             , BindingResult erreurConversation){
         conversation.setMessage(conversation.getMessage().replace("\n", "").replace("\r", ""));
 
-        conversation.setMembre(utilisateurAuthentifier);
+        conversation.setMembre(authentificationController.getUtilisateurAuthentifier());
         conversation.setDateAjout(LocalDateTime.now());
-        conversation.setInterlocuteur(utilisateurAuthentifier);
+        conversation.setInterlocuteur(authentificationController.getUtilisateurAuthentifier());
 
         conversationProxy.saveConversation(conversation);
-        conversationProxy.conversationsSelonMembre(utilisateurAuthentifier.getIdUtilisateur());
+        conversationProxy.conversationsSelonMembre(authentificationController.getUtilisateurAuthentifier().getIdUtilisateur());
 
         interfaceModelConversation(model);
 
@@ -261,10 +273,7 @@ public class UtilisateurController {
         return "ConversationMembre";
     }
 
-
-
-
-    private void interfaceModelAccueil(Model model) {
+    public void interfaceModelAccueil(Model model) {
         //Accueil
         String urlVideoAccueil = interfaceDonneesProxy.getUrlVideoYoutube();
         //Biographie
@@ -321,7 +330,8 @@ public class UtilisateurController {
         conversation = new Conversation();
         LocalTime midnight = LocalTime.MIDNIGHT;
         LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
-        List<Conversation> conversations = conversationProxy.conversationsSelonMembre(utilisateurAuthentifier.getIdUtilisateur());
+        List<Conversation> conversations = conversationProxy.conversationsSelonMembre(authentificationController
+                .getUtilisateurAuthentifier().getIdUtilisateur());
         PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
 
         model.addAttribute("photoInterface", photoInterface);
@@ -407,8 +417,12 @@ public class UtilisateurController {
         return true;
     }
 
-    public UtilisateurAuthentification getUtilisateurAuthentifier() {
-        return this.utilisateurAuthentifier;
+    private String verificationUtilisateurConnecte(int id) {
+        UtilisateurAuthentification utilisateurVerification = authentificationProxy.findUtilisateurById(id);
+        if( authentificationController.getUtilisateurAuthentifier() == null || !authentificationController.getUtilisateurAuthentifier().getUsername().equals(utilisateurVerification.getUsername())) {
+            return "Index";
+        }
+        return "autre";
     }
 
 }

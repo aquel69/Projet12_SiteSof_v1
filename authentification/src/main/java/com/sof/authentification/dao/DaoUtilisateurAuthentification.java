@@ -11,4 +11,6 @@ public interface DaoUtilisateurAuthentification extends JpaRepository<Utilisateu
 
     UtilisateurAuthentification findByUsername(String username);
 
+    UtilisateurAuthentification findById(int id);
+
 }

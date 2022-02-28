@@ -49,14 +49,19 @@
                     <a href="#concerts" class="liensNav" onclick="toggleNav()">Concerts</a>
                     <a href="#album" class="liensNav" onclick="toggleNav()">Album</a>
                     <a href="#contact" class="liensNav" onclick="toggleNav()">Contact</a>
-                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:href="@{|/conversationMembre|}" class="liensNav">Conversation</a>
+                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:href="@{|/conversationMembre/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav">Conversation</a>
+                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_ADMIN')}" th:href="@{|/newsletter/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav">Administrateur</a>
+                    <a th:if="${utilisateurAuthentifier != null && !utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_USER')}" th:href="@{|/modificationCompte/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav">Compte</a>
                     <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
                 </nav>
             </div>
             <div>
-                <nav id="lien_deconnection">
+                <nav id="lien_deconnection" class="menu">
+                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_ADMIN')}" th:text="'Bienvenue ' + ${utilisateurAuthentifier.getUsername()}" class="lien_deconnect"></a>
+                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_ADMIN')}" th:text="'déconnexion'" th:href="@{|/deconnexion|}" class="lien_deconnect"></a>
+                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:text="'Bienvenue ' + ${utilisateurAuthentifier.getUsername()}" class="lien_deconnect"></a>
                     <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:text="'déconnexion'" th:href="@{|/deconnexion|}" class="lien_deconnect"></a>
-                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_USER')}" th:text="'se connecter'" th:href="@{|#lien_authentification|}" class="lien_deconnect"></a>
+                    <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_USER')}" th:text="'se connecter'" th:href="@{|#lien_authentification|}" class="lien_se_connecter"></a>
                 </nav>
             </div>
         </div>
