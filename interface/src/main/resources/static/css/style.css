@@ -58,6 +58,8 @@ body {
     font-size: 4rem;
 }
 
+
+
 #lien_deconnection{
     z-index: 42;
     transition: all 0.4s ease-in-out;
@@ -67,14 +69,21 @@ body {
 
 #lien_deconnection a {
     text-decoration: none;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-family: 'Lato';
     color: #f7f7f7;
+    display: block;
 }
 
 #lien_deconnection a:active {
+    font-size: 1.4rem;
+}
+
+#lien_se_connecter a:active {
     font-size: 2rem;
 }
+
+
 
 .icon {
     display: none;

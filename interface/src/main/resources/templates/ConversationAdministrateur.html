@@ -23,7 +23,7 @@
 <body>
 
 <!-- Newsletter -->
-<div th:insert="Header :: header()"></div>
+<div th:insert="Header :: header(utilisateurAuthentifier = ${utilisateurAuthentifier})"></div>
 <div class="container-fluid g-0">
     <div class="row titre_global_conversation_administrateur g-0 align-items-center">
         <div class="col-12 titre_conversation_administrateur">
@@ -119,17 +119,22 @@
                     <label class="form-label text_form_conversation_historique">Historique Message</label>
                     <div th:if="${!conversations.isEmpty()}" id="historique_conversation_01" class="list-group ">
                         <div  th:each="conversationBoucle, index : ${conversations}" class="list-group">
-                            <a class="list-group-item list-group-item-action active mt-2 bloc_message">
-                                <div class="d-flex w-100 justify-content-between">
+                            <a th:if="${conversationBoucle.getInterlocuteur().getUsername().equals('Sof')}" class="list-group-item list-group-item-action active mt-2 bloc_message_admin align-self-end">
+                                <div id="texte_global_interlocuteur_admin" class="d-flex w-100 justify-content-between">
+                                    <p class="mb-1 " id="texte_interlocuteur_admin" th:text="'Message de ' +  ${conversationBoucle.getInterlocuteur().getUsername()}"></p>
+                                    <small th:if="${localDateTimeMidnight.isBefore(conversationBoucle.getDateAjout())}"> aujourd'hui</small>
+                                    <small th:if="${localDateTimeMidnight.isAfter(conversationBoucle.getDateAjout())}" th:text="'Il y a ' + ${localDateTime.getDayOfYear() - conversationBoucle.getDateAjout().getDayOfYear()} + ' jours'"></small>
+                                </div>
+                                <p id="texte_message_interlocuteur_admin" class="mb-1" th:text="${conversationBoucle.getMessage()}"></p>
+                            </a>
+                            <a th:if="${!conversationBoucle.getInterlocuteur().getUsername().equals('Sof')}" class="list-group-item list-group-item-action active mt-2 bloc_message">
+                                 <div id="texte_global_interlocuteur_member" class="d-flex w-100 justify-content-between">
                                     <p class="mb-1 " id="texte_interlocuteur" th:text="'Message de ' +  ${conversationBoucle.getInterlocuteur().getUsername()}"></p>
                                     <small th:if="${localDateTimeMidnight.isBefore(conversationBoucle.getDateAjout())}"> aujourd'hui</small>
                                     <small th:if="${localDateTimeMidnight.isAfter(conversationBoucle.getDateAjout())}" th:text="'Il y a ' + ${localDateTime.getDayOfYear() - conversationBoucle.getDateAjout().getDayOfYear()} + ' jours'"></small>
                                 </div>
                                 <p id="texte_message_interlocuteur" class="mb-1" th:text="${conversationBoucle.getMessage()}"></p>
                             </a>
-                        </div>
-                        <div class="h-100 d-flex align-items-center justify-content-center" th:if="${conversations.isEmpty()}">
-                            <h5 class="text-center">Pas de commentaire</h5>
                         </div>
                     </div>
                     <div  th:if="${conversations.isEmpty()}" id="historique_conversation_02" class="h-100 d-flex align-items-center justify-content-center">

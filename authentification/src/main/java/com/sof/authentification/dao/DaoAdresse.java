@@ -13,4 +13,7 @@ public interface DaoAdresse extends JpaRepository<Adresse, Integer> {
         @Query(value = "SELECT MAX(id_adresse) FROM adresse", nativeQuery = true)
         Integer recupererDernierAdresse();
 
+        @Query(value = "SELECT * FROM adresse WHERE id_adresse = ?", nativeQuery = true)
+        Adresse adresseSelonId(int idAdresse);
+
 }

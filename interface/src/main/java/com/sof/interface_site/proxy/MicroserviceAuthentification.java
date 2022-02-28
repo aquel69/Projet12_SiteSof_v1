@@ -26,6 +26,9 @@ public interface MicroserviceAuthentification {
     @PostMapping(value = "/ajouterRole")
     Utilisateur saveRole(@RequestBody Utilisateur utilisateur);
 
+    @GetMapping(value = "/adresseSelonId/{id}")
+    Adresse adresseSelonId(@PathVariable int id);
+
     @GetMapping(value = "/derniereAdresse")
     int recupererDernierAdresse();
 
@@ -33,7 +36,13 @@ public interface MicroserviceAuthentification {
     Utilisateur findUtilisateurByEmail(@PathVariable String email);
 
     @GetMapping(value = "/utilisateurSelonUsername/{username}")
-    UtilisateurAuthentification findUtilisateurByUsername(@PathVariable String username);
+    Utilisateur findUtilisateurByUsername(@PathVariable String username);
+
+    @GetMapping(value = "/utilisateurAuthentificationSelonUsername/{username}")
+    UtilisateurAuthentification findUtilisateurAuthentificationByUsername(@PathVariable String username);
+
+    @GetMapping(value = "/utilisateurSelonId/{id}")
+    UtilisateurAuthentification findUtilisateurById(@PathVariable int id);
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     UtilisateurAuthentification login(@Valid @RequestBody UtilisateurAuth utilisateurAuth);
