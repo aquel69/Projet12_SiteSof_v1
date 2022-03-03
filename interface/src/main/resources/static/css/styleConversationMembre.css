@@ -44,14 +44,25 @@ body{
     text-decoration: none;
 }
 
+.titre_global_conversation_administrateur{
+    min-height: 10rem;
+    margin-top: 1rem;
+    background-color: #e8bb8c;
+}
+
+.global_conversation_administrateur{
+    margin-top: 5rem;
+}
+
+.titre_conversation_administrateur{
+    font-size: 3rem;
+    color: blueviolet;
+}
+
 /*.ensemble_titre_conversation{
     margin-top: 4rem;
 }*/
 
-.titre_conversation{
-    color: blueviolet;
-    font-size: 4rem;
-}
 
 .ensemble_photo_conversation{
     margin-top: 10rem;
@@ -64,10 +75,6 @@ body{
 
 .ensemble_conversation{
     margin-top: 17rem;
-}
-
-.formulaire_conversation{
-
 }
 
 .ensemble_historique_conversation{
@@ -164,4 +171,57 @@ small {
     font-size: 1.5rem;
 }
 
+@media (max-width: 1920px) {
+html {
+    font-size: 55%;
+}
 
+.retour_accueil_icone{
+    font-size: 1.9rem;
+    margin-right: 1rem;
+    margin-left: 0;
+}
+
+.ensemble_retour_accueil{
+    height: 8rem;
+    min-height: 8rem;
+}
+
+.text_retour_accueil{
+    font-size: 1.9rem;
+    margin-left: 0;
+}
+
+.ensemble_photo_conversation{
+    margin-top: 7rem;
+    margin-right: 7rem;
+    margin-left: 7rem;
+}
+
+.photo_conversation{
+    max-width: 75%;
+}
+
+.ensemble_conversation{
+    margin-top: 10rem;
+}
+
+.ensemble_historique_conversation{
+    padding-bottom: 2rem;
+    height: 40rem;
+    max-height: 40rem;
+    min-height: 40rem;
+
+}
+
+#historique_conversation_01{
+    overflow-y: scroll;
+    max-height: 32rem;
+}
+
+#formulaire_conversation_01{
+    height: 17rem;
+    max-height: 17rem;
+}
+
+}

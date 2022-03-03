@@ -161,14 +161,43 @@ small {
 }
 
 @media (max-width: 1920px) {
-    .titre_global_conversation_administrateur{
-        min-height: 10rem;
-        margin-top: 12rem;
-        background-color: #e8bb8c;
+    html {
+        font-size: 55%;
     }
 
-    .bouton_newsletter{
-        padding: 1rem 6rem 1rem 6rem;
-        margin-top: 3rem;
+    .titre_global_conversation_administrateur{
+        margin-top: 14rem;
     }
+
+    .sous_titre_conversation_administrateur{
+        margin-top: 2rem;
+        margin-bottom: 5rem;
+    }
+
+    .sous_titre_conversation_administrateur_01 {
+        margin-top: 2rem;
+        margin-bottom: 5rem;
+    }
+
+    .ensemble_historique_conversation{
+        padding-bottom: 3rem;
+        height: 35rem;
+        max-height: 35rem;
+        min-height: 35rem;
+    }
+
+    #historique_conversation_01{
+        max-height: 28rem;
+    }
+
+    #formulaire_conversation_01{
+        height: 15rem;
+        max-height: 15rem;
+    }
+
+    .bouton_conversation{
+        margin-top: 3rem;
+     }
+
+
 }

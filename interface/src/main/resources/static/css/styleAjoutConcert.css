@@ -58,22 +58,6 @@ body{
     padding-bottom: 4rem;
 }
 
-#formulaire_ajout_concert_00{
-
-}
-
-#formulaire_ajout_concert_01{
-
-}
-
-#formulaire_ajout_concert_02{
-
-}
-
-#formulaire_ajout_concert_03{
-
-}
-
 .text_form_concert_date{
     font-size: 1.7rem;
     padding-bottom: 0.5rem;
@@ -125,10 +109,14 @@ body{
 }
 
 @media (max-width: 1920px) {
-    .titre_global_ajout_concert{
-        min-height: 10rem;
-        margin-top: 12rem;
-        background-color: #e8bb8c;
+    html{
+        font-size: 55%;
+    }
+
+    .ajout_concert_formulaire_globale{
+        padding-top: 3rem;
+        height: 80rem;
+
     }
 
     .bouton_newsletter{
