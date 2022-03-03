@@ -197,10 +197,74 @@ body{
     max-height: 3rem;
 }
 
-.bouton_inscription{
+.bouton_modification{
     padding: 1rem 6rem 1rem 6rem;
     margin-top: 6rem;
     font-size: 1.5rem;
 }
 
+@media (max-width: 1920px) {
+    html{
+        font-size: 55%;
+    }
 
+    .retour_accueil_icone{
+        font-size: 1.9rem;
+        margin-right: 1rem;
+        margin-left: 0;
+    }
+
+    .ensemble_retour_accueil{
+        height: 8rem;
+        min-height: 8rem;
+    }
+
+    .text_retour_accueil{
+        font-size: 1.9rem;
+        margin-left: 0;
+    }
+
+    .formulaire_inscription{
+        margin-top: 9rem;
+    }
+
+    .formulaire_inscription_identite{
+        padding-bottom: 3rem;
+    }
+
+
+    .formulaire_inscription_coordonne{
+        padding-bottom: 3rem;
+    }
+
+    .text_form_inscription_adresse{
+        padding-top: 3rem;
+    }
+
+    .text_form_inscription_complement{
+        padding-top: 1.5rem;
+    }
+
+    .text_form_inscription_ville{
+        padding-top: 1.5rem;
+     }
+
+    .text_form_inscription_codePostal{
+        padding-top: 1.5rem;
+    }
+
+    .formulaire_inscription_authentification{
+        padding-bottom: 3rem;
+    }
+
+    .text_form_inscription_email{
+        padding-top: 3rem;
+    }
+
+    .text_form_inscription_confEmail{
+        padding-top: 3rem;
+    }
+
+
+
+}

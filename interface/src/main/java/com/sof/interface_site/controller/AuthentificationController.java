@@ -16,11 +16,6 @@ import java.util.List;
 @Controller
 public class AuthentificationController {
 
-    /*@Autowired
-    private AdministrateurController administrateurController;
-
-    @Autowired
-    private UtilisateurController utilisateurController;*/
     @Autowired
     private MicroserviceInterfaceDonnees interfaceDonneesProxy;
 
@@ -44,12 +39,11 @@ public class AuthentificationController {
      */
     @RequestMapping(value = "/authentification",method = RequestMethod.POST)
     public String validationAuthentification(Model model, @ModelAttribute("utilisateur") UtilisateurAuth utilisateurPost){
+        newsletterEmail = new NewsletterEmail();
 
         utilisateurAuthentifier = authentificationProxy.login(utilisateurPost);
 
         interfaceModelAccueil(model);
-
-        newsletterEmail = new NewsletterEmail();
 
         if (utilisateurAuthentifier.getRoles().get(0).getStatut().equals("ROLE_USER")) {
             erreur = "L'email ou le mot de passe est incorrect";
@@ -59,12 +53,6 @@ public class AuthentificationController {
         } else {
             return "Index";
         }
-        /*} else {
-            Mail mail = new Mail();
-            model.addAttribute("mail", mail);
-
-            return "Newsletter";
-        }*/
     }
 
     /**
@@ -88,7 +76,6 @@ public class AuthentificationController {
 
         role.setStatut("ROLE_USER");
         utilisateurAuthentifier.getRoles().add(0, role);
-
 
         interfaceModelAccueil(model);
 

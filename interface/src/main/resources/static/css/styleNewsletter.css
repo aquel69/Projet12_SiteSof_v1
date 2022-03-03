@@ -65,22 +65,20 @@ textarea {
 }
 
 @media (max-width: 1920px) {
-    .titre_global_newsletter{
-        min-height: 10rem;
-        margin-top: 12rem;
-        background-color: #e8bb8c;
+
+    html{
+        font-size: 55%;
     }
 
     .formulaire_ensemble_newsletter{
-        margin-top: 5rem;
+        margin-top: 6rem;
     }
 
-    #formulaire_newsletter_texte{
+    #area1{
         height: 45rem;
     }
 
     .bouton_newsletter{
-        padding: 1rem 6rem 1rem 6rem;
-        margin-top: 3rem;
+        margin-top: 5rem;
     }
 }
