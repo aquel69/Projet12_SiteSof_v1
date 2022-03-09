@@ -82,6 +82,20 @@
         <span class="message_creation_compte" th:text="${messageEnvoiMail}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    <div class="messageErreurEnvoiMail">
+        <div th:if="${messageErreurNom != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <span class="message_erreur" th:text="${messageErreurNom}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${messageErreurEmail != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <span class="message_erreur" th:text="${messageErreurEmail}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${messageErreurMessage != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <span class="message_erreur" th:text="${messageErreurMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
     <div class="row ligne_groupe_titre g-0">
         <div class="col-7 p-0"></div>
             <div id="accueil_groupe_titre" class="text-center col-3 p-0">
@@ -319,7 +333,7 @@
                         <form th:action="@{/utilisateurEnvoiEmail}" method="post">
                             <div class="col-md-6">
                                 <label for="formulaire_envoi_mail_01" class="form-label text_form_mail">Nom</label>
-                                <input th:value="${nom}" name="nom" aria-describedby="button_mail" type="text" class="form-control texte_email_utilisateur" id="formulaire_envoi_mail_01" required>
+                                <input th:value="${nom}" name="nom" aria-describedby="button_mail" type="text" class="form-control texte_email_utilisateur" id="formulaire_envoi_mail_01" placeholder="2 à 20 caractères" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="formulaire_envoi_mail_02" class="form-label text_form_mail">Email</label>
@@ -327,7 +341,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="formulaire_envoi_mail_03" class="form-label text_form_mail">Message</label>
-                                <textarea th:value="${message}" name="message" aria-describedby="button_mail" type="text" class="form-control texte_message_utilisateur" id="formulaire_envoi_mail_03" required></textarea>
+                                <textarea th:value="${message}" name="message" aria-describedby="button_mail" type="text" class="form-control texte_message_utilisateur" id="formulaire_envoi_mail_03" placeholder="2 à 500 caractères" required></textarea>
                             </div>
                             <div class="col-12 text-start">
                                 <button class="btn btn-lg btn-primary bouton_mail" type="submit">Valider</button>

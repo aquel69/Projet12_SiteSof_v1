@@ -88,4 +88,23 @@ public class NewsLetterEmailController {
 
         emailService.sendEmailNewletter(mailAEnvoyer);
     }
+
+    @PostMapping(value="/envoyerEmailConversation/{objet}")
+    public void envoyerEmailConversation(@RequestBody UtilisateurAuthentification utilisateurAuthentification
+            , @PathVariable String objet)
+            throws MessagingException, TemplateException, IOException {
+        Mail mailAEnvoyer = new Mail();
+
+        mailAEnvoyer.setObjet(objet);
+        mailAEnvoyer.setUtilisateurAuthentification(utilisateurAuthentification);
+
+        emailService.sendEmailConversation(mailAEnvoyer);
+    }
+
+    @DeleteMapping(value="/desinscrireMembreNewsletter/{email}")
+    public boolean supprimerEmailNewsletter(@PathVariable String email) {
+        daoNewsletterEmail.supprimerEmailNewsletter(email);
+
+        return true;
+    }
 }

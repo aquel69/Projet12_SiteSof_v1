@@ -3,12 +3,14 @@ package com.sof.interface_site.controller;
 import com.sof.interface_site.model.*;
 import com.sof.interface_site.proxy.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -47,6 +49,9 @@ public class UtilisateurController {
     @Autowired
     private AuthentificationController authentificationController;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private UtilisateurAuthentification utilisateurAuthentifier;
     private Utilisateur utilisateur;
     private NewsletterEmail newsletterEmail;
@@ -55,12 +60,21 @@ public class UtilisateurController {
     private String erreur = null;
     private boolean matchRegexEmail;
     private boolean matchRegexPassword;
+    private boolean emailIdentique;
     private String messageErreurMail = null;
     private String messageErreurMotDePasse = null;
     private String messageErreurConfirmationMail = null;
     private String messageErreurConfirmationMotDePasse = null;
     private String messageErreurUsernameDejaExistant = null;
     private String messageInterface = null;
+    private String messageErreurMailIdentique = null;
+    private String messageErreurMotDePasseIdentique = null;
+    private String messageErreurModificationMail = null;
+    private String messageErreurModificationMotDePasse = null;
+    private String messageErreurConfirmationMotDePasseVide = null;
+    private String messageErreurNouveauMotDePasseVide = null;
+
+    private BCryptPasswordEncoder bCryptPasswordMatche;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String accueil(Model model){
@@ -115,12 +129,18 @@ public class UtilisateurController {
     @RequestMapping(value = "/utilisateurEnvoiEmail",method = RequestMethod.POST)
     public String envoiMailDeLUtilisateur(Model model, @RequestParam String nom, @RequestParam String email
     , @RequestParam String message){
-        String messageEnvoiMail = "Votre message a bien été envoyé";
+
+
+        if (!verificationEmail(email) || !verificationErreurMessageConversation(message) || !verificationNomEnvoiEmail(nom)) {
+            verificationErreurEnvoiMail(model, nom, email, message);
+            return "Index";
+        }
 
         newsletterEmailProxy.envoyerEmailUtilisateurAAdmin(nom, email, message);
 
-        interfaceModelAccueil(model);
+        String messageEnvoiMail = "Votre message a bien été envoyé";
 
+        interfaceModelAccueil(model);
         model.addAttribute("messageEnvoiMail", messageEnvoiMail);
 
         return "Index";
@@ -190,7 +210,7 @@ public class UtilisateurController {
         } else {
             Utilisateur utilisateur = authentificationProxy.findUtilisateurByUsername(authentificationController.getUtilisateurAuthentifier().getUsername());
 
-            interfaceModelCreationCompte(model, utilisateur, utilisateur.getAdresseUtilisateur());
+            interfaceModelModificationCompte(model, utilisateur, utilisateur.getAdresseUtilisateur());
         }
 
         return "ModificationCompte";
@@ -200,37 +220,103 @@ public class UtilisateurController {
     public String modificationComptePost(Model model, @ModelAttribute("utilisateur") @Valid Utilisateur utilisateur
             , BindingResult erreurUtilisateur, @ModelAttribute("adresse") @Valid Adresse adresse
             , BindingResult erreurAdresse, @RequestParam String nouveauEmail
-            , @RequestParam String nouveauMotDePasse){
-        if (!nouveauEmail.isEmpty()) {
-            matchRegexEmail = verificationEmail(utilisateur.getEmail());
-        }
-        matchRegexEmail = verificationEmail(utilisateur.getEmail());
-        matchRegexPassword = verificationMotDePasse(utilisateur.getMotDePasse());
-        String messageErreurMailActuel = null;
-        String messageErreurMotDePasseActuel = null;
-        String messageErreurModificationMail = null;
-        String messageErreurModificationMotDePasse = null;
-        List<Utilisateur> utilisateurs;
+            , @RequestParam String nouveauMotDePasse, @RequestParam String usernameSupression
+            , @RequestParam String confirmationMotDePasse) {
 
-        utilisateurs = authentificationProxy.findAllUtilisateur();
+        matchRegexPassword = true;
+        matchRegexEmail = true;
+        emailIdentique = false;
+        messageErreurMotDePasseIdentique = null;
+        messageErreurModificationMail = null;
+        messageErreurModificationMotDePasse = null;
+        messageErreurConfirmationMotDePasseVide = null;
+        messageErreurNouveauMotDePasseVide = null;
+        messageErreurMailIdentique = null;
+        bCryptPasswordMatche = new BCryptPasswordEncoder();
+        boolean correspondanceMotDePasse = true;
+        boolean unChampsMotDePasseVide = false;
+
+        //Récupération complet de l'utilisateur
+        Utilisateur utilisateurComplet = authentificationProxy
+                .findUtilisateurByUsername(authentificationController.getUtilisateurAuthentifier().getUsername());
+
+        //Vérification et suppression du compte
+        if (!usernameSupression.trim().isEmpty()) {
+            if(verificationPourSupressionDuCompte(usernameSupression)) {
+               supressionDuCompte();
+
+                messageInterface = "Le compte a été supprimé";
+                utilisateurAuthentifier = new UtilisateurAuthentification();
+                role = new Role();
+
+                newsletterEmail = new NewsletterEmail();
+
+                role.setStatut("ROLE_USER");
+                utilisateurAuthentifier.getRoles().add(0, role);
+
+                interfaceModelAccueil(model);
+                messageInterface = null;
+
+                return "Index";
+            } else {
+                String messageUsername = "Le username saisie ne correspond pas à celui existant";
+                model.addAttribute("messageUsername", messageUsername);
+                interfaceModelModificationCompte(model, utilisateur, adresse, messageErreurModificationMail
+                        , messageErreurMotDePasseIdentique,  messageErreurModificationMotDePasse
+                        , messageErreurConfirmationMotDePasseVide, messageErreurNouveauMotDePasseVide
+                        , messageErreurMailIdentique);
+
+                return "ModificationCompte";
+            }
+        }
+
+        //Vérification et gestion des erreurs email et mot de passe
+        if (!nouveauMotDePasse.trim().isEmpty() && !confirmationMotDePasse.trim().isEmpty()) {
+            if (!nouveauMotDePasse.equals(confirmationMotDePasse)) {
+                correspondanceMotDePasse = false;
+            }
+        } else if ((confirmationMotDePasse.trim().isEmpty() && !nouveauMotDePasse.trim().isEmpty())
+                || (!confirmationMotDePasse.trim().isEmpty() && nouveauMotDePasse.trim().isEmpty())) {
+            unChampsMotDePasseVide = true;
+        }
+        if (!nouveauMotDePasse.trim().isEmpty()) {
+            matchRegexPassword = verificationMotDePasse(nouveauMotDePasse);
+            utilisateur.setMotDePasse(bCryptPasswordEncoder.encode(nouveauMotDePasse));
+        } else {
+            utilisateur.setMotDePasse(utilisateurComplet.getMotDePasse());
+        }
+        if (!nouveauEmail.trim().isEmpty()) {
+            matchRegexEmail = verificationEmail(nouveauEmail);
+            emailIdentique = verificationCorrespondanceEmail(utilisateurComplet.getEmail(),nouveauEmail);
+            utilisateur.setEmail(nouveauEmail);
+        } else {
+            utilisateur.setEmail(utilisateurComplet.getEmail());
+        }
 
         if (erreurUtilisateur.hasErrors() || erreurAdresse.hasErrors() || !matchRegexEmail  || !matchRegexPassword
-                || !verificationCorrespondanceEmail(utilisateur.getEmail(), nouveauEmail)
-                || !verificationCorrespondanceMotDePasse(utilisateur.getMotDePasse(), nouveauMotDePasse)) {
-
-            verificationErreursGlobale(utilisateur, nouveauEmail, nouveauMotDePasse, utilisateurs);
-            interfaceModelModificationCompte(model, utilisateur, adresse, messageErreurMailActuel, messageErreurMotDePasseActuel, messageErreurModificationMail, messageErreurModificationMotDePasse);
+                || !correspondanceMotDePasse || unChampsMotDePasseVide || emailIdentique) {
+            verificationErreursModificationUtilisateur(nouveauMotDePasse,confirmationMotDePasse);
+            interfaceModelModificationCompte(model, utilisateur, adresse, messageErreurModificationMail
+                    , messageErreurMotDePasseIdentique,  messageErreurModificationMotDePasse
+                    , messageErreurConfirmationMotDePasseVide, messageErreurNouveauMotDePasseVide
+                    ,messageErreurMailIdentique);
 
             return "ModificationCompte";
         }
 
-        Adresse adresseSave = authentificationProxy.addAdresse(adresse);
-        utilisateur.setAdresseUtilisateur(adresseSave);
-        authentificationProxy.saveUtilisateur(utilisateur);
-        authentificationProxy.saveRole(utilisateur);
+        //mise à jour de l'utilisateur et modification de l
+        adresse.setIdAdresse(utilisateurComplet.getAdresseUtilisateur().getIdAdresse());
+        utilisateur.setIdUtilisateur(utilisateurComplet.getIdUtilisateur());
+        utilisateur.setAdresseUtilisateur(adresse);
+        utilisateur.setRoles(utilisateurComplet.getRoles());
+        utilisateur.setDateAjout(utilisateurComplet.getDateAjout());
+        utilisateur.setUsername(utilisateurComplet.getUsername());
+
+        authentificationProxy.modifierMembre(utilisateur);
 
         messageInterface = "Votre compte a bien été modifié";
-        interfaceModelCreationCompte(model, utilisateur, utilisateur.getAdresseUtilisateur());
+        interfaceModelModificationCompte(model, utilisateur, utilisateur.getAdresseUtilisateur());
+        model.addAttribute("adresseMail", utilisateur.getEmail());
         messageInterface = null;
 
         return "ModificationCompte";
@@ -245,14 +331,20 @@ public class UtilisateurController {
         } else {
             interfaceModelConversation(model);
 
-            System.out.println("ConversationMembre");
             return "ConversationMembre";
         }
     }
 
     @RequestMapping(value = "/conversationMembre", method = RequestMethod.POST)
-    public String conversationMembre(Model model, @ModelAttribute("conversation") @Valid Conversation conversation
-            , BindingResult erreurConversation){
+    public String conversationMembre(Model model, @ModelAttribute("conversation") Conversation conversation) throws IOException {
+        if (verificationErreurMessageConversation(conversation.getMessage())) {
+            String messageErreurConversation = "le message est compris entre 2 et 500 caractères";
+            model.addAttribute("messageErreurConversation", messageErreurConversation);
+            interfaceModelConversation(model);
+
+            return "ConversationMembre";
+        }
+
         conversation.setMessage(conversation.getMessage().replace("\n", "").replace("\r", ""));
 
         conversation.setMembre(authentificationController.getUtilisateurAuthentifier());
@@ -262,10 +354,44 @@ public class UtilisateurController {
         conversationProxy.saveConversation(conversation);
         conversationProxy.conversationsSelonMembre(authentificationController.getUtilisateurAuthentifier().getIdUtilisateur());
 
+        newsletterEmailProxy.envoyerEmailConversation(authentificationController.getUtilisateurAuthentifier()
+                , "Vous avez un nouveau message de "
+                        + authentificationController.getUtilisateurAuthentifier().getUsername());
+
         interfaceModelConversation(model);
 
-        System.out.println("ConversationMembre");
         return "ConversationMembre";
+    }
+
+    @RequestMapping(value = "/desinscriptionNewsletter", method = RequestMethod.GET)
+    public String desinscriptionNewsletter(Model model){
+        interfaceDesinscritpionNewsletter(model);
+
+        return "DesinscriptionNewsletter";
+    }
+
+    @RequestMapping(value = "/desinscriptionNewsletter",method = RequestMethod.POST)
+    public String desinscriptionNewsletter(Model model, @RequestParam String email){
+        if (!email.trim().isEmpty()) {
+            List<NewsletterEmail> newsletterEmailList = newsletterEmailProxy.recupererTousLesEmailsNewsletter();
+            for (NewsletterEmail newsletterEmail : newsletterEmailList) {
+                if (newsletterEmail.getEmail().equals(email)) {
+                    newsletterEmailProxy.supprimerEmailNewsletter(email);
+                    messageInterface = "Votre Email a bien été supprimé de la liste des newsLetters";
+
+                    interfaceDesinscritpionNewsletter(model);
+
+                    messageInterface = null;
+
+                    return "DesinscriptionNewsletter";
+                }
+            }
+        }
+        messageErreurMail = "Votre Email n'est pas dans la liste des newsLetters";
+        interfaceDesinscritpionNewsletter(model);
+        messageErreurMail = null;
+
+        return "DesinscriptionNewsletter";
     }
 
     public void interfaceModelAccueil(Model model) {
@@ -300,22 +426,6 @@ public class UtilisateurController {
         model.addAttribute("utilisateur", utilisateur);
         model.addAttribute("adresse", adresse);
         model.addAttribute("photoInterface", photoInterface);
-        model.addAttribute("adresseMail", authentificationController.getUtilisateurAuthentifier().getEmail());
-    }
-
-    private void interfaceModelModificationCompte(Model model, Utilisateur utilisateur, Adresse adresse
-            , String messageErreurMailActuel, String messageErreurMotDePasseActuel, String messageErreurNouveauMail
-            , String messageErreurNouveauMotDePasse) {
-        PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
-
-        model.addAttribute("adresseMail", authentificationController.getUtilisateurAuthentifier().getEmail());
-        model.addAttribute("utilisateur", utilisateur);
-        model.addAttribute("adresse", adresse);
-        model.addAttribute("photoInterface", photoInterface);
-        model.addAttribute("messageErreurMotDePasseActuel", messageErreurMotDePasseActuel);
-        model.addAttribute("messageErreurMail", messageErreurMailActuel);
-        model.addAttribute("messageErreurConfirmationMail", messageErreurNouveauMail);
-        model.addAttribute("messageErreurConfirmationMotDePasse", messageErreurNouveauMotDePasse);
     }
 
     private void interfaceModelCreationCompte(Model model, Utilisateur utilisateur, Adresse adresse
@@ -337,6 +447,35 @@ public class UtilisateurController {
 
     }
 
+    private void interfaceModelModificationCompte(Model model, Utilisateur utilisateur, Adresse adresse) {
+        PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
+
+        model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("adresse", adresse);
+        model.addAttribute("photoInterface", photoInterface);
+        model.addAttribute("adresseMail", authentificationController.getUtilisateurAuthentifier().getEmail());
+        model.addAttribute("messageInterface", messageInterface);
+    }
+
+    private void interfaceModelModificationCompte(Model model, Utilisateur utilisateur, Adresse adresse
+            , String messageErreurModificationMail, String messageErreurMotDePasseIdentique, String messageErreurModificationMotDePasse
+            , String messageErreurConfirmationMotDePasseVide, String messageErreurNouveauMotDePasseVide
+            , String messageErreurMailIdentique) {
+
+        PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
+
+        model.addAttribute("adresseMail", authentificationController.getUtilisateurAuthentifier().getEmail());
+        model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("adresse", adresse);
+        model.addAttribute("photoInterface", photoInterface);
+        model.addAttribute("messageErreurMotDePasseIdentique", messageErreurMotDePasseIdentique);
+        model.addAttribute("messageErreurModificationMail", messageErreurModificationMail);
+        model.addAttribute("messageErreurModificationMotDePasse", messageErreurModificationMotDePasse);
+        model.addAttribute("messageErreurConfirmationMotDePasseVide", messageErreurConfirmationMotDePasseVide);
+        model.addAttribute("messageErreurNouveauMotDePasseVide", messageErreurNouveauMotDePasseVide);
+        model.addAttribute("messageErreurMailIdentique", messageErreurMailIdentique);
+    }
+
     private void interfaceModelConversation(Model model) {
         conversation = new Conversation();
         LocalTime midnight = LocalTime.MIDNIGHT;
@@ -353,20 +492,57 @@ public class UtilisateurController {
 
     }
 
-    public void verificationErreursModificationUtilisateur(Utilisateur utilisateur
-            , String confirmationEmail, String confirmationMotDePasse){
+    public void interfaceDesinscritpionNewsletter(Model model) {
+        PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
+
+        model.addAttribute("photoInterface", photoInterface);
+        model.addAttribute("messageEmailSupprime", messageInterface);
+        model.addAttribute("messageErreurEmail", messageErreurMail);
+    }
+
+    public void verificationErreurEnvoiMail(Model model, String nom, String email, String message) {
+
+            if(!verificationEmail(email)) {
+                String messageErreurEmail = "L\'adresse mail n'est pas valable";
+                model.addAttribute("messageErreurEmail", messageErreurEmail);
+            }
+            if(!verificationErreurMessageConversation(message)) {
+                String messageErreurMessage = "Le message est compris entre 2 et 500 caractères";
+                model.addAttribute("messageErreurMessage", messageErreurMessage);
+            }
+            if(!verificationNomEnvoiEmail(nom)) {
+                String messageErreurNom = "Le nom est compris entre 2 et 20 caractères";
+                model.addAttribute("messageErreurNom", messageErreurNom);
+            }
+            interfaceModelAccueil(model);
+    }
+
+    public void verificationErreursModificationUtilisateur(String nouveauMotDePasse, String confirmationMotDePasse){
         if (!matchRegexEmail) {
-            messageErreurMail = "L\'adresse mail n'est pas valable";
+            messageErreurModificationMail = "L\'adresse mail n'est pas valable";
         }
+
+        if (emailIdentique) {
+            messageErreurMailIdentique = "L\'adresse mail est identique à la votre";
+        }
+
         if (!matchRegexPassword) {
-            messageErreurMotDePasse = "Le mot de passe comprend de 8 à 20 caractères et contient" +
+            messageErreurModificationMotDePasse = "Le mot de passe comprend de 8 à 20 caractères et contient" +
                     " au moins une majuscule, un chiffre et un caractère spécial ! @ # & ( )";
         }
-        if (!verificationCorrespondanceEmail(utilisateur.getEmail(), confirmationEmail)) {
-            messageErreurConfirmationMail = "Les adresses mails ne correspondent pas";
+
+        if (nouveauMotDePasse.trim().isEmpty() && !confirmationMotDePasse.trim().isEmpty()) {
+            messageErreurNouveauMotDePasseVide = "Vous devez saisir votre nouveau mot de passe";
         }
-        if (!verificationCorrespondanceMotDePasse(utilisateur.getMotDePasse(), confirmationMotDePasse)) {
-            messageErreurConfirmationMotDePasse = "Les mots de passe ne correspondent pas";
+
+        if (!nouveauMotDePasse.trim().isEmpty() && confirmationMotDePasse.trim().isEmpty()) {
+            messageErreurConfirmationMotDePasseVide = "Vous devez confirmer votre nouveau mot de passe";
+        }
+
+        if (!nouveauMotDePasse.trim().isEmpty() && !confirmationMotDePasse.trim().isEmpty()) {
+            if(!nouveauMotDePasse.equals(confirmationMotDePasse)){
+                messageErreurMotDePasseIdentique = "Le mot de passe et la confirmation ne correspondent pas";
+            }
         }
     }
 
@@ -436,7 +612,8 @@ public class UtilisateurController {
         return true;
     }
 
-    public boolean verificationEmailNewsletterDejaExistant(List<NewsletterEmail> listeEmailsNewletter, NewsletterEmail newsletterEmail) {
+    public boolean verificationEmailNewsletterDejaExistant(List<NewsletterEmail> listeEmailsNewletter
+            , NewsletterEmail newsletterEmail) {
         for (NewsletterEmail newsletterEmailBoucle : listeEmailsNewletter) {
             if (newsletterEmailBoucle.getEmail().equals(newsletterEmail.getEmail())) {
                 return false;
@@ -447,10 +624,44 @@ public class UtilisateurController {
 
     private String verificationUtilisateurConnecte(int id) {
         UtilisateurAuthentification utilisateurVerification = authentificationProxy.findUtilisateurById(id);
-        if( authentificationController.getUtilisateurAuthentifier() == null || !authentificationController.getUtilisateurAuthentifier().getUsername().equals(utilisateurVerification.getUsername())) {
+        if( authentificationController.getUtilisateurAuthentifier() == null || !authentificationController
+                .getUtilisateurAuthentifier().getUsername().equals(utilisateurVerification.getUsername())) {
             return "Index";
         }
         return "autre";
+    }
+
+    private boolean verificationPourSupressionDuCompte(String usernameSupression) {
+        if (usernameSupression.equals(authentificationController.getUtilisateurAuthentifier().getUsername())) {
+               return true;
+        }
+
+        return false;
+    }
+
+    private boolean verificationErreurMessageConversation(String message) {
+        if (message.length() >= 2 || message.length() <= 500) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean verificationNomEnvoiEmail(String nom) {
+        if (nom.length() >= 2 || nom.length() <= 20) {
+            return true;
+        }
+        return false;
+    }
+
+    private void supressionDuCompte() {
+        authentificationProxy.supprimerRoleUtilisateur(authentificationController.getUtilisateurAuthentifier()
+                .getIdUtilisateur());
+        conversationProxy.supprimerConversationsUtilisateur(authentificationController
+                .getUtilisateurAuthentifier().getIdUtilisateur());
+        authentificationProxy.supprimerUnUtilisateur(authentificationController.getUtilisateurAuthentifier()
+                .getIdUtilisateur());
+        authentificationProxy.supprimerUneAdresse(authentificationController.getUtilisateurAuthentifier()
+                .getAdresseUtilisateur().getIdAdresse());
     }
 
 }

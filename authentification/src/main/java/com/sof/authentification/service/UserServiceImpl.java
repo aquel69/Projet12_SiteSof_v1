@@ -35,6 +35,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Utilisateur modifierUtilisateur(Utilisateur utilisateur) {
+        return daoUtilisateur.save(utilisateur);
+    }
+
+    @Override
+    public Adresse modifierAdresse(Adresse adresse) {
+        return daoAdresse.save(adresse);
+    }
+
+    @Override
     public Utilisateur findUtilisateurByUsername(String username) {
         return daoUtilisateur.findByUsername(username);
     }

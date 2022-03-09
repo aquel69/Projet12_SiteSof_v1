@@ -41,9 +41,17 @@
                         <label for="formulaire_newsletter_objet" class="form-label text_form_newsletter_objet">Objet :</label>
                         <input th:field="*{objet}" name="objet" type="text" class="form-control texte_objet" id="formulaire_newsletter_objet" required>
                     </div>
+                    <div th:if="${#fields.hasErrors('objet')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <span class="message_erreur" th:errors="*{objet}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <div class="col-md-12 formulaire_ensemble_texte">
                         <label for="area1" class="form-label text_form_newsletter_texte">Texte :</label>
                         <textarea th:field="*{message}" name="area1" type="text" class="form-control texte_newsletter" id="area1"></textarea>
+                    </div>
+                    <div th:if="${#fields.hasErrors('message')}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <span class="message_erreur" th:errors="*{message}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     <div class="col-12 text-center">
                         <button class="btn btn-lg btn-primary bouton_newsletter" type="submit">Valider</button>

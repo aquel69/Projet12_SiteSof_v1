@@ -49,7 +49,6 @@ public class Utilisateur {
     /**
      * adresse de l'utilisateur
      */
-    @NonNull
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="adresse_id")
     private Adresse adresseUtilisateur;

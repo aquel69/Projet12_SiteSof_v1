@@ -108,6 +108,15 @@ body{
     font-size: 1.7rem;
 }
 
+.message_erreur_selection {
+    margin-top: 4rem;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
 @media (max-width: 1920px) {
     html{
         font-size: 55%;

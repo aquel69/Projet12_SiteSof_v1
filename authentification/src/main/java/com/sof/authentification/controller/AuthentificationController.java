@@ -1,10 +1,7 @@
 package com.sof.authentification.controller;
 
 import com.sof.authentification.Security.MyUserDetailService;
-import com.sof.authentification.dao.DaoAdresse;
-import com.sof.authentification.dao.DaoRole;
-import com.sof.authentification.dao.DaoUtilisateur;
-import com.sof.authentification.dao.DaoUtilisateurAuthentification;
+import com.sof.authentification.dao.*;
 import com.sof.authentification.model.*;
 import com.sof.authentification.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +32,9 @@ public class AuthentificationController {
     DaoRole daoRole;
 
     @Autowired
+    DaoUtilisateurRole daoUtilisateurRole;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -61,6 +61,45 @@ public class AuthentificationController {
     @PostMapping(value = "/ajouterUtilisateur")
     public Utilisateur saveUtilisateur(@RequestBody Utilisateur utilisateur) {
         return userService.saveUtilisateur(utilisateur);
+    }
+
+    /**
+     * modifier un membre dans la base de données
+     * @param utilisateur
+     */
+    @PutMapping(value="/modifierMembre")
+    public Utilisateur modifierMembre(@RequestBody Utilisateur utilisateur) {
+       return userService.modifierUtilisateur(utilisateur);
+    }
+    /**
+     * modifier une adresse dans la base de données
+     * @param adresse
+     */
+    @PutMapping(value="/modifierAdresse")
+    public Adresse modifierAdresse(@RequestBody Adresse adresse) {
+        return userService.modifierAdresse(adresse);
+    }
+
+
+    @DeleteMapping(value="/supprimerUnUtilisateur/{idUtilisateur}")
+    public boolean supprimerUnUtilisateur(@PathVariable int idUtilisateur) {
+        daoUtilisateur.deleteById(idUtilisateur);
+
+        return true;
+    }
+
+    @DeleteMapping(value="/supprimerUneAdresse/{idAdresse}")
+    public boolean supprimerUneAdresse(@PathVariable int idAdresse) {
+        daoAdresse.deleteById(idAdresse);
+
+        return true;
+    }
+
+    @DeleteMapping(value="/supprimerRoleUtilisateur/{idMembre}")
+    public boolean supprimerRoleUtilisateur(@PathVariable int idMembre) {
+        daoUtilisateurRole.supprimerRoleUtilisateur(idMembre);
+
+        return true;
     }
 
     @GetMapping(value = "/roleSelonStatut/{statut}")
@@ -161,4 +200,5 @@ public class AuthentificationController {
 
         return utilisateurAuthentification;
     }
+
 }

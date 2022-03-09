@@ -1,6 +1,6 @@
-package com.sof.newsletter_email.dao;
+package com.sof.authentification.dao;
 
-import com.sof.newsletter_email.model.NewsletterEmail;
+import com.sof.authentification.model.UtilisateurRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 
+
 @Repository
-public interface DaoNewsletterEmail extends JpaRepository<NewsletterEmail, Integer> {
+public interface DaoUtilisateurRole extends JpaRepository <UtilisateurRole, Integer> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value="DELETE FROM email_newsletter WHERE email = ?", nativeQuery = true)
-    void supprimerEmailNewsletter(String email);
+    @Query(value="DELETE FROM utilisateur_role WHERE utilisateur_id = ?", nativeQuery = true)
+    void supprimerRoleUtilisateur(int idMembre);
 }

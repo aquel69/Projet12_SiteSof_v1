@@ -13,6 +13,11 @@
         </td>
     </tr>
 
+    <tr>
+        <td>
+            <p><a href="https://localhost:8443/desinscriptionNewsletter">lien </a>de désinscription à la Newsletter</p>
+        </td>
+    </tr>
 </table>
 </body>
 </html>

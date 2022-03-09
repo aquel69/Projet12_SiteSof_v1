@@ -79,4 +79,11 @@ public class PhotoInterface {
     @Column(name="photo_gestion_compte")
     private String photoGestionCompte;
 
+    /**
+     * photo de la page désinscription de la newsletter
+     */
+    @NonNull
+    @Column(name="photo_desinscription_newsletter")
+    private String photoDesinscriptionNewsletter;
+
 }

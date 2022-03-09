@@ -84,7 +84,11 @@
                     <div class="row formulaire_conversation">
                         <div class="col-12">
                             <label for="formulaire_conversation_01" class="form-label text_form_formulaire_conversation">Nouveau Message</label>
-                            <textarea th:field="*{message}" name="message" aria-describedby="button_conversation" type="text" class="form-control" id="formulaire_conversation_01" required></textarea>
+                            <textarea th:field="*{message}" name="message" aria-describedby="button_conversation" type="text" class="form-control" id="formulaire_conversation_01" placeholder="2 à 500 caractères" required></textarea>
+                        </div>
+                        <div th:if="${messageErreurConversation != null}" class="alert alert-warning alert-dismissible fade show message_erreur_conversation" role="alert">
+                            <span class="message_erreur" th:text="${messageErreurConversation}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
 

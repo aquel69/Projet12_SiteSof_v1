@@ -53,6 +53,10 @@
                             </tbody>
                         </table>
                     </div>
+                    <div th:if="${messagePasDeSelection != null}" class="alert alert-warning alert-dismissible fade show message_erreur_selection" role="alert">
+                        <span class="message_erreur" th:text="${messagePasDeSelection}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <div class="col-12 text-center">
                         <button class="btn btn-lg btn-primary bouton_selection_membre_conversation" type="submit">Valider</button>
                     </div>
@@ -148,16 +152,20 @@
                         <label for="formulaire_conversation_01" class="form-label text_form_formulaire_conversation">Nouveau Message</label>
                         <textarea th:field="*{message}" name="message" aria-describedby="button_conversation" type="text" class="form-control" id="formulaire_conversation_01" required></textarea>
                     </div>
+                    <div th:if="${messageErreurConversation != null}" class="alert alert-warning alert-dismissible fade show message_erreur_conversation" role="alert">
+                        <span class="message_erreur" th:text="${messageErreurConversation}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
 
-                <!--th:value="${messageConversationMembre}"-->
                 <div class="row ensemble_bouton_conversation">
                     <div class="col-12 text-center">
                         <button class="btn btn-lg btn-primary bouton_conversation" type="submit">Valider</button>
                     </div>
                 </div>
+
             </form>
-        </div>
+         </div>
     </div>
 
 </div>
