@@ -109,6 +109,16 @@ header {
     font-size: 1.7rem;
 }
 
+.messageErreurEnvoiMail {
+    margin-top: 6rem;
+    width: 100%;
+    position: fixed;
+}
+
+.message_erreur{
+    font-size: 1.7rem;
+}
+
 .ligne_accueil {
     box-sizing: border-box;
 }

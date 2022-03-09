@@ -52,4 +52,11 @@ public class PhotoInterface {
      */
     private String photoGestionCompte;
 
+    /**
+     * photo de la page désinscription de la newsletter
+     */
+    private String photoDesinscriptionNewsletter;
+
+
+
 }

@@ -31,13 +31,13 @@ public class ConcertDate {
     /**
      * nom ou lieu du concert
      */
-    @Size(min=5, max = 35, message = "Le nom du lieu doit être compris entre 1 et 35 caractères")
+    @Size(min=2, max = 35, message = "Le nom du lieu doit être compris entre 2 et 35 caractères")
     private String nomLieu;
 
     /**
      * tarif
      */
-    @Size(min=5, max = 15, message = "Le tarif doit être compris entre 1 et 15 caractères")
+    @Size(min=2, max = 15, message = "Le tarif doit être compris entre 2 et 15 caractères")
     private String tarif;
 
 

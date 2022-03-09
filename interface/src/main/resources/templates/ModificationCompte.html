@@ -32,15 +32,19 @@
 <!-- Accueil -->
 
 <header>
-        <span class="col-2 ensemble_retour_accueil">
-            <a th:href="@{|/|}" class="retour_accueil_icone"><i class="fas fa-reply"></i></a>
-            <h6 class="text_retour_accueil"><a th:href="@{|/|}">Retour Accueil</a></h6>
-        </span>
+  <div class="col-2 ensemble_retour_accueil">
+    <a th:href="@{|/|}" class="retour_accueil_icone"><i class="fas fa-reply"></i></a>
+    <h6 class="text_retour_accueil"><a th:href="@{|/|}">Retour Accueil</a></h6>
+  </div>
 </header>
 <section>
   <div class="container-fluid">
     <div class="col-12">
       <h3 class="text-center titre_authentification">GESTION DU COMPTE</h3>
+    </div>
+    <div th:if="${messageInterface != null}" class="alert alert-warning alert-dismissible fade show message_alerte" role="alert">
+      <span class="message_modification_compte" th:text="${messageInterface}"></span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <div class="row">
       <div class="col-4 text-center ensemble_photo_authentification">
@@ -110,27 +114,49 @@
             <div class="col-md-6">
               <label for="formulaire_inscription_08" class="form-label text_form_inscription_confEmail">Nouvel Email</label>
               <input type="email" th:value="${nouveauEmail}" name="nouveauEmail" class="form-control police_creation_compte" id="formulaire_inscription_08">
-              <div th:if="${messageErreurConfirmationMail != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                <span class="message_erreur" th:text="${messageErreurConfirmationMail}"></span>
+              <div th:if="${messageErreurModificationMail != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span class="message_erreur" th:text="${messageErreurModificationMail}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <div th:if="${messageErreurMailIdentique != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span class="message_erreur" th:text="${messageErreurMailIdentique}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             </div>
           </div>
           <div class="row formulaire_inscription_authentification">
             <div class="col-md-6">
-              <label for="formulaire_inscription_09" class="form-label text_form_inscription_mdp">Mot de Passe Actuel</label>
-              <input type="password" class="form-control police_creation_compte" id="formulaire_inscription_09" th:field="*{motDePasse}" name="motDePasse">
-              <div th:if="${messageErreurMotDePasse != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                <span class="message_erreur" th:text="${messageErreurMotDePasse}"></span>
+              <label for="formulaire_inscription_09" class="form-label text_form_inscription_mdp">Nouveau Mot de Passe</label>
+              <input type="password" class="form-control police_creation_compte" id="formulaire_inscription_09" th:value="${nouveauMotDePasse}" name="nouveauMotDePasse" placeholder="8 caractères min dont 1 chiffre et 1 caractère spécial(!@#&()–)">
+              <div th:if="${messageErreurMotDePasseIdentique != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span class="message_erreur" th:text="${messageErreurMotDePasseIdentique}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <div th:if="${messageErreurModificationMotDePasse != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span class="message_erreur" th:text="${messageErreurModificationMotDePasse}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <div th:if="${messageErreurNouveauMotDePasseVide != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span class="message_erreur" th:text="${messageErreurNouveauMotDePasseVide}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="formulaire_inscription_010" class="form-label text_form_inscription_confMdp">Confirmation Mot de Passe</label>
+              <input type="password" th:value="${confirmationMotDePasse}" name="confirmationMotDePasse" class="form-control police_creation_compte" id="formulaire_inscription_010">
+              <div th:if="${messageErreurConfirmationMotDePasseVide != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span class="message_erreur" th:text="${messageErreurConfirmationMotDePasseVide}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             </div>
 
+          </div>
+          <div class="row formulaire_desinscrire_compte">
             <div class="col-md-6">
-              <label for="formulaire_inscription_010" class="form-label text_form_inscription_confMdp">Nouveau Mot de Passe</label>
-              <input type="password" th:value="${nouveauMotDePasse}" name="nouveauMotDePasse" class="form-control police_creation_compte" id="formulaire_inscription_010">
-              <div th:if="${messageErreurConfirmationMotDePasse != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                <span class="message_erreur" th:text="${messageErreurConfirmationMotDePasse}"></span>
+              <label for="formulaire_desinscrire_compte_01" class="form-label text_form_inscription_confMdp">Suppression du compte</label>
+              <input type="text" th:value="${usernameSupression}" name="usernameSupression" class="form-control police_creation_compte" id="formulaire_desinscrire_compte_01" placeholder="Saisissez votre Username">
+              <div th:if="${messageUsername != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span class="message_erreur" th:text="${messageUsername}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             </div>

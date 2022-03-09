@@ -39,6 +39,11 @@ public class ConversationController {
         return daoConversation.save(conversation);
     }
 
+    @DeleteMapping(value="/supprimerConversationsUtilisateur/{idUtilisateur}")
+    public void supprimerConversationsUtilisateur(@PathVariable int idUtilisateur) {
+        daoConversation.supprimerConversationsUtilisateur(idUtilisateur);
+    }
+
 
 
 }

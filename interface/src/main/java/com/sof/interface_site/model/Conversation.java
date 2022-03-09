@@ -3,6 +3,7 @@ package com.sof.interface_site.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data

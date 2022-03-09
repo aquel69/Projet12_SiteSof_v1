@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -60,7 +61,8 @@ public class AdministrateurController {
     private Adresse adresseMembre;
     private List<Conversation> listeConversationSelonMembreSelectionne;
     private Conversation conversation;
-    private UtilisateurAuthentification utilisateurVerificationAdmin;
+    private String messagePasDeSelection;
+
 
     @RequestMapping(value = "/newsletter/{id}", method = RequestMethod.GET)
     public String redactionNewsletter(Model model, @PathVariable int id){
@@ -74,13 +76,19 @@ public class AdministrateurController {
             model.addAttribute("mail", mail);
             model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
         }
-
         return "Newsletter";
     }
 
     @RequestMapping(value = "/envoiNewsletter", method = RequestMethod.POST)
     public String envoiNewsletter(Model model, @ModelAttribute("mail") @Valid Mail mail, BindingResult erreurMail){
         List<NewsletterEmail> newsletterEmailList = microserviceNewsletterEmail.recupererTousLesEmailsNewsletter();
+
+        if (erreurMail.hasErrors()) {
+            model.addAttribute("mail", mail);
+            model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
+
+            return "Newsletter";
+        }
 
         for (NewsletterEmail newsletterEmail : newsletterEmailList) {
             mail.setDestinataire(newsletterEmail.getEmail());
@@ -92,6 +100,7 @@ public class AdministrateurController {
         String messageEnvoiMail = "Votre message a bien été envoyé";
 
         model.addAttribute("messageEnvoiMail", messageEnvoiMail);
+        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
 
         return "Newsletter";
     }
@@ -108,7 +117,7 @@ public class AdministrateurController {
             concert = new ConcertDate();
 
             modelConcert(model, concert);
-            model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
+
         }
 
         return "AjoutConcert";
@@ -142,21 +151,26 @@ public class AdministrateurController {
 
         modelConcert(model, concert);
 
-        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
-
         return "AjoutConcert";
     }
 
     @RequestMapping(value = "/supprimerUnConcert", method = RequestMethod.POST)
-    public String supprimerUnConcert(Model model, @RequestParam int idConcert){
+    public String supprimerUnConcert(Model model, @RequestParam (defaultValue = "0") int idConcert){
+        messagePasDeSelection = null;
 
+        if (idConcert == 0) {
+            modelConcert(model, concert);
+
+            messagePasDeSelection = "vous n'avez rien sélectionné";
+            model.addAttribute("messagePasDeSelection", messagePasDeSelection);
+
+            return "AjoutConcert";
+        }
         microserviceConcert.supprimerUnConcert(idConcert);
 
         listeDateConcert = microserviceConcert.findAllUtilisateur();
 
         modelConcert(model, concert);
-
-        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
 
         return "AjoutConcert";
     }
@@ -168,7 +182,6 @@ public class AdministrateurController {
             utilisateurController.accueil(model);
             return "Index";
         } else {
-
             if (listeMembresConversation == null) {
                 listeMembresConversation = new ArrayList<>();
                 listeConversationSelonMembreSelectionne = new ArrayList<>();
@@ -177,7 +190,6 @@ public class AdministrateurController {
                 membreSelectionne = new UtilisateurAuthentification(adresseMembre);
                 conversation = new Conversation();
             }
-
             interfaceModelConversation(model);
 
             model.addAttribute("listeMembresConversation", listeMembresConversation);
@@ -190,7 +202,16 @@ public class AdministrateurController {
 
     @RequestMapping(value = "/conversationAdministrateurPost", method = RequestMethod.POST)
     public String conversationAdministrateurPost(Model model, @ModelAttribute("conversation")
-                @Valid Conversation conversation, BindingResult erreurConversation){
+                Conversation conversation) throws IOException {
+
+        if (verificationErreurMessageConversation(conversation.getMessage())) {
+            String messageErreurConversation = "le message est compris entre 2 et 500 caractères";
+            model.addAttribute("messageErreurConversation", messageErreurConversation);
+            interfaceModelConversation(model);
+
+            return "ConversationAdministrateur";
+        }
+
         conversation.setMessage(conversation.getMessage()
                 .replace("\n", "").replace("\r", ""));
 
@@ -204,24 +225,34 @@ public class AdministrateurController {
         microserviceConversation.saveConversation(conversation);
         microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
 
-        interfaceModelConversation(model);
-        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
-        model.addAttribute("listeMembresConversation", listeMembresConversation);
-        model.addAttribute("membreSelectionne", membreSelectionne);
+        newsletterEmailProxy.envoyerEmailConversation(authentificationController.getUtilisateurAuthentifier()
+                , "Vous avez un nouveau message de Sof");
 
-        System.out.println("ConversationMembre");
+        interfaceModelConversation(model);
+
         return "ConversationAdministrateur";
     }
 
     @RequestMapping(value = "/selectionDuMembre", method = RequestMethod.POST)
-    public String selectionDuMembreConversation(Model model, @RequestParam String usernameMembre){
+    public String selectionDuMembreConversation(Model model, @RequestParam(defaultValue = "0") String usernameMembre){
+        messagePasDeSelection = null;
+
+        if (usernameMembre.equals("0")) {
+            modelConcert(model, concert);
+
+            messagePasDeSelection = "vous n'avez rien sélectionné";
+
+            interfaceModelConversation(model);
+            model.addAttribute("messagePasDeSelection", messagePasDeSelection);
+
+            return "ConversationAdministrateur";
+        }
+
         membreSelectionne = microserviceAuthentification.findUtilisateurAuthentificationByUsername(usernameMembre);
         microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
 
         interfaceModelConversation(model);
-        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
-        model.addAttribute("listeMembresConversation", listeMembresConversation);
-        model.addAttribute("membreSelectionne", membreSelectionne);
+
 
         return "ConversationAdministrateur";
     }
@@ -230,6 +261,7 @@ public class AdministrateurController {
         model.addAttribute("listeDateConcert", listeDateConcert);
         model.addAttribute("concert", concert);
         model.addAttribute("dateTime", dateTime);
+        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
     }
 
     public boolean verificationDate(final String date) {
@@ -248,7 +280,9 @@ public class AdministrateurController {
         model.addAttribute("conversations", listeConversationSelonMembreSelectionne);
         model.addAttribute("localDateTimeMidnight",LocalDateTime.of(today, midnight));
         model.addAttribute("localDateTime",LocalDateTime.now());
-
+        model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
+        model.addAttribute("listeMembresConversation", listeMembresConversation);
+        model.addAttribute("membreSelectionne", membreSelectionne);
     }
 
     private String verificationUtilisateurConnecte(int id) {
@@ -257,5 +291,12 @@ public class AdministrateurController {
              return "Index";
         }
         return "autre";
+    }
+
+    private boolean verificationErreurMessageConversation(String message) {
+        if (message.length() >= 2 || message.length() <= 500) {
+            return true;
+        }
+        return false;
     }
 }

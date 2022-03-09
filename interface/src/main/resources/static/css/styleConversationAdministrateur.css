@@ -114,7 +114,7 @@ body{
 
 #historique_conversation_01{
     overflow-y: scroll;
-    max-height: 38rem;
+    max-height: 34rem;
 }
 
 .text_pas_de_commentaire {
@@ -158,6 +158,24 @@ small {
     padding: 1rem 6rem 1rem 6rem;
     margin-top: 6rem;
     font-size: 1.5rem;
+}
+
+.message_erreur{
+    font-size: 1.7rem;
+}
+
+.message_erreur_selection {
+    margin-top: 4rem;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.message_erreur_conversation {
+    margin-top: 3rem;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @media (max-width: 1920px) {

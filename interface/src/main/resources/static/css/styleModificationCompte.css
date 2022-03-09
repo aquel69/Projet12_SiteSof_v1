@@ -17,6 +17,10 @@ body{
     font-size: 1.7rem;
 }
 
+.message_modification_compte {
+    font-size: 1.7rem;
+}
+
 .ensemble_retour_accueil{
     display: flex;
     height: 10rem;
@@ -33,13 +37,18 @@ body{
 .retour_accueil_icone{
     font-size: 2rem;
     text-decoration: none;
-    margin: auto;
+    margin-left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
     padding-left: 3rem;
 }
 
 .text_retour_accueil{
     font-size: 2rem;
-    margin: auto;
+    float: right;
+    margin-left: 1rem;
+    margin-top: auto;
+    margin-bottom: auto;
     padding-right: 1rem;
 }
 
@@ -73,12 +82,12 @@ body{
 }
 
 .formulaire_inscription{
-    margin-top: 14rem;
+    margin-top: 10rem;
 }
 
 .formulaire_inscription_identite{
     border-bottom: 0.1rem solid #575659;
-    padding-bottom: 5rem;
+    padding-bottom: 4rem;
 }
 
 .text_form_inscription_nom{
@@ -95,7 +104,7 @@ body{
 }
 
 .text_form_inscription_adresse{
-    padding-top: 4rem;
+    padding-top: 3rem;
     font-size: 2.1rem;
 }
 
@@ -115,16 +124,16 @@ body{
 }
 
 .formulaire_inscription_authentification{
-    padding-bottom: 5rem;
+    padding-bottom: 4rem;
 }
 
 .text_form_inscription_email{
-    padding-top: 4rem;
+    padding-top: 3rem;
     font-size: 2.1rem;
 }
 
 .text_form_inscription_confEmail{
-    padding-top: 4rem;
+    padding-top: 3rem;
     font-size: 2.1rem;
 }
 
