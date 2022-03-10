@@ -18,7 +18,6 @@ public class InterfaceApplication {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
 }
 
 

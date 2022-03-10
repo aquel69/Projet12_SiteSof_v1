@@ -25,5 +25,4 @@ public interface MicroserviceInterfaceDonnees {
 
     @GetMapping(value = "/recuperationPhotoInterface/{id}")
     PhotoInterface getPhotoInterface(@PathVariable int id);
-
 }

@@ -20,11 +20,23 @@ public class EmailService {
     final Configuration configuration;
     final JavaMailSender javaMailSender;
 
+    /**
+     * constructeur de l'EmailService
+     * @param configuration configuration
+     * @param javaMailSender javaMailSender
+     */
     public EmailService(Configuration configuration, JavaMailSender javaMailSender) {
         this.configuration = configuration;
         this.javaMailSender = javaMailSender;
     }
 
+    /**
+     * permet d'envoyer un email de l'utilisateur à l'administrateur
+     * @param mail mail
+     * @throws MessagingException MessagingException
+     * @throws IOException IOException
+     * @throws TemplateException TemplateException
+     */
     public void sendEmail(Mail mail) throws MessagingException, IOException, TemplateException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
@@ -35,6 +47,13 @@ public class EmailService {
         javaMailSender.send(mimeMessage);
     }
 
+    /**
+     * contenu de l'email de l'utilisateur à l'administrateur
+     * @param mail mail
+     * @return
+     * @throws IOException IOException
+     * @throws TemplateException TemplateException
+     */
     String getEmailUserContent(Mail mail) throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> model = new HashMap<>();
@@ -43,6 +62,13 @@ public class EmailService {
         return stringWriter.getBuffer().toString();
     }
 
+    /**
+     * permet d'envoyer un email Newsletter à un utilisateur
+     * @param mail mail
+     * @throws MessagingException MessagingException
+     * @throws IOException IOException
+     * @throws TemplateException TemplateException
+     */
     public void sendEmailNewletter(Mail mail) throws MessagingException, IOException, TemplateException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
@@ -53,6 +79,13 @@ public class EmailService {
         javaMailSender.send(mimeMessage);
     }
 
+    /**
+     * contenu de l'email Newsletter à un utilisateur
+     * @param mail mail
+     * @return
+     * @throws IOException IOException
+     * @throws TemplateException TemplateException
+     */
     String getEmailNewsletterContent(Mail mail) throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> model = new HashMap<>();
@@ -61,6 +94,13 @@ public class EmailService {
         return stringWriter.getBuffer().toString();
     }
 
+    /**
+     * permet d'envoyer un email de bienvenue à un utilisateur
+     * @param mail mail
+     * @throws MessagingException MessagingException
+     * @throws IOException  IOException
+     * @throws TemplateException TemplateException
+     */
     public void sendEmailBienvenue(Mail mail) throws MessagingException, IOException, TemplateException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
@@ -71,6 +111,13 @@ public class EmailService {
         javaMailSender.send(mimeMessage);
     }
 
+    /**
+     * contenu de l'email de bienvenue à un utilisateur
+     * @param mail mail
+     * @return
+     * @throws IOException IOException
+     * @throws TemplateException TemplateException
+     */
     String getEmailBienvenueContent(Mail mail) throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> model = new HashMap<>();
@@ -79,6 +126,13 @@ public class EmailService {
         return stringWriter.getBuffer().toString();
     }
 
+    /**
+     * permet d'envoyer un email pour prévenir d'un nouveau message à un utilisateur
+     * @param mail mail
+     * @throws MessagingException MessagingException
+     * @throws IOException IOException
+     * @throws TemplateException TemplateException
+     */
     public void sendEmailConversation(Mail mail) throws MessagingException, IOException, TemplateException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
@@ -89,6 +143,13 @@ public class EmailService {
         javaMailSender.send(mimeMessage);
     }
 
+    /**
+     * contenu de l'email pour prévenir d'un nouveau message à un utilisateur
+     * @param mail mail
+     * @return
+     * @throws IOException IOException
+     * @throws TemplateException TemplateException
+     */
     String getEmailConversationContent(Mail mail) throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> model = new HashMap<>();
@@ -96,5 +157,4 @@ public class EmailService {
         configuration.getTemplate("EmailConversation.ftl").process(model, stringWriter);
         return stringWriter.getBuffer().toString();
     }
-
 }

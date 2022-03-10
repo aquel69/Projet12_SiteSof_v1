@@ -29,13 +29,12 @@ public class AuthentificationController {
     private Role role;
     private String erreur;
     private NewsletterEmail newsletterEmail;
+
     /**
-     * permet de récupérer les donnéees saisies par l'utilisateur et de vérifier si l'authentification est valide
-     * si elle l'est l'utilisateur est renvoyé sur la page d'accueil et le statut connecté apparait
-     * dans la barre de menu ou l'admin est connecté sur sa page
-     * @param model
-     * @param utilisateurPost
-     * @return la page correspondante au role
+     * authentification de l'utilisateur et gestion de l'erreur si email ou mot de passe incorrect
+     * @param model model
+     * @param utilisateurPost utilisateurPost
+     * @return String
      */
     @RequestMapping(value = "/authentification",method = RequestMethod.POST)
     public String validationAuthentification(Model model, @ModelAttribute("utilisateur") UtilisateurAuth utilisateurPost){
@@ -56,14 +55,12 @@ public class AuthentificationController {
     }
 
     /**
-     * permet de récupérer les donnéees saisies par l'utilisateur et de vérifier si l'authentification est valide
-     * si elle l'est l'utilisateur est renvoyé sur la page d'accueil et le statut connecté apparait
-     * dans la barre de menu ou l'admin est connecté sur sa page
-     * @return la page correspondante au role
+     * deconnexion du membre ou de l'administrateur
+     * @param model model
+     * @return String
      */
     @RequestMapping(value = "/deconnexion",method = RequestMethod.GET)
     public String deconnexion(Model model){
-
         if (utilisateurAuthentifier != null)
         {
             utilisateurAuthentifier = null;
@@ -82,6 +79,10 @@ public class AuthentificationController {
         return "Index";
     }
 
+    /**
+     * model pour la page accueil
+     * @param model model
+     */
     public void interfaceModelAccueil(Model model) {
         //Accueil
         String urlVideoAccueil = interfaceDonneesProxy.getUrlVideoYoutube();
@@ -107,6 +108,10 @@ public class AuthentificationController {
         model.addAttribute("utilisateurAuthentifier", utilisateurAuthentifier);
     }
 
+    /**
+     * permet d'accéder à l'utilisateur authentifié
+     * @return UtilisateurAuthentification
+     */
     public UtilisateurAuthentification getUtilisateurAuthentifier() {
         return this.utilisateurAuthentifier;
     }

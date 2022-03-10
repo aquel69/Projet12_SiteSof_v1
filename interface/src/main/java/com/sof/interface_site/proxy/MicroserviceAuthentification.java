@@ -61,7 +61,4 @@ public interface MicroserviceAuthentification {
 
     @GetMapping(value = "/tousLesUtilisateurs")
     List<Utilisateur> findAllUtilisateur();
-
-
-
 }

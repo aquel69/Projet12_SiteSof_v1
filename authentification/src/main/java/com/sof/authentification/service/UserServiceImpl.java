@@ -25,35 +25,63 @@ public class UserServiceImpl implements UserService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * ajoute un utilisateur avec un mot de passe crypté dans la base de données
+     * @param utilisateur utilisateur
+     * @return Utilisateur
+     */
     @Override
     public Utilisateur saveUtilisateur(Utilisateur utilisateur) {
-        //Adresse adresse = daoAdresse.findByIdAdresse(daoAdresse.recupererDernierAdresse());
         utilisateur.setMotDePasse(bCryptPasswordEncoder.encode(utilisateur.getMotDePasse()));
-        //utilisateur.setAdresseUtilisateur(adresse);
 
         return daoUtilisateur.save(utilisateur);
     }
 
+    /**
+     * modifie un utilisateur dans la base de données
+     * @param utilisateur utilisateur
+     * @return Utilisateur
+     */
     @Override
     public Utilisateur modifierUtilisateur(Utilisateur utilisateur) {
         return daoUtilisateur.save(utilisateur);
     }
 
+    /**
+     * modifie une adresse dans la base de données
+     * @param adresse adresse
+     * @return Adresse
+     */
     @Override
     public Adresse modifierAdresse(Adresse adresse) {
         return daoAdresse.save(adresse);
     }
 
+    /**
+     * récupère un utilisateur selon son username dans la base de données
+     * @param username username
+     * @return Utilisateur
+     */
     @Override
     public Utilisateur findUtilisateurByUsername(String username) {
         return daoUtilisateur.findByUsername(username);
     }
 
+    /**
+     * ajoute une adresse dans la base de données
+     * @param adresse adresse
+     * @return Adresse
+     */
     @Override
     public Adresse addAdresse(Adresse adresse){
         return daoAdresse.save(adresse);
     }
 
+    /**
+     * ajoute un role au membre
+     * @param username username
+     * @return Utilisateur
+     */
     @Override
     public Utilisateur addRoleToUtilisateur(String username) {
         Utilisateur utilisateur = daoUtilisateur.findByUsername(username);

@@ -28,11 +28,20 @@ public class InterfaceController {
     @Autowired
     private DaoPhotoInterface daoPhotoInterface;
 
+    /**
+     * récupère l'url de la vidéo youtube dans la base de données
+     * @return String
+     */
     @GetMapping(value = "/recuperationUrlVideo")
     public String getUrlVideoYoutube(){
         return daoAccueilInterface.getUrlVideoYoutube();
     }
 
+    /**
+     * récupère les liens des photos de l'interface concert dans la base de données
+     * @param id id
+     * @return ConcertInterface
+     */
     @GetMapping(value = "/recuperationConcertInterface/{id}")
     public ConcertInterface getConcertInterface(@PathVariable int id){
         ConcertInterface concertInterface = daoConcertInterface.findByIdConcertInterface(id);
@@ -40,6 +49,11 @@ public class InterfaceController {
         return concertInterface;
     }
 
+    /**
+     * récupère les liens des photos de l'interface biographie et les paragraphes dans la base de données
+     * @param id id
+     * @return BiographieInterface
+     */
     @GetMapping(value = "/recuperationBiographieInterface/{id}")
     public BiographieInterface getBiographieInterface(@PathVariable int id){
         BiographieInterface biographieInterface = daoBiographieInterface.findByIdBiographieInterface(id);
@@ -47,6 +61,12 @@ public class InterfaceController {
         return biographieInterface;
     }
 
+    /**
+     * récupère les liens des photos de l'interface biographie, les liens des chansons
+     * et les paragraphes dans la base de données
+     * @param id id
+     * @return AlbumInterface
+     */
     @GetMapping(value = "/recuperationAlbumInterface/{id}")
     public AlbumInterface getAlbumInterface(@PathVariable int id){
         AlbumInterface albumInterface = daoAlbumInterface.findByIdAlbumInterface(id);
@@ -54,6 +74,11 @@ public class InterfaceController {
         return albumInterface;
     }
 
+    /**
+     * récupère les liens des photos des differentes pages du site dans la base de données
+     * @param id id
+     * @return PhotoInterface
+     */
     @GetMapping(value = "/recuperationPhotoInterface/{id}")
     public PhotoInterface getPhotoInterface(@PathVariable int id){
         PhotoInterface photoInterface = daoPhotoInterface.findByIdPhotoInterface(id);

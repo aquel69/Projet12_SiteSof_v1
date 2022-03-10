@@ -17,5 +17,4 @@ public interface MicroserviceConcert {
 
     @DeleteMapping(value="/supprimerUnConcert/{idConcert}")
     void supprimerUnConcert(@PathVariable int idConcert);
-
 }

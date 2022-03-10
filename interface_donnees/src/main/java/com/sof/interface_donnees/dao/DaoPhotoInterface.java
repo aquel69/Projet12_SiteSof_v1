@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DaoPhotoInterface extends JpaRepository<PhotoInterface, Integer> {
 
-
     PhotoInterface findByIdPhotoInterface(int id);
 
 }

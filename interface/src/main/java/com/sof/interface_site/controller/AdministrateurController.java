@@ -63,7 +63,12 @@ public class AdministrateurController {
     private Conversation conversation;
     private String messagePasDeSelection;
 
-
+    /**
+     * accéder à la page newsletter si administrateur connecté
+     * @param model model
+     * @param id id
+     * @return String
+     */
     @RequestMapping(value = "/newsletter/{id}", method = RequestMethod.GET)
     public String redactionNewsletter(Model model, @PathVariable int id){
         String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
@@ -79,6 +84,13 @@ public class AdministrateurController {
         return "Newsletter";
     }
 
+    /**
+     * envoyer la newsletter à tous les emails newsletter faisant partie de la base de données
+     * @param model model
+     * @param mail mail
+     * @param erreurMail erreurMail
+     * @return String
+     */
     @RequestMapping(value = "/envoiNewsletter", method = RequestMethod.POST)
     public String envoiNewsletter(Model model, @ModelAttribute("mail") @Valid Mail mail, BindingResult erreurMail){
         List<NewsletterEmail> newsletterEmailList = microserviceNewsletterEmail.recupererTousLesEmailsNewsletter();
@@ -105,6 +117,12 @@ public class AdministrateurController {
         return "Newsletter";
     }
 
+    /**
+     * accéder à la page ajout et suppression concert si administrateur connecté
+     * @param model model
+     * @param id id
+     * @return String
+     */
     @RequestMapping(value = "/ajoutConcert/{id}", method = RequestMethod.GET)
     public String ajoutConcert(Model model, @PathVariable int id){
         String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
@@ -112,18 +130,22 @@ public class AdministrateurController {
             utilisateurController.accueil(model);
             return "Index";
         } else {
-
             listeDateConcert = microserviceConcert.findAllUtilisateur();
             concert = new ConcertDate();
 
             modelConcert(model, concert);
-
         }
-
         return "AjoutConcert";
     }
 
-
+    /**
+     * ajouter un concert dans la base de données en vérifiant les données saisies
+     * @param model model
+     * @param concert concert
+     * @param erreurConcert erreurConcert
+     * @param dateTime dateTime
+     * @return String
+     */
     @RequestMapping(value = "/ajoutConcertPost", method = RequestMethod.POST)
     public String ajouterUnConcert(Model model, @Valid @ModelAttribute("concert") ConcertDate concert
             , BindingResult erreurConcert, @RequestParam String dateTime){
@@ -154,6 +176,12 @@ public class AdministrateurController {
         return "AjoutConcert";
     }
 
+    /**
+     * supprimer un concert dans la base de données en vérifiant la selection
+     * @param model model
+     * @param idConcert idConcert
+     * @return String
+     */
     @RequestMapping(value = "/supprimerUnConcert", method = RequestMethod.POST)
     public String supprimerUnConcert(Model model, @RequestParam (defaultValue = "0") int idConcert){
         messagePasDeSelection = null;
@@ -166,8 +194,8 @@ public class AdministrateurController {
 
             return "AjoutConcert";
         }
-        microserviceConcert.supprimerUnConcert(idConcert);
 
+        microserviceConcert.supprimerUnConcert(idConcert);
         listeDateConcert = microserviceConcert.findAllUtilisateur();
 
         modelConcert(model, concert);
@@ -175,6 +203,12 @@ public class AdministrateurController {
         return "AjoutConcert";
     }
 
+    /**
+     * accéder à la page conversation si administrateur connecté
+     * @param model model
+     * @param id id
+     * @return String
+     */
     @RequestMapping(value = "/conversationAdministrateur/{id}", method = RequestMethod.GET)
     public String conversationAdministrateur(Model model, @PathVariable int id){
         String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
@@ -191,15 +225,20 @@ public class AdministrateurController {
                 conversation = new Conversation();
             }
             interfaceModelConversation(model);
-
             model.addAttribute("listeMembresConversation", listeMembresConversation);
             model.addAttribute("membreSelectionne", membreSelectionne);
             model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
         }
-
         return "ConversationAdministrateur";
     }
 
+    /**
+     * ajouter un message de conversation dans la base de données et affichage de celui-ci
+     * @param model model
+     * @param conversation conversation
+     * @return String
+     * @throws IOException IOException
+     */
     @RequestMapping(value = "/conversationAdministrateurPost", method = RequestMethod.POST)
     public String conversationAdministrateurPost(Model model, @ModelAttribute("conversation")
                 Conversation conversation) throws IOException {
@@ -224,7 +263,6 @@ public class AdministrateurController {
 
         microserviceConversation.saveConversation(conversation);
         microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
-
         newsletterEmailProxy.envoyerEmailConversation(authentificationController.getUtilisateurAuthentifier()
                 , "Vous avez un nouveau message de Sof");
 
@@ -233,12 +271,18 @@ public class AdministrateurController {
         return "ConversationAdministrateur";
     }
 
+    /**
+     * vérification du membre sélectionné et affichage de celui-ci
+     * @param model model
+     * @param usernameMembre usernameMembre
+     * @return String
+     */
     @RequestMapping(value = "/selectionDuMembre", method = RequestMethod.POST)
     public String selectionDuMembreConversation(Model model, @RequestParam(defaultValue = "0") String usernameMembre){
         messagePasDeSelection = null;
 
         if (usernameMembre.equals("0")) {
-            modelConcert(model, concert);
+            //modelConcert(model, concert);
 
             messagePasDeSelection = "vous n'avez rien sélectionné";
 
@@ -247,16 +291,19 @@ public class AdministrateurController {
 
             return "ConversationAdministrateur";
         }
-
         membreSelectionne = microserviceAuthentification.findUtilisateurAuthentificationByUsername(usernameMembre);
         microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
 
         interfaceModelConversation(model);
 
-
         return "ConversationAdministrateur";
     }
 
+    /**
+     * models pour la page concert
+     * @param model model
+     * @param concert concert
+     */
     public void modelConcert(Model model, ConcertDate concert){
         model.addAttribute("listeDateConcert", listeDateConcert);
         model.addAttribute("concert", concert);
@@ -264,13 +311,11 @@ public class AdministrateurController {
         model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
     }
 
-    public boolean verificationDate(final String date) {
-        Matcher matcher = patternEmail.matcher(date);
-        return matcher.matches();
-    }
-
+    /**
+     * models pour la page conversation
+     * @param model model
+     */
     private void interfaceModelConversation(Model model) {
-
         LocalTime midnight = LocalTime.MIDNIGHT;
         LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
         listeConversationSelonMembreSelectionne = microserviceConversation
@@ -285,6 +330,21 @@ public class AdministrateurController {
         model.addAttribute("membreSelectionne", membreSelectionne);
     }
 
+    /**
+     * permet de vérifier la syntaxe de la date
+     * @param date date
+     * @return boolean
+     */
+    public boolean verificationDate(final String date) {
+        Matcher matcher = patternEmail.matcher(date);
+        return matcher.matches();
+    }
+
+    /**
+     * vérification si un utilisateur est connecté sinon renvoi la page index
+     * @param id id
+     * @return
+     */
     private String verificationUtilisateurConnecte(int id) {
         UtilisateurAuthentification utilisateurVerification = microserviceAuthentification.findUtilisateurById(id);
         if( authentificationController.getUtilisateurAuthentifier() == null || !authentificationController.getUtilisateurAuthentifier().getUsername().equals(utilisateurVerification.getUsername())) {
@@ -293,6 +353,11 @@ public class AdministrateurController {
         return "autre";
     }
 
+    /**
+     * vérification du nombre de caractères dans un message
+     * @param message message
+     * @return
+     */
     private boolean verificationErreurMessageConversation(String message) {
         if (message.length() >= 2 || message.length() <= 500) {
             return true;
