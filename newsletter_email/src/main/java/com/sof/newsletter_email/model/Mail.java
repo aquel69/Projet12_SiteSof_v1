@@ -7,7 +7,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Mail {
 
+    /**
+     * expediteur
+     */
     private String expediteur;
+
     /**
      * destinataire du mail
      */
@@ -22,8 +26,14 @@ public class Mail {
      */
     private String message;
 
+    /**
+     * émetteur
+     */
     private String emetteur;
 
+    /**
+     * utilisateur authentifié
+     */
     private UtilisateurAuthentification utilisateurAuthentification;
 
 }

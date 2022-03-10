@@ -76,6 +76,11 @@ public class UtilisateurController {
 
     private BCryptPasswordEncoder bCryptPasswordMatche;
 
+    /**
+     * accéder à la page Accueil
+     * @param model model
+     * @return String
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String accueil(Model model){
         if (authentificationController.getUtilisateurAuthentifier() == null) {
@@ -95,9 +100,15 @@ public class UtilisateurController {
         return "Index";
     }
 
+    /**
+     * ajout de l'email d'un utilisateur dans la base de données
+     * @param model model
+     * @param newsletterEmailPost newsletterEmailPost
+     * @return String
+     */
     @RequestMapping(value = "/ajoutEmail",method = RequestMethod.POST)
     public String ajoutEmailNewsletter(Model model, @ModelAttribute("newsletterEmail") NewsletterEmail newsletterEmailPost){
-        String messageEmailNewsletter = messageEmailNewsletter(newsletterEmailPost);
+        String messageEmailNewsletter = messageErreurEmailNewsletter(newsletterEmailPost);
 
         if (messageEmailNewsletter.equals("Votre adresse a été ajoutée à la newsletter")) {
             newsletterEmailProxy.ajouterEmailNewsletter(newsletterEmailPost);
@@ -109,12 +120,18 @@ public class UtilisateurController {
         return "Index";
     }
 
+    /**
+     * ajout de l'email d'un membre dans la base de données
+     * @param model model
+     * @param email email
+     * @return String
+     */
     @RequestMapping(value = "/ajoutEmailMembre",method = RequestMethod.POST)
     public String ajoutEmailNewsletterMembre(Model model, @RequestParam String email){
         NewsletterEmail newsletterEmail = new NewsletterEmail();
         newsletterEmail.setEmail(email);
 
-        String messageEmailNewsletter = messageEmailNewsletter(newsletterEmail);
+        String messageEmailNewsletter = messageErreurEmailNewsletter(newsletterEmail);
 
         if (messageEmailNewsletter.equals("Votre adresse a été ajoutée à la newsletter")) {
             newsletterEmailProxy.ajouterEmailNewsletter(newsletterEmail);
@@ -126,10 +143,17 @@ public class UtilisateurController {
         return "Index";
     }
 
+    /**
+     * envoi d'un mail d'un utilisateur à l'administrateur
+     * @param model model
+     * @param nom nom
+     * @param email email
+     * @param message message
+     * @return String
+     */
     @RequestMapping(value = "/utilisateurEnvoiEmail",method = RequestMethod.POST)
     public String envoiMailDeLUtilisateur(Model model, @RequestParam String nom, @RequestParam String email
     , @RequestParam String message){
-
 
         if (!verificationEmail(email) || !verificationErreurMessageConversation(message) || !verificationNomEnvoiEmail(nom)) {
             verificationErreurEnvoiMail(model, nom, email, message);
@@ -146,6 +170,11 @@ public class UtilisateurController {
         return "Index";
     }
 
+    /**
+     * accéder à la page création compte
+     * @param model model
+     * @return String
+     */
     @RequestMapping(value = "/creationCompte", method = RequestMethod.GET)
     public String creationCompte(Model model){
         Utilisateur utilisateur = new Utilisateur();
@@ -156,6 +185,17 @@ public class UtilisateurController {
         return "CreationCompte";
     }
 
+    /**
+     * créer un compte membre dans la base de données et vérification des erreurs de saisie et de correspondance
+     * @param model model
+     * @param utilisateur utilisateur
+     * @param erreurUtilisateur erreurUtilisateur
+     * @param adresse adresse
+     * @param erreurAdresse erreurAdresse
+     * @param confirmationEmail confirmationEmail
+     * @param confirmationMotDePasse confirmationMotDePasse
+     * @return String
+     */
     @RequestMapping(value = "/creationCompte", method = RequestMethod.POST)
     public String creationCompte(Model model, @ModelAttribute("utilisateur") @Valid Utilisateur utilisateur
             , BindingResult erreurUtilisateur, @ModelAttribute("adresse") @Valid Adresse adresse
@@ -177,7 +217,7 @@ public class UtilisateurController {
         || !verificationCorrespondanceMotDePasse(utilisateur.getMotDePasse(), confirmationMotDePasse)
         || !verificationUsernameDejaExistant(utilisateurs, utilisateur)) {
 
-            verificationErreursGlobale(utilisateur, confirmationEmail, confirmationMotDePasse, utilisateurs);
+            verificationErreursCreationCompte(utilisateur, confirmationEmail, confirmationMotDePasse, utilisateurs);
             interfaceModelCreationCompte(model, utilisateur, adresse, confirmationEmail, confirmationMotDePasse
                         , messageErreurMail, messageErreurMotDePasse, messageErreurConfirmationMail
                         , messageErreurConfirmationMotDePasse, messageErreurUsernameDejaExistant);
@@ -201,6 +241,12 @@ public class UtilisateurController {
         return "Index";
     }
 
+    /**
+     * accéder à la page modification compte si membre connecté
+     * @param model model
+     * @param id id
+     * @return String
+     */
     @RequestMapping(value = "/modificationCompte/{id}", method = RequestMethod.GET)
     public String modificationCompte(Model model, @PathVariable int id){
         String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
@@ -216,6 +262,19 @@ public class UtilisateurController {
         return "ModificationCompte";
     }
 
+    /**
+     * modifier un compte membre dans la base de données et vérification des erreurs de saisie et de correspondance
+     * @param model model
+     * @param utilisateur utilisateur
+     * @param erreurUtilisateur erreurUtilisateur
+     * @param adresse adresse
+     * @param erreurAdresse erreurAdresse
+     * @param nouveauEmail nouveauEmail
+     * @param nouveauMotDePasse nouveauMotDePasse
+     * @param usernameSupression usernameSupression
+     * @param confirmationMotDePasse confirmationMotDePasse
+     * @return String
+     */
     @RequestMapping(value = "/modificationCompte", method = RequestMethod.POST)
     public String modificationComptePost(Model model, @ModelAttribute("utilisateur") @Valid Utilisateur utilisateur
             , BindingResult erreurUtilisateur, @ModelAttribute("adresse") @Valid Adresse adresse
@@ -304,7 +363,7 @@ public class UtilisateurController {
             return "ModificationCompte";
         }
 
-        //mise à jour de l'utilisateur et modification de l
+        //mise à jour de l'utilisateur et modification de l'adresse
         adresse.setIdAdresse(utilisateurComplet.getAdresseUtilisateur().getIdAdresse());
         utilisateur.setIdUtilisateur(utilisateurComplet.getIdUtilisateur());
         utilisateur.setAdresseUtilisateur(adresse);
@@ -322,11 +381,18 @@ public class UtilisateurController {
         return "ModificationCompte";
     }
 
+    /**
+     * accéder à la page conversation si le membre est connecté
+     * @param model model
+     * @param id id
+     * @return String
+     */
     @RequestMapping(value = "/conversationMembre/{id}", method = RequestMethod.GET)
     public String conversationMembre(Model model, @PathVariable int id){
         String verificationUtilisateurConnecte = verificationUtilisateurConnecte(id);
         if (verificationUtilisateurConnecte.equals("Index")) {
             accueil(model);
+
             return "Index";
         } else {
             interfaceModelConversation(model);
@@ -335,6 +401,13 @@ public class UtilisateurController {
         }
     }
 
+    /**
+     * ajouter une conversation membre dans la base de données et et vérification des erreurs de saisie
+     * @param model model
+     * @param conversation conversation
+     * @return String
+     * @throws IOException IOException
+     */
     @RequestMapping(value = "/conversationMembre", method = RequestMethod.POST)
     public String conversationMembre(Model model, @ModelAttribute("conversation") Conversation conversation) throws IOException {
         if (verificationErreurMessageConversation(conversation.getMessage())) {
@@ -346,7 +419,6 @@ public class UtilisateurController {
         }
 
         conversation.setMessage(conversation.getMessage().replace("\n", "").replace("\r", ""));
-
         conversation.setMembre(authentificationController.getUtilisateurAuthentifier());
         conversation.setDateAjout(LocalDateTime.now());
         conversation.setInterlocuteur(authentificationController.getUtilisateurAuthentifier());
@@ -363,6 +435,11 @@ public class UtilisateurController {
         return "ConversationMembre";
     }
 
+    /**
+     * accéder à la page désinscription newsletter
+     * @param model model
+     * @return String
+     */
     @RequestMapping(value = "/desinscriptionNewsletter", method = RequestMethod.GET)
     public String desinscriptionNewsletter(Model model){
         interfaceDesinscritpionNewsletter(model);
@@ -370,6 +447,12 @@ public class UtilisateurController {
         return "DesinscriptionNewsletter";
     }
 
+    /**
+     * désinscrire un utilisateur de la newsletter et vérification des erreurs de correspondance
+     * @param model model
+     * @param email email
+     * @return String
+     */
     @RequestMapping(value = "/desinscriptionNewsletter",method = RequestMethod.POST)
     public String desinscriptionNewsletter(Model model, @RequestParam String email){
         if (!email.trim().isEmpty()) {
@@ -380,7 +463,6 @@ public class UtilisateurController {
                     messageInterface = "Votre Email a bien été supprimé de la liste des newsLetters";
 
                     interfaceDesinscritpionNewsletter(model);
-
                     messageInterface = null;
 
                     return "DesinscriptionNewsletter";
@@ -394,6 +476,10 @@ public class UtilisateurController {
         return "DesinscriptionNewsletter";
     }
 
+    /**
+     * models pour la page accueil
+     * @param model model
+     */
     public void interfaceModelAccueil(Model model) {
         //Accueil
         String urlVideoAccueil = interfaceDonneesProxy.getUrlVideoYoutube();
@@ -420,6 +506,12 @@ public class UtilisateurController {
         model.addAttribute("utilisateurAuthentifier", utilisateurAuthentifier);
     }
 
+    /**
+     * models pour la page création compte
+     * @param model model
+     * @param utilisateur  utilisateur
+     * @param adresse adresse
+     */
     private void interfaceModelCreationCompte(Model model, Utilisateur utilisateur, Adresse adresse) {
         PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
 
@@ -428,6 +520,19 @@ public class UtilisateurController {
         model.addAttribute("photoInterface", photoInterface);
     }
 
+    /**
+     * models pour la page création compte
+     * @param model model
+     * @param utilisateur utilisateur
+     * @param adresse adresse
+     * @param confirmationEmail confirmationEmail
+     * @param confirmationMotDePasse confirmationMotDePasse
+     * @param messageErreurMail messageErreurMail
+     * @param messageErreurMotDePasse messageErreurMotDePasse
+     * @param messageErreurConfirmationMail messageErreurConfirmationMail
+     * @param messageErreurConfirmationMotDePasse messageErreurConfirmationMotDePasse
+     * @param messageErreurUsernameDejaExistant messageErreurUsernameDejaExistant
+     */
     private void interfaceModelCreationCompte(Model model, Utilisateur utilisateur, Adresse adresse
             , String confirmationEmail, String confirmationMotDePasse
             , String messageErreurMail, String messageErreurMotDePasse, String messageErreurConfirmationMail
@@ -447,6 +552,12 @@ public class UtilisateurController {
 
     }
 
+    /**
+     * models pour la page modification compte
+     * @param model model
+     * @param utilisateur utilisateur
+     * @param adresse adresse
+     */
     private void interfaceModelModificationCompte(Model model, Utilisateur utilisateur, Adresse adresse) {
         PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
 
@@ -457,6 +568,18 @@ public class UtilisateurController {
         model.addAttribute("messageInterface", messageInterface);
     }
 
+    /**
+     * models pour la page modification compte
+     * @param model model
+     * @param utilisateur utilisateur
+     * @param adresse adresse
+     * @param messageErreurModificationMail messageErreurModificationMail
+     * @param messageErreurMotDePasseIdentique messageErreurMotDePasseIdentique
+     * @param messageErreurModificationMotDePasse messageErreurModificationMotDePasse
+     * @param messageErreurConfirmationMotDePasseVide messageErreurConfirmationMotDePasseVide
+     * @param messageErreurNouveauMotDePasseVide messageErreurNouveauMotDePasseVide
+     * @param messageErreurMailIdentique messageErreurMailIdentique
+     */
     private void interfaceModelModificationCompte(Model model, Utilisateur utilisateur, Adresse adresse
             , String messageErreurModificationMail, String messageErreurMotDePasseIdentique, String messageErreurModificationMotDePasse
             , String messageErreurConfirmationMotDePasseVide, String messageErreurNouveauMotDePasseVide
@@ -476,6 +599,10 @@ public class UtilisateurController {
         model.addAttribute("messageErreurMailIdentique", messageErreurMailIdentique);
     }
 
+    /**
+     * models pour la page conversation membre
+     * @param model model
+     */
     private void interfaceModelConversation(Model model) {
         conversation = new Conversation();
         LocalTime midnight = LocalTime.MIDNIGHT;
@@ -492,6 +619,10 @@ public class UtilisateurController {
 
     }
 
+    /**
+     * models pour la page désinscription de la newsletter
+     * @param model model
+     */
     public void interfaceDesinscritpionNewsletter(Model model) {
         PhotoInterface photoInterface = interfaceDonneesProxy.getPhotoInterface(1);
 
@@ -500,8 +631,14 @@ public class UtilisateurController {
         model.addAttribute("messageErreurEmail", messageErreurMail);
     }
 
+    /**
+     * gestion des erreurs lors de l'envoi d'un mail à l'administrateur
+     * @param model model
+     * @param nom nom
+     * @param email email
+     * @param message message
+     */
     public void verificationErreurEnvoiMail(Model model, String nom, String email, String message) {
-
             if(!verificationEmail(email)) {
                 String messageErreurEmail = "L\'adresse mail n'est pas valable";
                 model.addAttribute("messageErreurEmail", messageErreurEmail);
@@ -517,6 +654,11 @@ public class UtilisateurController {
             interfaceModelAccueil(model);
     }
 
+    /**
+     * gestion des erreurs lors de la modification d'un compte
+     * @param nouveauMotDePasse nouveauMotDePasse
+     * @param confirmationMotDePasse confirmationMotDePasse
+     */
     public void verificationErreursModificationUtilisateur(String nouveauMotDePasse, String confirmationMotDePasse){
         if (!matchRegexEmail) {
             messageErreurModificationMail = "L\'adresse mail n'est pas valable";
@@ -546,7 +688,14 @@ public class UtilisateurController {
         }
     }
 
-    public void verificationErreursGlobale(Utilisateur utilisateur, String confirmationEmail, String confirmationMotDePasse
+    /**
+     * gestion des erreurs lors de la création d'un compte
+     * @param utilisateur utilisateur
+     * @param confirmationEmail confirmationEmail
+     * @param confirmationMotDePasse confirmationMotDePasse
+     * @param utilisateurs utilisateurs
+     */
+    public void verificationErreursCreationCompte(Utilisateur utilisateur, String confirmationEmail, String confirmationMotDePasse
             , List<Utilisateur> utilisateurs){
         if (!matchRegexEmail) {
             messageErreurMail = "L\'adresse mail n'est pas valable";
@@ -566,9 +715,13 @@ public class UtilisateurController {
         }
     }
 
-    public String messageEmailNewsletter(NewsletterEmail newsletterEmail){
+    /**
+     * gestion des erreurs lors de l'inscription à la newsletter
+     * @param newsletterEmail newsletterEmail
+     * @return String
+     */
+    public String messageErreurEmailNewsletter(NewsletterEmail newsletterEmail){
         List<NewsletterEmail> newsletterEmailList = newsletterEmailProxy.recupererTousLesEmailsNewsletter();
-
         if (!verificationEmail(newsletterEmail.getEmail())) {
             return "L\'adresse mail n'est pas valable";
         }
@@ -579,16 +732,32 @@ public class UtilisateurController {
         return "Votre adresse a été ajoutée à la newsletter";
     }
 
+    /**
+     * vérification de la syntaxe de l'email
+     * @param email email
+     * @return boolean
+     */
     public boolean verificationEmail(final String email) {
         Matcher matcher = patternEmail.matcher(email);
         return matcher.matches();
     }
 
+    /**
+     * vérification de la syntaxe du mot de passe
+     * @param password password
+     * @return boolean
+     */
     public boolean verificationMotDePasse(final String password) {
         Matcher matcher = patternPassword.matcher(password);
         return matcher.matches();
     }
 
+    /**
+     * vérification de la correspondance des emails
+     * @param email email
+     * @param confirmationEmail confirmationEmail
+     * @return boolean
+     */
     public boolean verificationCorrespondanceEmail(String email, String confirmationEmail) {
         if (email.equals(confirmationEmail)) {
             return true;
@@ -596,6 +765,12 @@ public class UtilisateurController {
         return false;
     }
 
+    /**
+     * vérification de la correspondance des mots de passe
+     * @param motDePasse motDePasse
+     * @param confirmationMotDePasse confirmationMotDePasse
+     * @return boolean
+     */
     public boolean verificationCorrespondanceMotDePasse(String motDePasse, String confirmationMotDePasse) {
         if (motDePasse.equals(confirmationMotDePasse)) {
             return true;
@@ -603,6 +778,12 @@ public class UtilisateurController {
         return false;
     }
 
+    /**
+     * vérification d'un username déjà existant
+     * @param listeUtilisateurs listeUtilisateurs
+     * @param utilisateur utilisateur
+     * @return boolean
+     */
     public boolean verificationUsernameDejaExistant(List<Utilisateur> listeUtilisateurs, Utilisateur utilisateur) {
         for (Utilisateur utilisateurBoucle : listeUtilisateurs) {
             if (utilisateurBoucle.getUsername().equals(utilisateur.getUsername())) {
@@ -612,6 +793,12 @@ public class UtilisateurController {
         return true;
     }
 
+    /**
+     * vérification d'un email newsletter déjà existant
+     * @param listeEmailsNewletter listeEmailsNewletter
+     * @param newsletterEmail newsletterEmail
+     * @return boolean
+     */
     public boolean verificationEmailNewsletterDejaExistant(List<NewsletterEmail> listeEmailsNewletter
             , NewsletterEmail newsletterEmail) {
         for (NewsletterEmail newsletterEmailBoucle : listeEmailsNewletter) {
@@ -622,6 +809,11 @@ public class UtilisateurController {
         return true;
     }
 
+    /**
+     * vérification si un utilisateur est connecté sinon renvoi à la page index
+     * @param id id
+     * @return String
+     */
     private String verificationUtilisateurConnecte(int id) {
         UtilisateurAuthentification utilisateurVerification = authentificationProxy.findUtilisateurById(id);
         if( authentificationController.getUtilisateurAuthentifier() == null || !authentificationController
@@ -631,6 +823,11 @@ public class UtilisateurController {
         return "autre";
     }
 
+    /**
+     * vérification si un utilisateur est connecté pour la suppression du compte
+     * @param usernameSupression usernameSupression
+     * @return boolean
+     */
     private boolean verificationPourSupressionDuCompte(String usernameSupression) {
         if (usernameSupression.equals(authentificationController.getUtilisateurAuthentifier().getUsername())) {
                return true;
@@ -639,6 +836,11 @@ public class UtilisateurController {
         return false;
     }
 
+    /**
+     * vérification du nombre de caractères dans un message
+     * @param message message
+     * @return boolean
+     */
     private boolean verificationErreurMessageConversation(String message) {
         if (message.length() >= 2 || message.length() <= 500) {
             return true;
@@ -646,6 +848,11 @@ public class UtilisateurController {
         return false;
     }
 
+    /**
+     * vérification du nombre de caractères dans un nom
+     * @param nom nom
+     * @return boolean
+     */
     private boolean verificationNomEnvoiEmail(String nom) {
         if (nom.length() >= 2 || nom.length() <= 20) {
             return true;
@@ -653,6 +860,9 @@ public class UtilisateurController {
         return false;
     }
 
+    /**
+     * suppression d'un compte membre
+     */
     private void supressionDuCompte() {
         authentificationProxy.supprimerRoleUtilisateur(authentificationController.getUtilisateurAuthentifier()
                 .getIdUtilisateur());
@@ -663,5 +873,4 @@ public class UtilisateurController {
         authentificationProxy.supprimerUneAdresse(authentificationController.getUtilisateurAuthentifier()
                 .getAdresseUtilisateur().getIdAdresse());
     }
-
 }

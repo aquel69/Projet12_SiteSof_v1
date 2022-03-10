@@ -21,12 +21,12 @@ public class Conversation {
     private String message;
 
     /**
-     * utilisateur
+     * membre concerné
      */
     private UtilisateurAuthentification membre;
 
     /**
-     * utilisateur
+     * interlocuteur
      */
     private UtilisateurAuthentification interlocuteur;
 

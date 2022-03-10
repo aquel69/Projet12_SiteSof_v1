@@ -11,5 +11,4 @@ public interface DaoAccueilInterface extends JpaRepository<AccueilInterface, Str
         @Query(value = "SELECT * FROM accueil_interface WHERE video_youtube = 'https://www.youtube.com/embed/yRWCAFs1oY8?controls=0'", nativeQuery = true)
         String getUrlVideoYoutube();
 
-
 }

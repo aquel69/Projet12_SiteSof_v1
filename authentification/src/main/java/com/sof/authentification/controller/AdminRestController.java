@@ -19,5 +19,4 @@ public class AdminRestController {
     public List<Utilisateur> getAllUtilisateurs() {
         return authentificationController.findAllUtilisateur();
     }
-
 }
