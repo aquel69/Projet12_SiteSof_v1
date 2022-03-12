@@ -40,7 +40,7 @@ public class UtilisateurAuthentification {
     /**
      * role de l'utilisateur
      */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "utilisateur_role", joinColumns = @JoinColumn (name = "utilisateur_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 }

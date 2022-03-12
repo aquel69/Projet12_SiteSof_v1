@@ -127,11 +127,20 @@ public class UtilisateurController {
      * @return String
      */
     @RequestMapping(value = "/ajoutEmailMembre",method = RequestMethod.POST)
-    public String ajoutEmailNewsletterMembre(Model model, @RequestParam String email){
+    public String ajoutEmailNewsletterMembre(Model model, @RequestParam(defaultValue = "null") String email){
         NewsletterEmail newsletterEmail = new NewsletterEmail();
         newsletterEmail.setEmail(email);
 
         String messageEmailNewsletter = messageErreurEmailNewsletter(newsletterEmail);
+
+        if (email.equals("null")) {
+            messageEmailNewsletter = "Vous avez oublié de cocher la case avant de valider";
+            model.addAttribute("messageEmailNewsletter", messageEmailNewsletter);
+            utilisateurAuthentifier = authentificationController.getUtilisateurAuthentifier();
+            interfaceModelAccueil(model);
+
+            return "Index";
+        }
 
         if (messageEmailNewsletter.equals("Votre adresse a été ajoutée à la newsletter")) {
             newsletterEmailProxy.ajouterEmailNewsletter(newsletterEmail);
@@ -304,7 +313,7 @@ public class UtilisateurController {
             if(verificationPourSupressionDuCompte(usernameSupression)) {
                supressionDuCompte();
 
-                messageInterface = "Le compte a été supprimé";
+                messageInterface = "Votre compte a été supprimé";
                 utilisateurAuthentifier = new UtilisateurAuthentification();
                 role = new Role();
 
@@ -409,8 +418,8 @@ public class UtilisateurController {
      * @throws IOException IOException
      */
     @RequestMapping(value = "/conversationMembre", method = RequestMethod.POST)
-    public String conversationMembre(Model model, @ModelAttribute("conversation") Conversation conversation) throws IOException {
-        if (verificationErreurMessageConversation(conversation.getMessage())) {
+    public String conversationMembre(Model model, @ModelAttribute("conversation") ConversationBDD conversation) throws IOException {
+        if (!verificationErreurMessageConversation(conversation.getMessage())) {
             String messageErreurConversation = "le message est compris entre 2 et 500 caractères";
             model.addAttribute("messageErreurConversation", messageErreurConversation);
             interfaceModelConversation(model);
@@ -419,16 +428,16 @@ public class UtilisateurController {
         }
 
         conversation.setMessage(conversation.getMessage().replace("\n", "").replace("\r", ""));
-        conversation.setMembre(authentificationController.getUtilisateurAuthentifier());
+        conversation.setMembre(authentificationController.getUtilisateurAuthentifier().getIdUtilisateur());
         conversation.setDateAjout(LocalDateTime.now());
-        conversation.setInterlocuteur(authentificationController.getUtilisateurAuthentifier());
+        conversation.setInterlocuteur(authentificationController.getUtilisateurAuthentifier().getIdUtilisateur());
 
         conversationProxy.saveConversation(conversation);
         conversationProxy.conversationsSelonMembre(authentificationController.getUtilisateurAuthentifier().getIdUtilisateur());
 
         newsletterEmailProxy.envoyerEmailConversation(authentificationController.getUtilisateurAuthentifier()
                 , "Vous avez un nouveau message de "
-                        + authentificationController.getUtilisateurAuthentifier().getUsername());
+                        + authentificationController.getUtilisateurAuthentifier().getUsername(), false);
 
         interfaceModelConversation(model);
 
@@ -842,7 +851,7 @@ public class UtilisateurController {
      * @return boolean
      */
     private boolean verificationErreurMessageConversation(String message) {
-        if (message.length() >= 2 || message.length() <= 500) {
+        if (message.length() >= 2 && message.length() <= 500) {
             return true;
         }
         return false;
@@ -854,7 +863,7 @@ public class UtilisateurController {
      * @return boolean
      */
     private boolean verificationNomEnvoiEmail(String nom) {
-        if (nom.length() >= 2 || nom.length() <= 20) {
+        if (nom.length() >= 2 && nom.length() <= 20) {
             return true;
         }
         return false;

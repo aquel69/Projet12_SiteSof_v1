@@ -27,19 +27,25 @@ public class ConcertController {
     /**
      * ajoute un concert dans la base de données
      * @param concertDate concertDate
+     * @return ConcertDate
      */
     @PostMapping(value="/ajouterUnConcert")
-    public void ajouterUnConcert(@RequestBody ConcertDate concertDate) {
-        daoConcertDate.save(concertDate);
+    public ConcertDate ajouterUnConcert(@RequestBody ConcertDate concertDate) {
+        ConcertDate concertDate1 = daoConcertDate.save(concertDate);
+
+        return concertDate1;
     }
 
     /**
-     *  supprime un concert dans la base de données
+     * supprime un concert dans la base de données
      * @param idConcert idConcert
+     * @return List ConcertDate
      */
     @DeleteMapping(value="/supprimerUnConcert/{idConcert}")
-    public void supprimerUnConcert(@PathVariable int idConcert) {
-        daoConcertDate.deleteById(idConcert);
+    public List<ConcertDate> supprimerUnConcert(@PathVariable int idConcert) {
+        List<ConcertDate> listConcertDate = daoConcertDate.deleteById(idConcert);
+
+        return listConcertDate;
     }
 
 }
