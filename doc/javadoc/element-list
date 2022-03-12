@@ -11,6 +11,7 @@ com.sof.conversation
 com.sof.conversation.controller
 com.sof.conversation.dao
 com.sof.conversation.model
+com.sof.conversation.services
 com.sof.interface_donnees
 com.sof.interface_donnees.controller
 com.sof.interface_donnees.dao
@@ -21,6 +22,7 @@ com.sof.interface_site.model
 com.sof.interface_site.proxy
 com.sof.newsletter_email
 com.sof.newsletter_email.controller
+com.sof.newsletter_email.Controller
 com.sof.newsletter_email.dao
 com.sof.newsletter_email.model
 com.sof.newsletter_email.service

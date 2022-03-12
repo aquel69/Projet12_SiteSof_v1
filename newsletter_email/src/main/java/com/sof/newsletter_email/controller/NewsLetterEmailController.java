@@ -28,6 +28,7 @@ public class NewsLetterEmailController {
 
     /**
      * récupère tous les emails newsletter dans la base de données
+     *
      * @return List NewsletterEmail
      */
     @GetMapping(value = "/recupererTousLesEmailsNewsletter")
@@ -39,6 +40,7 @@ public class NewsLetterEmailController {
 
     /**
      * récupère un utilisateur selon son username dans la base de données
+     *
      * @param username username
      * @return UtilisateurAuthentification
      */
@@ -52,22 +54,38 @@ public class NewsLetterEmailController {
     /**
      * ajoute un email newsletter dans la base de données
      * @param newsletterEmail newsletterEmail
+     * @return NewsletterEmail
      */
-    @PostMapping(value="/ajouterEmailNewsletter")
-    public void ajouterEmailNewsletter(@RequestBody NewsletterEmail newsletterEmail) {
-        daoNewsletterEmail.save(newsletterEmail);
+    @PostMapping(value = "/ajouterEmailNewsletter")
+    public NewsletterEmail ajouterEmailNewsletter(@RequestBody NewsletterEmail newsletterEmail) {
+        NewsletterEmail newsletterEmail1;
+        newsletterEmail1 = daoNewsletterEmail.save(newsletterEmail);
+        return newsletterEmail1;
+    }
+
+    /**
+     * supprimer un emailNewsletter de la base de données
+     * @param email email
+     * @return boolean
+     */
+    @DeleteMapping(value="/desinscrireMembreNewsletter/{email}")
+    public boolean supprimerEmailNewsletter(@PathVariable String email) {
+        daoNewsletterEmail.supprimerEmailNewsletter(email);
+
+        return true;
     }
 
     /**
      * envoi un email utilisateur à l'administrateur
-     * @param nom nom
-     * @param email email
+     *
+     * @param nom     nom
+     * @param email   email
      * @param message message
      * @throws MessagingException MessagingException
-     * @throws TemplateException TemplateException
-     * @throws IOException IOException
+     * @throws TemplateException  TemplateException
+     * @throws IOException        IOException
      */
-    @PostMapping(value="/envoyerEmailUtilisateurAAdmin/{nom}/{email}/{message}")
+    @PostMapping(value = "/envoyerEmailUtilisateurAAdmin/{nom}/{email}/{message}")
     public void envoyerEmailUtilisateurAAdmin(@PathVariable String nom, @PathVariable String email
             , @PathVariable String message) throws MessagingException, TemplateException, IOException {
         Mail mail = new Mail();
@@ -81,12 +99,13 @@ public class NewsLetterEmailController {
 
     /**
      * envoi un email de bienvenue lors de la création du compte
+     *
      * @param utilisateurAuthentification utilisateurAuthentification
      * @throws MessagingException MessagingException
-     * @throws TemplateException TemplateException
-     * @throws IOException IOException
+     * @throws TemplateException  TemplateException
+     * @throws IOException        IOException
      */
-    @PostMapping(value="/envoyerEmailBienvenue")
+    @PostMapping(value = "/envoyerEmailBienvenue")
     public void envoyerEmailBienvenue(@RequestBody UtilisateurAuthentification utilisateurAuthentification) throws MessagingException, TemplateException, IOException {
         Mail mail = new Mail();
 
@@ -97,12 +116,13 @@ public class NewsLetterEmailController {
 
     /**
      * envoi un emailNewsletter à un destinataire
+     *
      * @param mail mail
      * @throws MessagingException MessagingException
-     * @throws TemplateException TemplateException
-     * @throws IOException IOException
+     * @throws TemplateException  TemplateException
+     * @throws IOException        IOException
      */
-    @PostMapping(value="/envoyerEmailNewsletter")
+    @PostMapping(value = "/envoyerEmailNewsletter")
     public void envoyerEmailNewsletter(@RequestBody Mail mail)
             throws MessagingException, TemplateException, IOException {
         Mail mailAEnvoyer = new Mail();
@@ -118,31 +138,20 @@ public class NewsLetterEmailController {
      * envoi un email à un destinataire pour le prévenir d'un nouveau message de conversation
      * @param utilisateurAuthentification utilisateurAuthentification
      * @param objet objet
+     * @param administrateur administrateur
      * @throws MessagingException MessagingException
      * @throws TemplateException TemplateException
      * @throws IOException IOException
      */
-    @PostMapping(value="/envoyerEmailConversation/{objet}")
+    @PostMapping(value = "/envoyerEmailConversation/{objet}/{administrateur}")
     public void envoyerEmailConversation(@RequestBody UtilisateurAuthentification utilisateurAuthentification
-            , @PathVariable String objet)
+            , @PathVariable String objet, @PathVariable boolean administrateur)
             throws MessagingException, TemplateException, IOException {
         Mail mailAEnvoyer = new Mail();
 
         mailAEnvoyer.setObjet(objet);
         mailAEnvoyer.setUtilisateurAuthentification(utilisateurAuthentification);
 
-        emailService.sendEmailConversation(mailAEnvoyer);
-    }
-
-    /**
-     * supprimer un emailNewsletter de la base de données
-     * @param email email
-     * @return boolean
-     */
-    @DeleteMapping(value="/desinscrireMembreNewsletter/{email}")
-    public boolean supprimerEmailNewsletter(@PathVariable String email) {
-        daoNewsletterEmail.supprimerEmailNewsletter(email);
-
-        return true;
+        emailService.sendEmailConversation(mailAEnvoyer, administrateur);
     }
 }

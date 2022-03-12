@@ -129,16 +129,21 @@ public class EmailService {
     /**
      * permet d'envoyer un email pour prévenir d'un nouveau message à un utilisateur
      * @param mail mail
+     * @param administrateur  administrateur
      * @throws MessagingException MessagingException
      * @throws IOException IOException
      * @throws TemplateException TemplateException
      */
-    public void sendEmailConversation(Mail mail) throws MessagingException, IOException, TemplateException {
+    public void sendEmailConversation(Mail mail, boolean administrateur) throws MessagingException, IOException, TemplateException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
         helper.setSubject(mail.getObjet());
-        helper.setTo(mail.getUtilisateurAuthentification().getEmail());
-        String emailContent = getEmailConversationContent(mail);
+        if (administrateur){
+            helper.setTo(mail.getUtilisateurAuthentification().getEmail());
+        } else {
+            helper.setTo("serveursof@gmail.com");
+        }
+        String emailContent = getEmailConversationContent(mail, administrateur);
         helper.setText(emailContent, true);
         javaMailSender.send(mimeMessage);
     }
@@ -146,15 +151,20 @@ public class EmailService {
     /**
      * contenu de l'email pour prévenir d'un nouveau message à un utilisateur
      * @param mail mail
-     * @return
+     * @return StringWriter
      * @throws IOException IOException
      * @throws TemplateException TemplateException
      */
-    String getEmailConversationContent(Mail mail) throws IOException, TemplateException {
+    String getEmailConversationContent(Mail mail, boolean administrateur) throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> model = new HashMap<>();
         model.put("mail", mail);
-        configuration.getTemplate("EmailConversation.ftl").process(model, stringWriter);
+        if (administrateur){
+            configuration.getTemplate("EmailConversationAdmin.ftl").process(model, stringWriter);
+        } else {
+            configuration.getTemplate("EmailConversation.ftl").process(model, stringWriter);
+        }
+
         return stringWriter.getBuffer().toString();
     }
 }

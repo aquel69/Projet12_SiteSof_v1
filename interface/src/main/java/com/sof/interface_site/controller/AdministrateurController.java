@@ -220,6 +220,11 @@ public class AdministrateurController {
                 listeMembresConversation = new ArrayList<>();
                 listeConversationSelonMembreSelectionne = new ArrayList<>();
                 listeMembresConversation = microserviceConversation.conversationSelonDateAjoutPourListeMembre();
+                for (Conversation conversation : listeMembresConversation) {
+                    if (conversation.getMembre().equals(3)) {
+                        listeMembresConversation.remove(conversation);
+                    }
+                }
                 adresseMembre = new Adresse();
                 membreSelectionne = new UtilisateurAuthentification(adresseMembre);
                 conversation = new Conversation();
@@ -241,9 +246,9 @@ public class AdministrateurController {
      */
     @RequestMapping(value = "/conversationAdministrateurPost", method = RequestMethod.POST)
     public String conversationAdministrateurPost(Model model, @ModelAttribute("conversation")
-                Conversation conversation) throws IOException {
+                ConversationBDD conversation) throws IOException {
 
-        if (verificationErreurMessageConversation(conversation.getMessage())) {
+        if (!verificationNbCaractereMessageConversation(conversation.getMessage())) {
             String messageErreurConversation = "le message est compris entre 2 et 500 caractères";
             model.addAttribute("messageErreurConversation", messageErreurConversation);
             interfaceModelConversation(model);
@@ -257,14 +262,13 @@ public class AdministrateurController {
         UtilisateurAuthentification utilisateurSof = microserviceAuthentification
                 .findUtilisateurAuthentificationByUsername("Sof");
 
-        conversation.setMembre(membreSelectionne);
+        conversation.setMembre(membreSelectionne.getIdUtilisateur());
         conversation.setDateAjout(LocalDateTime.now());
-        conversation.setInterlocuteur(utilisateurSof);
+        conversation.setInterlocuteur(utilisateurSof.getIdUtilisateur());
 
         microserviceConversation.saveConversation(conversation);
         microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
-        newsletterEmailProxy.envoyerEmailConversation(authentificationController.getUtilisateurAuthentifier()
-                , "Vous avez un nouveau message de Sof");
+        newsletterEmailProxy.envoyerEmailConversation(membreSelectionne, "Vous avez un nouveau message de Sof", true);
 
         interfaceModelConversation(model);
 
@@ -347,7 +351,8 @@ public class AdministrateurController {
      */
     private String verificationUtilisateurConnecte(int id) {
         UtilisateurAuthentification utilisateurVerification = microserviceAuthentification.findUtilisateurById(id);
-        if( authentificationController.getUtilisateurAuthentifier() == null || !authentificationController.getUtilisateurAuthentifier().getUsername().equals(utilisateurVerification.getUsername())) {
+        if( authentificationController.getUtilisateurAuthentifier() == null || !authentificationController
+                .getUtilisateurAuthentifier().getUsername().equals(utilisateurVerification.getUsername())) {
              return "Index";
         }
         return "autre";
@@ -356,12 +361,13 @@ public class AdministrateurController {
     /**
      * vérification du nombre de caractères dans un message
      * @param message message
-     * @return
+     * @return boolean
      */
-    private boolean verificationErreurMessageConversation(String message) {
-        if (message.length() >= 2 || message.length() <= 500) {
+    public boolean verificationNbCaractereMessageConversation(String message) {
+        if (message.length() >= 2 && message.length() <= 500) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 }

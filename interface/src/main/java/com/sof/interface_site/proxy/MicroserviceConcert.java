@@ -13,8 +13,8 @@ public interface MicroserviceConcert {
     List<ConcertDate> findAllUtilisateur();
 
     @PostMapping(value="/ajouterUnConcert")
-    void ajouterUnConcert(@RequestBody ConcertDate concertDate);
+    ConcertDate ajouterUnConcert(@RequestBody ConcertDate concertDate);
 
     @DeleteMapping(value="/supprimerUnConcert/{idConcert}")
-    void supprimerUnConcert(@PathVariable int idConcert);
+    ConcertDate supprimerUnConcert(@PathVariable int idConcert);
 }

@@ -1,6 +1,7 @@
 package com.sof.interface_site.proxy;
 
 import com.sof.interface_site.model.Conversation;
+import com.sof.interface_site.model.ConversationBDD;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +20,8 @@ public interface MicroserviceConversation {
     List<Conversation> conversationSelonDateAjoutPourListeMembre();
 
     @PostMapping(value = "/ajouterConversation")
-    Conversation saveConversation(@RequestBody Conversation conversation);
+    ConversationBDD saveConversation(@RequestBody ConversationBDD conversation);
 
     @DeleteMapping(value="/supprimerConversationsUtilisateur/{idUtilisateur}")
-    void supprimerConversationsUtilisateur(@PathVariable int idUtilisateur);
+    boolean supprimerConversationsUtilisateur(@PathVariable int idUtilisateur);
 }

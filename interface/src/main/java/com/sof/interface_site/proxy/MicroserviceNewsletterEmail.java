@@ -16,7 +16,7 @@ public interface MicroserviceNewsletterEmail {
     List<NewsletterEmail> recupererTousLesEmailsNewsletter();
 
     @PostMapping(value="/ajouterEmailNewsletter")
-    void ajouterEmailNewsletter(@RequestBody NewsletterEmail newsletterEmail);
+    NewsletterEmail ajouterEmailNewsletter(@RequestBody NewsletterEmail newsletterEmail);
 
     @PostMapping(value="/envoyerEmailUtilisateurAAdmin/{nom}/{email}/{message}")
     void envoyerEmailUtilisateurAAdmin(@PathVariable String nom, @PathVariable String email
@@ -28,9 +28,9 @@ public interface MicroserviceNewsletterEmail {
     @PostMapping(value="/envoyerEmailNewsletter")
     void envoyerEmailNewsletter(@RequestBody Mail mail);
 
-    @PostMapping(value="/envoyerEmailConversation/{objet}")
+    @PostMapping(value="/envoyerEmailConversation/{objet}/{administrateur}")
     void envoyerEmailConversation(@RequestBody UtilisateurAuthentification utilisateurAuthentification
-            , @PathVariable String objet) throws IOException;
+            , @PathVariable String objet, @PathVariable boolean administrateur) throws IOException;
 
     @DeleteMapping(value="/desinscrireMembreNewsletter/{email}")
     boolean supprimerEmailNewsletter(@PathVariable String email);
