@@ -52,6 +52,9 @@ body{
     min-height: 10rem;
     margin-top: 1rem;
     background-color: #e8bb8c;
+    border-bottom: 0.1rem solid #575659;
+    border-top: 0.1rem solid #575659;
+    opacity: 80%;
 }
 
 .global_conversation_administrateur{
@@ -59,14 +62,9 @@ body{
 }
 
 .titre_conversation_administrateur{
-    font-size: 3rem;
+    font-size: 4rem;
     color: blueviolet;
 }
-
-/*.ensemble_titre_conversation{
-    margin-top: 4rem;
-}*/
-
 
 .ensemble_photo_conversation{
     margin-top: 10rem;
@@ -87,7 +85,6 @@ body{
     height: 45rem;
     max-height: 45rem;
     min-height: 45rem;
-
 }
 
 * {

@@ -14,6 +14,9 @@ body{
     min-height: 10rem;
     margin-top: 15rem;
     background-color: #e8bb8c;
+    border-bottom: 0.1rem solid #575659;
+    border-top: 0.1rem solid #575659;
+    opacity: 80%;
 }
 
 .titre_ajout_concert{
@@ -23,7 +26,6 @@ body{
 
 .ajout_concert_formulaire_globale{
     height: 100rem;
-
 }
 
 .formulaire_ajout_concert{

@@ -7,12 +7,16 @@ body{
     margin: 0;
     padding: 0;
     background: linear-gradient(to right, #f7f7f7, #d4d1d5) no-repeat;
+    font-family: 'Lato', 'sans-serif';
 }
 
 .titre_global_newsletter{
     min-height: 10rem;
     margin-top: 15rem;
     background-color: #e8bb8c;
+    border-bottom: 0.1rem solid #575659;
+    border-top: 0.1rem solid #575659;
+    opacity: 80%;
 }
 
 .titre_ajout_newsletter{

@@ -2,6 +2,9 @@ package com.sof.interface_site.controller;
 
 import com.sof.interface_site.model.*;
 import com.sof.interface_site.proxy.*;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 @Controller
 public class UtilisateurController {
 
@@ -30,6 +34,8 @@ public class UtilisateurController {
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
 
     private final Pattern patternPassword = Pattern.compile(PASSWORD_PATTERN);
+
+    private static final Logger logger = LoggerFactory.getLogger(UtilisateurController.class);
 
     @Autowired
     private MicroserviceAuthentification authentificationProxy;
@@ -94,6 +100,8 @@ public class UtilisateurController {
         } else {
             utilisateurAuthentifier = authentificationController.getUtilisateurAuthentifier();
         }
+
+        logger.info("accueil");
 
         interfaceModelAccueil(model);
 
