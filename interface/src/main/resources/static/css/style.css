@@ -79,12 +79,6 @@ body {
     font-size: 1.4rem;
 }
 
-#lien_se_connecter a:active {
-    font-size: 2rem;
-}
-
-
-
 .icon {
     display: none;
 }
@@ -593,11 +587,11 @@ audio{
 }
 
 .texte_username_authentification{
-    font-size: 1.5rem;
+    font-size: 1.7rem;
 }
 
 .texte_motDePasse_authentification{
-    font-size: 1.5rem;
+    font-size: 1.7rem;
 }
 
 .texte_pas_de_compte{
@@ -814,6 +808,7 @@ audio{
     .ligne_groupe_titre{
         padding-top:10rem;
     }
+
 
     /*section bio*/
     .composition_photo--1 {

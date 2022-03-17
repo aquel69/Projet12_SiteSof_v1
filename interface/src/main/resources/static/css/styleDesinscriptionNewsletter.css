@@ -60,7 +60,7 @@ body{
     padding-top: 3rem;
     padding-bottom: 3rem;
     background-color: #e8bb8c;
-    opacity: 60%;
+    opacity: 80%;
 }
 
 .ensemble_photo_desinscription{
@@ -105,3 +105,24 @@ body{
     font-size: 1.7rem;
 }
 
+@media (max-width: 1920px) {
+    html{
+        font-size: 55%;
+    }
+
+    .ensemble_titre_desinscription{
+        margin-top: 3rem;
+    }
+
+    .ensemble_photo_desinscription{
+        margin-top: 9rem;
+    }
+
+    .photo_desinscription{
+        max-width: 70%;
+    }
+
+    .formulaire_desinscription {
+        height: 70rem;
+    }
+}

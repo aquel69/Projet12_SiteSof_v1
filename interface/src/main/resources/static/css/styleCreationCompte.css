@@ -33,13 +33,18 @@ body{
 .retour_accueil_icone{
     font-size: 2rem;
     text-decoration: none;
-    margin: auto;
+    margin-left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
     padding-left: 3rem;
 }
 
 .text_retour_accueil{
     font-size: 2rem;
-    margin: auto;
+    float: right;
+    margin-left: 1rem;
+    margin-top: auto;
+    margin-bottom: auto;
     padding-right: 1rem;
 }
 
@@ -60,7 +65,7 @@ body{
     padding-top: 3rem;
     padding-bottom: 3rem;
     background-color: #e8bb8c;
-    opacity: 60%;
+    opacity: 80%;
 }
 
 .ensemble_photo_authentification{
@@ -201,6 +206,69 @@ body{
     padding: 1rem 6rem 1rem 6rem;
     margin-top: 6rem;
     font-size: 1.5rem;
+}
+
+@media (max-width: 1920px) {
+    html{
+        font-size: 55%;
+    }
+
+    .retour_accueil_icone{
+        font-size: 1.9rem;
+        margin-right: 1rem;
+        margin-left: 0;
+    }
+
+    .ensemble_retour_accueil{
+        height: 8rem;
+        min-height: 8rem;
+    }
+
+    .text_retour_accueil{
+        font-size: 1.9rem;
+        margin-left: 0;
+    }
+
+    .formulaire_inscription{
+        margin-top: 9rem;
+    }
+
+    .formulaire_inscription_identite{
+        padding-bottom: 3rem;
+    }
+
+
+    .formulaire_inscription_coordonne{
+        padding-bottom: 3rem;
+    }
+
+    .text_form_inscription_adresse{
+        padding-top: 3rem;
+    }
+
+    .text_form_inscription_complement{
+        padding-top: 1.5rem;
+    }
+
+    .text_form_inscription_ville{
+        padding-top: 1.5rem;
+    }
+
+    .text_form_inscription_codePostal{
+        padding-top: 1.5rem;
+    }
+
+    .formulaire_inscription_authentification{
+        padding-bottom: 3rem;
+    }
+
+    .text_form_inscription_email{
+        padding-top: 3rem;
+    }
+
+    .text_form_inscription_confEmail{
+        padding-top: 3rem;
+    }
 }
 
 
