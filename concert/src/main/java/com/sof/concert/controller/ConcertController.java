@@ -2,11 +2,13 @@ package com.sof.concert.controller;
 
 import com.sof.concert.dao.DaoConcertDate;
 import com.sof.concert.model.ConcertDate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 public class ConcertController {
 

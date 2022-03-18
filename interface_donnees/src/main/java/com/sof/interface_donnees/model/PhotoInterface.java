@@ -66,13 +66,6 @@ public class PhotoInterface {
     private String photoConversationMembre;
 
     /**
-     * photo de la page modification du compte
-     */
-    @NonNull
-    @Column(name="photo_modification_compte")
-    private String photoModificationCompte;
-
-    /**
      * photo de la page gestion du compte
      */
     @NonNull

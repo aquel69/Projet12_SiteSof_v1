@@ -4,6 +4,7 @@ import com.sof.interface_site.model.*;
 import com.sof.interface_site.proxy.MicroserviceAuthentification;
 import com.sof.interface_site.proxy.MicroserviceConcert;
 import com.sof.interface_site.proxy.MicroserviceInterfaceDonnees;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 public class AuthentificationController {
 
@@ -50,6 +52,7 @@ public class AuthentificationController {
             erreur = null;
             return "Index";
         } else {
+            log.info("validationAuthentification - l'utilisateur est authentifié : " + utilisateurAuthentifier);
             return "Index";
         }
     }
@@ -68,13 +71,14 @@ public class AuthentificationController {
 
         utilisateurAuthentifier = new UtilisateurAuthentification();
         role = new Role();
-        Utilisateur utilisateur = new Utilisateur();
         newsletterEmail = new NewsletterEmail();
 
         role.setStatut("ROLE_USER");
         utilisateurAuthentifier.getRoles().add(0, role);
 
         interfaceModelAccueil(model);
+
+        log.info("deconnexion - l'utilisateur est déconnecté");
 
         return "Index";
     }

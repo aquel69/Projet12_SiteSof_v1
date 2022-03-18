@@ -5,6 +5,7 @@ import com.sof.interface_site.proxy.MicroserviceAuthentification;
 import com.sof.interface_site.proxy.MicroserviceConcert;
 import com.sof.interface_site.proxy.MicroserviceConversation;
 import com.sof.interface_site.proxy.MicroserviceNewsletterEmail;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
 @Controller
 public class AdministrateurController {
 
@@ -76,6 +78,7 @@ public class AdministrateurController {
             utilisateurController.accueil(model);
             return "Index";
         } else {
+            listeMembresConversation = null;
             mail = new Mail();
 
             model.addAttribute("mail", mail);
@@ -113,6 +116,8 @@ public class AdministrateurController {
 
         model.addAttribute("messageEnvoiMail", messageEnvoiMail);
         model.addAttribute("utilisateurAuthentifier", authentificationController.getUtilisateurAuthentifier());
+
+        log.info("ajoutEmailNewsletter - ajout utilisateur de l'email : " + mail);
 
         return "Newsletter";
     }
@@ -173,6 +178,8 @@ public class AdministrateurController {
 
         modelConcert(model, concert);
 
+        log.info("ajouterUnConcert - ajout du concert : " + concert);
+
         return "AjoutConcert";
     }
 
@@ -199,6 +206,8 @@ public class AdministrateurController {
         listeDateConcert = microserviceConcert.findAllUtilisateur();
 
         modelConcert(model, concert);
+
+        log.info("supprimerUnConcert - supprimer un concert : " + idConcert);
 
         return "AjoutConcert";
     }
@@ -272,6 +281,8 @@ public class AdministrateurController {
 
         interfaceModelConversation(model);
 
+        log.info("conversationAdministrateurPost - ajout de la conversation : " + conversation);
+
         return "ConversationAdministrateur";
     }
 
@@ -299,6 +310,8 @@ public class AdministrateurController {
         microserviceConversation.conversationsSelonMembre(membreSelectionne.getIdUtilisateur());
 
         interfaceModelConversation(model);
+
+        log.info("selectionDuMembreConversation - selection du membre pour la conversation : " + usernameMembre);
 
         return "ConversationAdministrateur";
     }

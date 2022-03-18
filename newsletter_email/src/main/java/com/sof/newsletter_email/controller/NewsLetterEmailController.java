@@ -7,6 +7,7 @@ import com.sof.newsletter_email.model.NewsletterEmail;
 import com.sof.newsletter_email.model.UtilisateurAuthentification;
 import com.sof.newsletter_email.service.EmailService;
 import freemarker.template.TemplateException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @RestController
 public class NewsLetterEmailController {
 
@@ -47,7 +49,7 @@ public class NewsLetterEmailController {
     @GetMapping(value = "/utilisateurSelonUsername/{username}")
     public UtilisateurAuthentification findUtilisateurByUsername(@PathVariable String username) {
         UtilisateurAuthentification utilisateur = daoUtilisateurAuthentification.findByUsername(username);
-
+        log.info("findUtilisateurByUsername - utilisateur : " + utilisateur);
         return utilisateur;
     }
 

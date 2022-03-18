@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+@Slf4j
 @Controller
 public class UtilisateurController {
 
@@ -34,8 +34,6 @@ public class UtilisateurController {
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
 
     private final Pattern patternPassword = Pattern.compile(PASSWORD_PATTERN);
-
-    private static final Logger logger = LoggerFactory.getLogger(UtilisateurController.class);
 
     @Autowired
     private MicroserviceAuthentification authentificationProxy;
@@ -101,8 +99,6 @@ public class UtilisateurController {
             utilisateurAuthentifier = authentificationController.getUtilisateurAuthentifier();
         }
 
-        logger.info("accueil");
-
         interfaceModelAccueil(model);
 
         return "Index";
@@ -124,6 +120,8 @@ public class UtilisateurController {
 
         model.addAttribute("messageEmailNewsletter", messageEmailNewsletter);
         interfaceModelAccueil(model);
+
+        log.info("ajoutEmailNewsletter - ajout utilisateur de l'email : " + newsletterEmailPost);
 
         return "Index";
     }
@@ -157,6 +155,8 @@ public class UtilisateurController {
         model.addAttribute("messageEmailNewsletter", messageEmailNewsletter);
         interfaceModelAccueil(model);
 
+        log.info("ajoutEmailNewsletterMembre - ajout membre de l'email : " + email);
+
         return "Index";
     }
 
@@ -183,6 +183,8 @@ public class UtilisateurController {
 
         interfaceModelAccueil(model);
         model.addAttribute("messageEnvoiMail", messageEnvoiMail);
+
+        log.info("envoiMailDeLUtilisateur - envoi d'un email de : " + nom + " et email " + email);
 
         return "Index";
     }
@@ -254,6 +256,8 @@ public class UtilisateurController {
         messageInterface = "Votre compte a bien été créé ! Un message vous a été envoyé sur votre boite mail";
         interfaceModelAccueil(model);
         messageInterface = null;
+
+        log.info("creationCompte - compte créé : " + utilisateur);
 
         return "Index";
     }
@@ -333,6 +337,8 @@ public class UtilisateurController {
                 interfaceModelAccueil(model);
                 messageInterface = null;
 
+                log.info("suppression Compte - compte supprimé : " + utilisateur);
+
                 return "Index";
             } else {
                 String messageUsername = "Le username saisie ne correspond pas à celui existant";
@@ -395,6 +401,8 @@ public class UtilisateurController {
         model.addAttribute("adresseMail", utilisateur.getEmail());
         messageInterface = null;
 
+        log.info("modificationCompte - compte modifié : " + utilisateur);
+
         return "ModificationCompte";
     }
 
@@ -449,6 +457,8 @@ public class UtilisateurController {
 
         interfaceModelConversation(model);
 
+        log.info("conversationMembre - conversation ajoutée : " + conversation);
+
         return "ConversationMembre";
     }
 
@@ -489,6 +499,8 @@ public class UtilisateurController {
         messageErreurMail = "Votre Email n'est pas dans la liste des newsLetters";
         interfaceDesinscritpionNewsletter(model);
         messageErreurMail = null;
+
+        log.info("desinscriptionNewsletter - emailNewsletter supprimé : " + email);
 
         return "DesinscriptionNewsletter";
     }

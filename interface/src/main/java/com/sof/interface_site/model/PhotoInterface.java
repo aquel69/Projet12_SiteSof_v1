@@ -43,11 +43,6 @@ public class PhotoInterface {
     private String photoConversationMembre;
 
     /**
-     * photo de la page modification du compte
-     */
-    private String photoModificationCompte;
-
-    /**
      * photo de la page gestion du compte
      */
     private String photoGestionCompte;

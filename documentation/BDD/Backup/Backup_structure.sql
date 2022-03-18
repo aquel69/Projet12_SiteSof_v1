@@ -5,7 +5,7 @@
 -- Dumped from database version 12.2
 -- Dumped by pg_dump version 12.2
 
--- Started on 2022-02-28 18:48:17
+-- Started on 2022-03-18 15:30:59
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 208 (class 1259 OID 77030)
+-- TOC entry 210 (class 1259 OID 77030)
 -- Name: accueil_interface; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -35,7 +35,7 @@ CREATE TABLE public.accueil_interface (
 ALTER TABLE public.accueil_interface OWNER TO postgres;
 
 --
--- TOC entry 220 (class 1259 OID 77090)
+-- TOC entry 222 (class 1259 OID 77090)
 -- Name: adresse; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -51,7 +51,7 @@ CREATE TABLE public.adresse (
 ALTER TABLE public.adresse OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 77088)
+-- TOC entry 221 (class 1259 OID 77088)
 -- Name: adresse_id_seq_1; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -66,8 +66,8 @@ CREATE SEQUENCE public.adresse_id_seq_1
 ALTER TABLE public.adresse_id_seq_1 OWNER TO postgres;
 
 --
--- TOC entry 2942 (class 0 OID 0)
--- Dependencies: 219
+-- TOC entry 2944 (class 0 OID 0)
+-- Dependencies: 221
 -- Name: adresse_id_seq_1; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -75,7 +75,7 @@ ALTER SEQUENCE public.adresse_id_seq_1 OWNED BY public.adresse.id_adresse;
 
 
 --
--- TOC entry 215 (class 1259 OID 77057)
+-- TOC entry 217 (class 1259 OID 77057)
 -- Name: album_interface; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -100,7 +100,7 @@ CREATE TABLE public.album_interface (
 ALTER TABLE public.album_interface OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 77049)
+-- TOC entry 213 (class 1259 OID 77049)
 -- Name: album_interface_id_album_interface_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -115,8 +115,8 @@ CREATE SEQUENCE public.album_interface_id_album_interface_seq
 ALTER TABLE public.album_interface_id_album_interface_seq OWNER TO postgres;
 
 --
--- TOC entry 2943 (class 0 OID 0)
--- Dependencies: 211
+-- TOC entry 2945 (class 0 OID 0)
+-- Dependencies: 213
 -- Name: album_interface_id_album_interface_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -124,7 +124,7 @@ ALTER SEQUENCE public.album_interface_id_album_interface_seq OWNED BY public.alb
 
 
 --
--- TOC entry 214 (class 1259 OID 77055)
+-- TOC entry 216 (class 1259 OID 77055)
 -- Name: album_interface_photo_album_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -139,8 +139,8 @@ CREATE SEQUENCE public.album_interface_photo_album_seq
 ALTER TABLE public.album_interface_photo_album_seq OWNER TO postgres;
 
 --
--- TOC entry 2944 (class 0 OID 0)
--- Dependencies: 214
+-- TOC entry 2946 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: album_interface_photo_album_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -148,7 +148,7 @@ ALTER SEQUENCE public.album_interface_photo_album_seq OWNED BY public.album_inte
 
 
 --
--- TOC entry 212 (class 1259 OID 77051)
+-- TOC entry 214 (class 1259 OID 77051)
 -- Name: album_interface_sous_titre_1_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -163,8 +163,8 @@ CREATE SEQUENCE public.album_interface_sous_titre_1_seq
 ALTER TABLE public.album_interface_sous_titre_1_seq OWNER TO postgres;
 
 --
--- TOC entry 2945 (class 0 OID 0)
--- Dependencies: 212
+-- TOC entry 2947 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: album_interface_sous_titre_1_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -172,7 +172,7 @@ ALTER SEQUENCE public.album_interface_sous_titre_1_seq OWNED BY public.album_int
 
 
 --
--- TOC entry 213 (class 1259 OID 77053)
+-- TOC entry 215 (class 1259 OID 77053)
 -- Name: album_interface_sous_titre_2_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -187,8 +187,8 @@ CREATE SEQUENCE public.album_interface_sous_titre_2_seq
 ALTER TABLE public.album_interface_sous_titre_2_seq OWNER TO postgres;
 
 --
--- TOC entry 2946 (class 0 OID 0)
--- Dependencies: 213
+-- TOC entry 2948 (class 0 OID 0)
+-- Dependencies: 215
 -- Name: album_interface_sous_titre_2_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -196,7 +196,7 @@ ALTER SEQUENCE public.album_interface_sous_titre_2_seq OWNED BY public.album_int
 
 
 --
--- TOC entry 207 (class 1259 OID 77021)
+-- TOC entry 209 (class 1259 OID 77021)
 -- Name: biographie_interface; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -215,7 +215,7 @@ CREATE TABLE public.biographie_interface (
 ALTER TABLE public.biographie_interface OWNER TO postgres;
 
 --
--- TOC entry 206 (class 1259 OID 77019)
+-- TOC entry 208 (class 1259 OID 77019)
 -- Name: biographie_interface_id_biographie_interface_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -230,8 +230,8 @@ CREATE SEQUENCE public.biographie_interface_id_biographie_interface_seq
 ALTER TABLE public.biographie_interface_id_biographie_interface_seq OWNER TO postgres;
 
 --
--- TOC entry 2947 (class 0 OID 0)
--- Dependencies: 206
+-- TOC entry 2949 (class 0 OID 0)
+-- Dependencies: 208
 -- Name: biographie_interface_id_biographie_interface_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -239,7 +239,7 @@ ALTER SEQUENCE public.biographie_interface_id_biographie_interface_seq OWNED BY 
 
 
 --
--- TOC entry 226 (class 1259 OID 77123)
+-- TOC entry 228 (class 1259 OID 77123)
 -- Name: conversation; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -255,7 +255,7 @@ CREATE TABLE public.conversation (
 ALTER TABLE public.conversation OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 77121)
+-- TOC entry 227 (class 1259 OID 77121)
 -- Name: commentaire_id_commentaire_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -270,8 +270,8 @@ CREATE SEQUENCE public.commentaire_id_commentaire_seq
 ALTER TABLE public.commentaire_id_commentaire_seq OWNER TO postgres;
 
 --
--- TOC entry 2948 (class 0 OID 0)
--- Dependencies: 225
+-- TOC entry 2950 (class 0 OID 0)
+-- Dependencies: 227
 -- Name: commentaire_id_commentaire_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -279,7 +279,7 @@ ALTER SEQUENCE public.commentaire_id_commentaire_seq OWNED BY public.conversatio
 
 
 --
--- TOC entry 218 (class 1259 OID 77079)
+-- TOC entry 220 (class 1259 OID 77079)
 -- Name: concert_date; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -295,7 +295,7 @@ CREATE TABLE public.concert_date (
 ALTER TABLE public.concert_date OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 77077)
+-- TOC entry 219 (class 1259 OID 77077)
 -- Name: concert_date_id_concert_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -310,8 +310,8 @@ CREATE SEQUENCE public.concert_date_id_concert_seq
 ALTER TABLE public.concert_date_id_concert_seq OWNER TO postgres;
 
 --
--- TOC entry 2949 (class 0 OID 0)
--- Dependencies: 217
+-- TOC entry 2951 (class 0 OID 0)
+-- Dependencies: 219
 -- Name: concert_date_id_concert_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -319,7 +319,7 @@ ALTER SEQUENCE public.concert_date_id_concert_seq OWNED BY public.concert_date.i
 
 
 --
--- TOC entry 210 (class 1259 OID 77040)
+-- TOC entry 212 (class 1259 OID 77040)
 -- Name: concert_interface; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -334,7 +334,7 @@ CREATE TABLE public.concert_interface (
 ALTER TABLE public.concert_interface OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 77038)
+-- TOC entry 211 (class 1259 OID 77038)
 -- Name: concert_interface_id_concert_interface_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -349,8 +349,8 @@ CREATE SEQUENCE public.concert_interface_id_concert_interface_seq
 ALTER TABLE public.concert_interface_id_concert_interface_seq OWNER TO postgres;
 
 --
--- TOC entry 2950 (class 0 OID 0)
--- Dependencies: 209
+-- TOC entry 2952 (class 0 OID 0)
+-- Dependencies: 211
 -- Name: concert_interface_id_concert_interface_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -358,7 +358,7 @@ ALTER SEQUENCE public.concert_interface_id_concert_interface_seq OWNED BY public
 
 
 --
--- TOC entry 216 (class 1259 OID 77069)
+-- TOC entry 218 (class 1259 OID 77069)
 -- Name: email_newsletter; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -370,18 +370,18 @@ CREATE TABLE public.email_newsletter (
 ALTER TABLE public.email_newsletter OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 77101)
+-- TOC entry 224 (class 1259 OID 77101)
 -- Name: utilisateur; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.utilisateur (
     id_utilisateur numeric NOT NULL,
-    nom character varying NOT NULL,
-    prenom character varying NOT NULL,
+    nom character varying,
+    prenom character varying,
     email character varying NOT NULL,
-    mot_de_passe character varying NOT NULL,
-    date_de_creation_du_compte date NOT NULL,
-    adresse_id numeric NOT NULL,
+    mot_de_passe character varying,
+    date_de_creation_du_compte date,
+    adresse_id numeric,
     username character varying NOT NULL
 );
 
@@ -389,7 +389,7 @@ CREATE TABLE public.utilisateur (
 ALTER TABLE public.utilisateur OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 77099)
+-- TOC entry 223 (class 1259 OID 77099)
 -- Name: membre_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -404,8 +404,8 @@ CREATE SEQUENCE public.membre_id_seq
 ALTER TABLE public.membre_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2951 (class 0 OID 0)
--- Dependencies: 221
+-- TOC entry 2953 (class 0 OID 0)
+-- Dependencies: 223
 -- Name: membre_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -413,7 +413,7 @@ ALTER SEQUENCE public.membre_id_seq OWNED BY public.utilisateur.id_utilisateur;
 
 
 --
--- TOC entry 228 (class 1259 OID 77160)
+-- TOC entry 230 (class 1259 OID 77160)
 -- Name: photo_interface; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -425,15 +425,15 @@ CREATE TABLE public.photo_interface (
     photo_contact character varying NOT NULL,
     photo_creation_compte character varying NOT NULL,
     photo_conversation_membre character varying NOT NULL,
-    photo_modification_compte character varying NOT NULL,
-    photo_gestion_compte character varying NOT NULL
+    photo_gestion_compte character varying NOT NULL,
+    photo_desinscription_newsletter character varying NOT NULL
 );
 
 
 ALTER TABLE public.photo_interface OWNER TO postgres;
 
 --
--- TOC entry 227 (class 1259 OID 77158)
+-- TOC entry 229 (class 1259 OID 77158)
 -- Name: photo_interface_id_photo_interface_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -448,8 +448,8 @@ CREATE SEQUENCE public.photo_interface_id_photo_interface_seq
 ALTER TABLE public.photo_interface_id_photo_interface_seq OWNER TO postgres;
 
 --
--- TOC entry 2952 (class 0 OID 0)
--- Dependencies: 227
+-- TOC entry 2954 (class 0 OID 0)
+-- Dependencies: 229
 -- Name: photo_interface_id_photo_interface_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -457,7 +457,7 @@ ALTER SEQUENCE public.photo_interface_id_photo_interface_seq OWNED BY public.pho
 
 
 --
--- TOC entry 205 (class 1259 OID 77010)
+-- TOC entry 207 (class 1259 OID 77010)
 -- Name: role; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -470,7 +470,7 @@ CREATE TABLE public.role (
 ALTER TABLE public.role OWNER TO postgres;
 
 --
--- TOC entry 204 (class 1259 OID 77008)
+-- TOC entry 206 (class 1259 OID 77008)
 -- Name: role_id_role_seq_1; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -485,8 +485,8 @@ CREATE SEQUENCE public.role_id_role_seq_1
 ALTER TABLE public.role_id_role_seq_1 OWNER TO postgres;
 
 --
--- TOC entry 2953 (class 0 OID 0)
--- Dependencies: 204
+-- TOC entry 2955 (class 0 OID 0)
+-- Dependencies: 206
 -- Name: role_id_role_seq_1; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -494,7 +494,7 @@ ALTER SEQUENCE public.role_id_role_seq_1 OWNED BY public.role.id_role;
 
 
 --
--- TOC entry 224 (class 1259 OID 77112)
+-- TOC entry 226 (class 1259 OID 77112)
 -- Name: utilisateur_role; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -508,7 +508,7 @@ CREATE TABLE public.utilisateur_role (
 ALTER TABLE public.utilisateur_role OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 77110)
+-- TOC entry 225 (class 1259 OID 77110)
 -- Name: utilisateur_role_id_utilisateur_role_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -523,8 +523,8 @@ CREATE SEQUENCE public.utilisateur_role_id_utilisateur_role_seq
 ALTER TABLE public.utilisateur_role_id_utilisateur_role_seq OWNER TO postgres;
 
 --
--- TOC entry 2954 (class 0 OID 0)
--- Dependencies: 223
+-- TOC entry 2956 (class 0 OID 0)
+-- Dependencies: 225
 -- Name: utilisateur_role_id_utilisateur_role_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -532,7 +532,7 @@ ALTER SEQUENCE public.utilisateur_role_id_utilisateur_role_seq OWNED BY public.u
 
 
 --
--- TOC entry 2777 (class 2604 OID 77093)
+-- TOC entry 2779 (class 2604 OID 77093)
 -- Name: adresse id_adresse; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -540,7 +540,7 @@ ALTER TABLE ONLY public.adresse ALTER COLUMN id_adresse SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 2772 (class 2604 OID 77060)
+-- TOC entry 2774 (class 2604 OID 77060)
 -- Name: album_interface id_album_interface; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -548,7 +548,7 @@ ALTER TABLE ONLY public.album_interface ALTER COLUMN id_album_interface SET DEFA
 
 
 --
--- TOC entry 2773 (class 2604 OID 77061)
+-- TOC entry 2775 (class 2604 OID 77061)
 -- Name: album_interface sous_titre_1; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -556,7 +556,7 @@ ALTER TABLE ONLY public.album_interface ALTER COLUMN sous_titre_1 SET DEFAULT ne
 
 
 --
--- TOC entry 2774 (class 2604 OID 77062)
+-- TOC entry 2776 (class 2604 OID 77062)
 -- Name: album_interface sous_titre_2; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -564,7 +564,7 @@ ALTER TABLE ONLY public.album_interface ALTER COLUMN sous_titre_2 SET DEFAULT ne
 
 
 --
--- TOC entry 2775 (class 2604 OID 77063)
+-- TOC entry 2777 (class 2604 OID 77063)
 -- Name: album_interface photo_album; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -572,7 +572,7 @@ ALTER TABLE ONLY public.album_interface ALTER COLUMN photo_album SET DEFAULT nex
 
 
 --
--- TOC entry 2770 (class 2604 OID 77024)
+-- TOC entry 2772 (class 2604 OID 77024)
 -- Name: biographie_interface id_biographie_interface; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -580,7 +580,7 @@ ALTER TABLE ONLY public.biographie_interface ALTER COLUMN id_biographie_interfac
 
 
 --
--- TOC entry 2776 (class 2604 OID 77176)
+-- TOC entry 2778 (class 2604 OID 77176)
 -- Name: concert_date id_concert_date; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -588,7 +588,7 @@ ALTER TABLE ONLY public.concert_date ALTER COLUMN id_concert_date SET DEFAULT ne
 
 
 --
--- TOC entry 2771 (class 2604 OID 77043)
+-- TOC entry 2773 (class 2604 OID 77043)
 -- Name: concert_interface id_concert_interface; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -596,7 +596,7 @@ ALTER TABLE ONLY public.concert_interface ALTER COLUMN id_concert_interface SET 
 
 
 --
--- TOC entry 2780 (class 2604 OID 77126)
+-- TOC entry 2782 (class 2604 OID 77126)
 -- Name: conversation id_conversation; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -604,7 +604,7 @@ ALTER TABLE ONLY public.conversation ALTER COLUMN id_conversation SET DEFAULT ne
 
 
 --
--- TOC entry 2781 (class 2604 OID 77163)
+-- TOC entry 2783 (class 2604 OID 77163)
 -- Name: photo_interface id_photo_interface; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -612,7 +612,7 @@ ALTER TABLE ONLY public.photo_interface ALTER COLUMN id_photo_interface SET DEFA
 
 
 --
--- TOC entry 2769 (class 2604 OID 77013)
+-- TOC entry 2771 (class 2604 OID 77013)
 -- Name: role id_role; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -620,7 +620,7 @@ ALTER TABLE ONLY public.role ALTER COLUMN id_role SET DEFAULT nextval('public.ro
 
 
 --
--- TOC entry 2778 (class 2604 OID 77104)
+-- TOC entry 2780 (class 2604 OID 77104)
 -- Name: utilisateur id_utilisateur; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -628,7 +628,7 @@ ALTER TABLE ONLY public.utilisateur ALTER COLUMN id_utilisateur SET DEFAULT next
 
 
 --
--- TOC entry 2779 (class 2604 OID 77115)
+-- TOC entry 2781 (class 2604 OID 77115)
 -- Name: utilisateur_role id_utilisateur_role; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -636,7 +636,7 @@ ALTER TABLE ONLY public.utilisateur_role ALTER COLUMN id_utilisateur_role SET DE
 
 
 --
--- TOC entry 2787 (class 2606 OID 77037)
+-- TOC entry 2789 (class 2606 OID 77037)
 -- Name: accueil_interface accueil_interface_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -645,7 +645,7 @@ ALTER TABLE ONLY public.accueil_interface
 
 
 --
--- TOC entry 2797 (class 2606 OID 77098)
+-- TOC entry 2799 (class 2606 OID 77098)
 -- Name: adresse adresse_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -654,7 +654,7 @@ ALTER TABLE ONLY public.adresse
 
 
 --
--- TOC entry 2791 (class 2606 OID 77068)
+-- TOC entry 2793 (class 2606 OID 77068)
 -- Name: album_interface album_interface_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -663,7 +663,7 @@ ALTER TABLE ONLY public.album_interface
 
 
 --
--- TOC entry 2785 (class 2606 OID 77029)
+-- TOC entry 2787 (class 2606 OID 77029)
 -- Name: biographie_interface biographie_interface_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -672,7 +672,7 @@ ALTER TABLE ONLY public.biographie_interface
 
 
 --
--- TOC entry 2803 (class 2606 OID 77131)
+-- TOC entry 2805 (class 2606 OID 77131)
 -- Name: conversation commentaire_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -681,7 +681,7 @@ ALTER TABLE ONLY public.conversation
 
 
 --
--- TOC entry 2795 (class 2606 OID 77178)
+-- TOC entry 2797 (class 2606 OID 77178)
 -- Name: concert_date concert_date_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -690,7 +690,7 @@ ALTER TABLE ONLY public.concert_date
 
 
 --
--- TOC entry 2789 (class 2606 OID 77048)
+-- TOC entry 2791 (class 2606 OID 77048)
 -- Name: concert_interface concert_interface_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -699,7 +699,7 @@ ALTER TABLE ONLY public.concert_interface
 
 
 --
--- TOC entry 2793 (class 2606 OID 77076)
+-- TOC entry 2795 (class 2606 OID 77076)
 -- Name: email_newsletter email_newsletter_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -708,7 +708,7 @@ ALTER TABLE ONLY public.email_newsletter
 
 
 --
--- TOC entry 2805 (class 2606 OID 77168)
+-- TOC entry 2807 (class 2606 OID 77168)
 -- Name: photo_interface photo_interface_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -717,7 +717,7 @@ ALTER TABLE ONLY public.photo_interface
 
 
 --
--- TOC entry 2783 (class 2606 OID 77018)
+-- TOC entry 2785 (class 2606 OID 77018)
 -- Name: role role_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -726,7 +726,7 @@ ALTER TABLE ONLY public.role
 
 
 --
--- TOC entry 2799 (class 2606 OID 77109)
+-- TOC entry 2801 (class 2606 OID 77109)
 -- Name: utilisateur utilisateur_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -735,7 +735,7 @@ ALTER TABLE ONLY public.utilisateur
 
 
 --
--- TOC entry 2801 (class 2606 OID 77120)
+-- TOC entry 2803 (class 2606 OID 77120)
 -- Name: utilisateur_role utilisateur_role_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -744,7 +744,7 @@ ALTER TABLE ONLY public.utilisateur_role
 
 
 --
--- TOC entry 2806 (class 2606 OID 77137)
+-- TOC entry 2808 (class 2606 OID 77137)
 -- Name: utilisateur adresse_membre_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -753,7 +753,7 @@ ALTER TABLE ONLY public.utilisateur
 
 
 --
--- TOC entry 2809 (class 2606 OID 77142)
+-- TOC entry 2811 (class 2606 OID 77142)
 -- Name: conversation membre_commentaire_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -762,7 +762,7 @@ ALTER TABLE ONLY public.conversation
 
 
 --
--- TOC entry 2810 (class 2606 OID 77147)
+-- TOC entry 2812 (class 2606 OID 77147)
 -- Name: conversation membre_commentaire_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -771,7 +771,7 @@ ALTER TABLE ONLY public.conversation
 
 
 --
--- TOC entry 2807 (class 2606 OID 77132)
+-- TOC entry 2809 (class 2606 OID 77132)
 -- Name: utilisateur_role role_utilisateur_role_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -780,7 +780,7 @@ ALTER TABLE ONLY public.utilisateur_role
 
 
 --
--- TOC entry 2808 (class 2606 OID 77152)
+-- TOC entry 2810 (class 2606 OID 77152)
 -- Name: utilisateur_role utilisateur_utilisateur_role_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -788,7 +788,7 @@ ALTER TABLE ONLY public.utilisateur_role
     ADD CONSTRAINT utilisateur_utilisateur_role_fk FOREIGN KEY (utilisateur_id) REFERENCES public.utilisateur(id_utilisateur);
 
 
--- Completed on 2022-02-28 18:48:18
+-- Completed on 2022-03-18 15:30:59
 
 --
 -- PostgreSQL database dump complete
