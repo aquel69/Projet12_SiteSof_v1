@@ -3,6 +3,7 @@ package com.sof.authentification.controller;
 import com.sof.authentification.dao.*;
 import com.sof.authentification.model.*;
 import com.sof.authentification.service.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RestController
 public class AuthentificationController {
 

@@ -5,11 +5,13 @@ import com.sof.interface_donnees.model.AlbumInterface;
 import com.sof.interface_donnees.model.BiographieInterface;
 import com.sof.interface_donnees.model.ConcertInterface;
 import com.sof.interface_donnees.model.PhotoInterface;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 public class InterfaceController {
 
@@ -45,7 +47,7 @@ public class InterfaceController {
     @GetMapping(value = "/recuperationConcertInterface/{id}")
     public ConcertInterface getConcertInterface(@PathVariable int id){
         ConcertInterface concertInterface = daoConcertInterface.findByIdConcertInterface(id);
-
+        log.info("getConcertInterface - interface du concert : " + concertInterface);
         return concertInterface;
     }
 
