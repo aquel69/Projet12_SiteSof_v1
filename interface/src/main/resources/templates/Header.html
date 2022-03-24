@@ -15,7 +15,7 @@
             <nav id="navigationBarre">
                 <a th:href="@{|/|}" class="liensNav">Accueil</a>
                 <a th:href="@{|/newsletter/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav">Newsletter</a>
-                <a th:href="@{|/ajoutConcert/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav" onclick="toggleNav()">Ajout Concert</a>
+                <a th:href="@{|/ajoutConcert/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav" onclick="toggleNav()">Concert</a>
                 <a th:href="@{|/conversationAdministrateur/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav" onclick="toggleNav()">Conversation</a>
                 <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
             </nav>

@@ -28,6 +28,10 @@ body{
     margin-top: 7rem;
 }
 
+.message_newsletter{
+ font-size: 1.7rem;
+}
+
 .text_form_newsletter_objet{
     font-size: 2.1rem;
 }
