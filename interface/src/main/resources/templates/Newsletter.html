@@ -27,8 +27,12 @@
 <div class="container-fluid g-0">
     <div class="row titre_global_newsletter g-0 align-items-center">
         <div class="col-12 titre_newsletter">
-            <h3 class="text-center titre_ajout_newsletter">AJOUT D'UNE NEWSLETTER</h3>
+            <h3 class="text-center titre_ajout_newsletter">NEWSLETTER</h3>
         </div>
+    </div>
+    <div th:if="${messageEnvoiMail != null}" class="alert alert-warning alert-dismissible fade show message_alerte" role="alert">
+        <span class="message_newsletter" th:text="${messageEnvoiMail}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <div class="row justify-content-center g-0">
         <div class="col-5 formulaire_newsletter">
