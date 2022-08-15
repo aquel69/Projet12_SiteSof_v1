@@ -35,7 +35,7 @@
                     <a href="https://www.facebook.com/sofmusique/" id="facebook" class="icone"><i class="fab fa-facebook"></i></a>
                 </nav>
             </div>
-            <div>
+            <div id="menu-navigation">
                 <nav id="navigationBarre">
                     <a href="#accueil" class="liensNav" onclick="toggleNav()">Accueil</a>
                     <a href="#bio" class="liensNav" onclick="toggleNav()">Bio</a>
@@ -48,8 +48,8 @@
                     <a class="icon" id="icon" onclick="toggleNav()"><i class="fas fa-bars"></i></a>
                 </nav>
             </div>
-            <div>
-                <nav id="lien_deconnection" class="menu">
+            <div id="div_deconnection">
+                <nav id="lien_deconnection" class="">
                     <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_ADMIN')}" th:text="'Bienvenue ' + ${utilisateurAuthentifier.getUsername()}" class="lien_deconnect"></a>
                     <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_ADMIN')}" th:text="'déconnexion'" th:href="@{|/deconnexion|}" class="lien_deconnect"></a>
                     <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:text="'Bienvenue ' + ${utilisateurAuthentifier.getUsername()}" class="lien_deconnect"></a>
@@ -57,6 +57,18 @@
                     <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_USER')}" th:text="'se connecter'" th:href="@{|#lien_authentification|}" class="lien_se_connecter"></a>
                 </nav>
             </div>
+        </div>
+        <div id="barre2">
+            <nav id="navigationBarre2 flex-column">
+                <a href="#accueil" class="liensNav" onclick="toggleNav()">Accueil</a>
+                <a href="#bio" class="liensNav" onclick="toggleNav()">Bio</a>
+                <a href="#concerts" class="liensNav" onclick="toggleNav()">Concerts</a>
+                <a href="#album" class="liensNav" onclick="toggleNav()">Album</a>
+                <a href="#contact" class="liensNav" onclick="toggleNav()">Contact</a>
+                <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_MEMBER')}" th:href="@{|/conversationMembre/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav">Conversation</a>
+                <a th:if="${utilisateurAuthentifier != null && utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_ADMIN')}" th:href="@{|/newsletter/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav">Administrateur</a>
+                <a th:if="${utilisateurAuthentifier != null && !utilisateurAuthentifier.getRoles().get(0).getStatut().equals('ROLE_USER')}" th:href="@{|/modificationCompte/${utilisateurAuthentifier.getIdUtilisateur()}|}" class="liensNav">Compte</a>
+            </nav>
         </div>
     </div>
     <div th:if="${messageCompteCree != null}" class="alert alert-warning alert-dismissible fade show message_alerte" role="alert">
@@ -90,7 +102,7 @@
         </div>
     </div>
     <div class="row ligne_groupe_titre g-0">
-        <div class="col-7 p-0"></div>
+        <div class="col-lg-7 col-sm-12 p-0"></div>
             <div id="accueil_groupe_titre" class="text-center col-3 p-0">
                 <div>
                     <h1>Sof</h1>
@@ -125,7 +137,7 @@
             <h3 class="sousTitreBio" th:text="${biographieInterface.getSousTitre2()}"></h3>
             <p class="paragraphe" th:text="${biographieInterface.getParagraphe2()}"></p>
         </div>
-        <div class="col-1-of-2">
+        <div id="photo_bio" class="col-1-of-2">
             <div class="composition">
                 <div class="bio_photo_1">
                     <img th:src="@{/ressources/{image}(image=${biographieInterface.getPhoto1()})}" alt="photo concert sof" class="composition_photo composition_photo--1">
@@ -222,7 +234,7 @@
     </div>
     <div class="container-fluid cont">
         <div class="row">
-            <div class="col-4">
+            <div class="mobile_album col-4 col-xs-12">
                 <h4 id="sous_titre_ep" class="text-center" th:text="${albumInterface.getSousTitre1()}"></h4>
                 <div class="text-center">
                      <img th:src="@{/ressources/{image}(image=${albumInterface.getPhotoAlbum()})}" alt="photo EP sof" class="img-fluid photo_EP_front">
@@ -264,10 +276,10 @@
                     </div>
                 </div>
             </div>
-            <div id="lien_authentification" class="col-4 text-center">
+            <div id="lien_authentification" class="col-4 offset-sm-0 text-center">
                 <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoAlbum()})}" alt="photo sof tenant un ukulélé dans la nature" class="img-fluid photo_album">
             </div>
-            <div class="col-4">
+            <div class="mobile_album col-4 col-xs-12">
                 <h4 id="sous_titre_commander" class="text-center" th:text="${albumInterface.getSousTitre2()}"></h4>
                 <div class="text-center">
                     <img th:src="@{/ressources/{image}(image=${albumInterface.getPhotoCD()})}" alt="photo cd sof" class="img-fluid photo_CD">
@@ -314,10 +326,10 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-4 text-center">
+            <div id="mobile_photo_contact" class="col-4 text-center">
                 <img th:src="@{/ressources/{image}(image=${photoInterface.getPhotoContact()})}" alt="photo sof en robe à coté d'un arbre" class="img-fluid photo_contact">
             </div>
-            <div class="col-8">
+            <div id="mobile_formulaire_contact" class="col-8">
                 <div class="row justify-content-center envoi_mail">
                     <div class="col-10 ligne_envoi_mail">
                         <h6 class="titre_envoi_mail">Envoi d'un message</h6>
@@ -376,8 +388,8 @@
             </div>
         </div>
          <div class="row footer justify-content-center footer">
-            <div class="row justify-content-center">
-                 <div class="col-6 ">
+            <div  class="row justify-content-center">
+                 <div id="mobile_footer" class="col-6 ">
                     <p class="text-center texte_mention">- © Sof 2022 – Tous droits réservés – Reproduction interdite – Mentions légales -</p>
                  </div>
             </div>

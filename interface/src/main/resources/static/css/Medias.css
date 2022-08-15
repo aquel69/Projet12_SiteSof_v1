@@ -30,9 +30,6 @@
         /*margin-left: 50rem;*/
     }
 
-    .icon {
-        display: none;
-    }
 
     /* Section Accueil */
 
@@ -180,4 +177,283 @@
         width: 560px;
     }
 
+}
+
+@media (max-width: 1200px) {
+
+    #navigationBarre a {
+
+        font-size: 2.2rem;
+        padding: 1rem 5rem;
+
+    }
+
+
+    h1 {
+        margin: 0;
+        top: 22rem;
+        font-size: 6rem;
+    }
+
+
+}
+
+@media (max-width: 768px) {
+
+    #lien_icone a {
+        margin: 0.5rem;
+        color: #f7f7f7;
+    }
+
+    #lien_deconnection a {
+        font-size: 1.4rem;
+        color: #f7f7f7;
+    }
+
+    #div_icone{
+        padding-left: 0;
+    }
+
+    #div_deconnection{
+        padding-right: 0;
+    }
+
+    #barre_menu_texte{
+        width: 100vw;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+    }
+
+
+    #navigationBarre a:not(:nth-child(6)) {
+        display: none;
+    }
+
+    .icon {
+        display: block;
+        position: center;
+        right: -3rem;
+        top: -1.6rem;
+        cursor: pointer;
+        color: #373737;
+        font-size: 3rem!important;
+    }
+
+    #barre_menu {
+        width: 100vw;
+        text-align: center;
+        height: 5rem;
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        transition: all 0.4s ease-in-out;
+        border-bottom: 2px solid #373737;
+    }
+
+    #barre_menu.responsive {
+        height: 30rem;
+    }
+
+    #barre2 {
+        display: block;
+    }
+
+    #barre2 a {
+        vertical-align: middle;
+        display: block;
+        text-decoration: none;
+        font-size: 3rem;
+        font-family: 'Kaushan Script';
+        color: #f7f7f7;
+        margin : 0rem 3rem 0rem 3rem;
+    }
+
+    #barre2 a:active {
+        font-size: 4rem;
+    }
+
+    #lien_icone.responsive {
+        display: none;
+    }
+
+    #div_deconnection.responsive{
+        display: none;
+    }
+
+    #navigationBarre.responsive a:not(:nth-child(6)) {
+        display: block;
+        text-align: center;
+
+        margin: 0;
+        position: relative;
+        top: 4rem;
+        font-size: 3rem;
+        z-index: 100;
+    }
+
+    header {
+        background-size: cover;
+        overflow: hidden;
+    }
+    h1 {
+        margin: 0;
+        top: 25rem;
+        font-size: 6rem;
+    }
+    header h2 {
+        top: 24rem;
+        font-size: 1.3rem;
+        width: 80%;
+        margin: auto;
+    }
+
+    .iframe_container{
+        width: 95%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .iframe_container::after{
+        content:"";
+        display: block;
+        width: 95%;
+        padding-bottom: calc(315/560*100%);
+    }
+
+    iframe{
+        width: 95%;
+        height: 70%;
+    }
+
+
+    header #arrow {
+        height: 5rem;
+        width: 5rem;
+        font-size: 2.5rem;
+        line-height: 5rem;
+    }
+
+    #sous_titre_commander{
+        font-size: 1.5rem;
+    }
+
+    .authentification_globale{
+        padding-bottom: 5rem;
+        margin-top: 8.5rem;
+        border-radius: 2rem;
+        border: 0.1rem solid #575659;
+        height: 662px;
+        width: auto;
+    }
+
+    /* bio */
+    .ligne{
+
+    }
+
+    .ligne .col-1-of-2 {
+        width:80%;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .ligne [class^="col-"] {
+        float: none;
+    }
+
+    .ligne [class^="col-"]:not(:last-child) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #photo_bio {
+        display: none;
+    }
+
+    .paragraphe {
+
+    }
+
+    /* concert */
+    .compositionConcerts{
+        display: none;
+    }
+
+    #concerts {
+        height:66rem;
+    }
+
+    /* parralax */
+    .section-parallax {
+        height: 35rem;
+        background-position: 30% 75%;;
+    }
+
+    /* album */
+    .mobile_album{
+        width: 100%;
+    }
+
+    #lien_authentification{
+        display: none;
+    }
+
+    .lecteurs{
+        width: 85%;
+        margin-bottom: 10rem;
+    }
+
+    #sous_titre_commander{
+        font-size: 3rem;
+    }
+
+    .authentification_globale {
+        margin-top: 5rem;
+        height: 540px;
+    }
+
+    /* contact */
+    #mobile_photo_contact{
+        display: none;
+    }
+
+    #mobile_formulaire_contact{
+        width: 100%;
+    }
+
+    .envoi_mail{
+        margin-left: auto;
+        margin-right: auto;
+        width: 85%;
+    }
+
+    .titre_envoi_mail{
+        font-size: 2.5rem;
+    }
+
+
+    .newsletter{
+        height: 250px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 85%;
+    }
+
+    .titre_newsletter{
+        font-size: 2.3rem;
+    }
+
+    .formulaire_inscription_newsletter{
+        margin-top: 0px;
+    }
+
+    .footer{
+        padding-top: 7rem;
+    }
+
+    #mobile_footer{
+        width: 100%;
+    }
+
+    .texte_mention{
+        font-size: 1.1rem;
+    }
 }

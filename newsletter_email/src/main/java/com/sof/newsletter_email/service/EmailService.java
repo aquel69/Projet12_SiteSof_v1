@@ -43,7 +43,7 @@ public class EmailService {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
         helper.setSubject("Email de l'utilisateur " + mail.getExpediteur());
-        helper.setTo("alexandre.lardon@yahoo.fr");
+        helper.setTo("serveursof@gmail.com");
         String emailContent = getEmailUserContent(mail);
         helper.setText(emailContent, true);
         javaMailSender.send(mimeMessage);

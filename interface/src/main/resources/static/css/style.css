@@ -22,6 +22,11 @@ body {
     opacity: 0;
 }
 
+#barre2 {
+    display: none;
+    z-index: 500;
+}
+
 .barre_menu_texte {
     height: 6.3rem;
     padding-left: 5rem;
@@ -1034,6 +1039,56 @@ audio{
     .ajoutNewsletterMembre {
         margin-top: 2rem;
     }
+
+    /*@media (max-width: 768px) {
+        #lien_deconnection {
+            display: none;
+        }
+
+        #lien_icone {
+            display: none;
+        }
+
+        #navigationBarre a:not(:nth-child(2)) {
+            display: none;
+        }
+        .icon {
+            display: block;
+            position: absolute;
+            right: -3rem;
+            top: -1.6rem;
+            cursor: pointer;
+            color: #373737;
+            font-size: 3rem!important;
+        }
+
+        #barre_menu {
+            width: 100%;
+            text-align: center;
+            height: 5rem;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            transition: all 0.4s ease-in-out;
+            border-bottom: 2px solid #373737;
+        }
+
+        #navigationBarre.responsive {
+            height: 38rem;
+        }
+
+        #navigationBarre.responsive a:not(:nth-child(2)) {
+
+            display: block;
+            text-align: center;
+            background: #F0EAd6;
+            margin: 0;
+            position: relative;
+            top: 4rem;
+            font-size: 3rem;
+
+        }
+*/
+
+
 }
 
 
